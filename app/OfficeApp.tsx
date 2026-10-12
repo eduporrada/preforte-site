@@ -1299,10 +1299,12 @@ function ProjectCard({
       const dt = Math.max(16, now - lastPointer.current.t);
       const vx = (latestPointer.current.x - lastPointer.current.x) / dt; // px/ms
       lastPointer.current = { x: latestPointer.current.x, t: now };
-      const alvo = Math.max(-8, Math.min(8, vx * 6));
-      tilt.current += (alvo - tilt.current) * 0.25;
+      const alvo = Math.max(-14, Math.min(14, vx * 9));
+      tilt.current += (alvo - tilt.current) * 0.18;
       overlayRef.current.style.transform = `translate3d(${latestPointer.current.x - start.offsetX}px, ${latestPointer.current.y - start.offsetY}px, 0)`;
       overlayRef.current.style.setProperty("--tilt", `${tilt.current.toFixed(2)}deg`);
+      overlayRef.current.style.setProperty("--grab-x", `${start.offsetX}px`);
+      overlayRef.current.style.setProperty("--grab-y", `${start.offsetY}px`);
     });
   }
 

@@ -758,3 +758,137 @@ body {
 @media (max-width: 860px) { .drawer-grid { grid-template-columns: 1fr; } }
 .card-head { margin-bottom: 12px; }
 .priority-tag { height: 28px; font-size: 13px; }
+
+/* =====================================================================
+   Referência final: acetinado, profundidade, pendurado no ponto de clique
+   ===================================================================== */
+:root {
+  --apple-bg: #0f0f11;
+  --apple-label: #ececee;
+  --apple-secondary-label: #a9a9b1;
+  --apple-tertiary-label: #6b6b74;
+  --card-border: rgba(255,255,255,.10);
+  --card-border-hover: rgba(255,255,255,.22);
+}
+html { background: #0f0f11; }
+body {
+  background:
+    radial-gradient(1400px 800px at 30% -20%, rgba(255,255,255,.045), transparent 60%),
+    radial-gradient(900px 600px at 110% 100%, rgba(255,255,255,.03), transparent 60%),
+    linear-gradient(160deg, #141416 0%, #0f0f11 50%, #0c0c0e 100%);
+}
+.sidebar { background: rgba(14,14,16,.85); border-right: 1px solid rgba(255,255,255,.06); }
+.nav-group-label { color: #5e5e67; font-size: 12px; margin: 16px 12px 6px; border-top: 1px dotted rgba(255,255,255,.1); padding-top: 12px; }
+.nav-button { height: 38px; font-size: 14.5px; color: #a3a3ab; border-radius: 10px; }
+.nav-button .nav-icon { color: #7a7a83; }
+.nav-button.active { background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06)); color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px rgba(0,0,0,.4); }
+.topbar { background: rgba(15,15,17,.8); border-bottom: 1px solid rgba(255,255,255,.06); }
+.page-title { font-size: clamp(26px, 2.6vw, 32px); font-weight: 600; }
+
+/* Colunas: só título com ponto, “•••” e “+” à direita como na referência */
+.column-head { padding: 4px 6px 12px; }
+.column-title { font-size: 15px; font-weight: 500; color: #d9d9de; }
+.count { font-size: 14px; color: #6b6b74; }
+
+/* Cards: superfície acetinada com leve gradiente e borda clara */
+.card {
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.11);
+  background: linear-gradient(180deg, #202023 0%, #18181b 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.05) inset,
+    0 -1px 0 rgba(0,0,0,.4) inset,
+    0 10px 28px rgba(0,0,0,.45);
+}
+.card:hover { border-color: rgba(255,255,255,.2); box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 14px 36px rgba(0,0,0,.5); }
+.card-head { margin-bottom: 12px; padding-right: 30px; }
+.card-kind {
+  width: 34px; height: 34px; border-radius: 9px; color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tag-color, #8d8f99) 55%, #1a1a1e), color-mix(in srgb, var(--tag-color, #8d8f99) 30%, #121214));
+  border: 1px solid color-mix(in srgb, var(--tag-color, #8d8f99) 60%, transparent);
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 4px 10px rgba(0,0,0,.4);
+}
+.card-title { font-size: 16px; font-weight: 500; color: #f0f0f2; }
+.card-client { font-size: 13.5px; color: #8f8f98; margin-bottom: 10px; }
+.card-menu-button { color: #6b6b74; top: 12px; right: 10px; }
+.card-menu-button:hover { color: #fff; }
+
+/* Pílulas pequenas e discretas (chips de ferramenta na referência) */
+.service-tag, .tag, .chip, .status-badge, .late-pill, .payment-state, .cmd-estado, .escritorio-contadores > span {
+  height: 27px; padding: 0 11px 0 9px; font-size: 13px; font-weight: 500;
+  background: #151518; border: 1px solid rgba(255,255,255,.12); color: #d6d6db;
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset;
+}
+.priority-tag {
+  height: 26px; padding: 0 10px 0 8px; font-size: 13px; gap: 6px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent) inset, 0 0 14px color-mix(in srgb, currentColor 18%, transparent);
+}
+.priority-tag.priority-high, .priority-tag.priority-urgent { color: #ff5a4f; border-color: rgba(255,90,79,.55); background: rgba(255,90,79,.10); }
+.priority-tag.priority-medium { color: #f2c23a; border-color: rgba(242,194,58,.5); background: rgba(242,194,58,.10); }
+.priority-tag.priority-normal, .priority-tag.priority-low { color: #4fd36b; border-color: rgba(79,211,107,.5); background: rgba(79,211,107,.10); }
+.late-pill { color: #ff6b63; border-color: rgba(255,107,99,.5); background: rgba(255,107,99,.08); }
+.payment-state.pending { color: #f2c23a; border-color: rgba(242,194,58,.5); background: rgba(242,194,58,.08); }
+.payment-state.paid { color: #4fd36b; border-color: rgba(79,211,107,.5); background: rgba(79,211,107,.08); }
+
+/* Tarefas dentro do card */
+.task-item { font-size: 13.5px; color: #c9c9cf; }
+.task-check { width: 16px; height: 16px; border-radius: 4px; }
+.card-financial-grid small { color: #7f7f88; }
+.card-financial-grid strong { font-size: 14px; }
+
+/* Pendurado: gira em torno do ponto onde você pegou */
+.drag-follow-layer { transform-origin: var(--grab-x, 50%) var(--grab-y, 0px); rotate: var(--tilt, 0deg); transition: rotate 90ms linear; }
+.drag-follow-card {
+  rotate: 0deg; transform: none;
+  border: 1px solid rgba(255,255,255,.75);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.15), 0 0 40px rgba(255,255,255,.08), 0 40px 80px rgba(0,0,0,.75);
+  background: linear-gradient(180deg, #26262a, #1b1b1f);
+}
+.column.drag-over { background: rgba(255,255,255,.03); border-radius: 14px; }
+
+/* Botões: discretos, sem contorno branco pesado */
+.primary-button, .modal-submit, .budget-add-button { background: #e8e8ea; color: #111; border-radius: 10px; min-height: 40px; font-weight: 500; }
+.secondary-button, .ghost-button, .back-button, .register-button, .collection-copy-button {
+  background: linear-gradient(180deg, #232327, #1b1b1f) !important; color: #e3e3e7 !important;
+  border: 1px solid rgba(255,255,255,.12) !important; border-radius: 10px; min-height: 38px !important; font-weight: 500;
+  box-shadow: 0 1px 0 rgba(255,255,255,.05) inset !important;
+}
+.secondary-button:hover, .ghost-button:hover, .register-button:hover, .collection-copy-button:hover { border-color: rgba(255,255,255,.24) !important; background: linear-gradient(180deg, #2a2a2f, #1f1f24) !important; }
+.register-button svg { color: #e3e3e7; }
+.complete-button {
+  background: linear-gradient(180deg, #232327, #1b1b1f) !important; border: 1px solid rgba(255,255,255,.14) !important; color: #e8e8ea !important;
+  min-height: 46px !important; border-radius: 12px !important; font-size: 15px !important; font-weight: 500 !important;
+}
+.delete-button { border-radius: 10px; min-height: 38px; }
+
+/* Painel: cabeçalho com ícone-tile, título grande, Fechar */
+.drawer { background: linear-gradient(180deg, #161618, #111113); border-left: 1px solid rgba(255,255,255,.08); }
+.modal-head { background: transparent; border-bottom: 1px solid rgba(255,255,255,.07); padding: 18px 24px; }
+.modal-head h2 { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+.modal-head p { color: #8f8f98; }
+.drawer-type { height: 26px; font-size: 12.5px; color: #c9c9cf; }
+.close-button { width: 34px; height: 34px; border-radius: 9px; background: #1d1d21; border: 1px solid rgba(255,255,255,.1); color: #c9c9cf; }
+.detail-metric { background: linear-gradient(180deg, #1c1c20, #161619); }
+.detail-metric span { color: #7f7f88; font-size: 12.5px; }
+.detail-metric strong { font-size: 19px; font-weight: 600; }
+.attrs h4 { color: #8f8f98; font-size: 14px; }
+.attr { min-height: 38px; font-size: 14.5px; }
+.attr-label { color: #9a9aa3; }
+.attr-label svg { color: #6b6b74; }
+.attr-select { height: 30px; font-size: 13.5px; background: #151518; border-color: rgba(255,255,255,.12); }
+.chip { height: 27px; }
+.section-title { font-size: 15px; color: #8f8f98; font-weight: 500; }
+.project-notes-box, .payment-box { background: linear-gradient(180deg, #1a1a1d, #151518); }
+.project-notes-box textarea, .add-checklist-form input, .payment-box input { background: #121214; border: 1px solid rgba(255,255,255,.1); color: #ececee; border-radius: 10px; }
+
+/* Arquivos: linha com ícone azul, nome e data */
+.file-icon { width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(180deg, #1c3f6e, #163157); border: 1px solid rgba(90,160,255,.4); color: #8cc1ff; font-size: 9.5px; }
+.project-files > div > div[style*="border-bottom"] { padding: 10px 12px !important; border: 1px solid rgba(255,255,255,.08) !important; border-radius: 12px; margin-bottom: 8px; background: linear-gradient(180deg, #1a1a1d, #151518); }
+
+/* Formulários e modais */
+.modal { background: linear-gradient(180deg, #1a1a1d, #141416); border: 1px solid rgba(255,255,255,.1); }
+.modal input, .modal select, .modal textarea, .page-simple input, .page-simple textarea, .cmd-acoes select, .cmd-campos select, .cmd-responder textarea {
+  background: #121214; border: 1px solid rgba(255,255,255,.11); color: #ececee; border-radius: 10px;
+}
+.modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: rgba(255,255,255,.3); }
