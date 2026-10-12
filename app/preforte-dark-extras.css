@@ -1,0 +1,346 @@
+/* Camada de acabamento do tema escuro: cards acetinados, tags, seletores, ícones de arquivo e Escritório. */
+
+/* ---------- Cards e painéis ---------- */
+.card,
+.panel,
+.metric-card,
+.detail-metric,
+.column,
+.drawer-control-card,
+.mini-list,
+.payment-box,
+.project-notes-box,
+.access-note {
+  border: 1px solid var(--card-border);
+  background: var(--satin);
+  box-shadow: var(--apple-shadow-card);
+}
+
+.card {
+  position: relative;
+  transition: transform 220ms var(--apple-ease), border-color 180ms ease, box-shadow 220ms var(--apple-ease);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 38%);
+}
+.card:hover {
+  border-color: var(--card-border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+.card.is-drag-source {
+  opacity: 0.35;
+  transform: scale(0.97);
+}
+.card.is-landing {
+  animation: card-land 420ms var(--apple-ease);
+}
+@keyframes card-land {
+  0% { transform: scale(1.04) rotate(-1.2deg); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6); }
+  60% { transform: scale(0.99) rotate(0.4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* Card que segue o mouse: inclina conforme a velocidade */
+.drag-follow-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform;
+}
+.drag-follow-card {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: rotate(var(--tilt, 0deg)) scale(1.03);
+  transition: transform 120ms ease-out;
+  cursor: grabbing;
+}
+.column.drag-over {
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 1px var(--apple-blue-soft), 0 0 40px rgba(139, 124, 255, 0.18);
+}
+body.is-kanban-dragging .card:not(.is-drag-source) { transition: transform 200ms var(--apple-ease); }
+
+/* ---------- Tags ---------- */
+.card-labels { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.service-tag,
+.priority-tag,
+.tag,
+.late-pill,
+.payment-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--apple-secondary-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.service-tag { max-width: 100%; }
+.service-tag > span, .service-tag { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.service-tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tag-color, var(--apple-blue));
+  box-shadow: 0 0 10px var(--tag-color, var(--apple-blue));
+}
+.priority-tag.priority-high,
+.priority-tag.priority-urgent {
+  color: #ff7b72;
+  border-color: rgba(255, 90, 79, 0.35);
+  background: rgba(255, 90, 79, 0.12);
+}
+.priority-tag.priority-medium {
+  color: #f5c35a;
+  border-color: rgba(245, 182, 59, 0.35);
+  background: rgba(245, 182, 59, 0.12);
+}
+.priority-tag::before { content: "▮▮"; font-size: 9px; letter-spacing: -2px; opacity: 0.9; }
+.late-pill { color: #ff7b72; border-color: rgba(255, 90, 79, 0.3); background: rgba(255, 90, 79, 0.1); }
+.payment-state.paid { color: #5fe08f; border-color: rgba(74, 208, 122, 0.3); background: rgba(74, 208, 122, 0.1); }
+.payment-state.pending { color: #f5c35a; border-color: rgba(245, 182, 59, 0.3); background: rgba(245, 182, 59, 0.1); }
+
+/* Ícone-azulejo do tipo de serviço (como no app de referência) */
+.card-kind {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--tag-color, var(--apple-blue)) 28%, #15151a);
+  border: 1px solid color-mix(in srgb, var(--tag-color, var(--apple-blue)) 45%, transparent);
+  color: #fff;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--tag-color, var(--apple-blue)) 25%, transparent);
+  flex: none;
+}
+.card-kind svg { width: 18px; height: 18px; }
+.card-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.card-head .card-labels { flex: 1; }
+
+/* ---------- Seletor de tipo de serviço (chips) ---------- */
+.chip-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--apple-secondary-label);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, transform 150ms var(--apple-ease);
+}
+.chip:hover { border-color: rgba(255, 255, 255, 0.25); color: var(--apple-label); transform: translateY(-1px); }
+.chip.active {
+  color: #fff;
+  border-color: color-mix(in srgb, var(--chip-color, var(--apple-blue)) 70%, transparent);
+  background: color-mix(in srgb, var(--chip-color, var(--apple-blue)) 26%, #15151a);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--chip-color, var(--apple-blue)) 30%, transparent), 0 8px 24px color-mix(in srgb, var(--chip-color, var(--apple-blue)) 22%, transparent);
+}
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--chip-color, var(--apple-blue)); }
+.chip-custom { display: flex; gap: 8px; margin-top: 8px; }
+.chip-custom input { flex: 1; }
+
+/* ---------- Seletor de pasta do OneDrive ---------- */
+.folder-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.folder-option {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--apple-secondary-label);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, transform 150ms var(--apple-ease);
+}
+.folder-option:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
+.folder-option.active {
+  color: var(--apple-label);
+  border-color: color-mix(in srgb, var(--chip-color, var(--apple-blue)) 70%, transparent);
+  background: color-mix(in srgb, var(--chip-color, var(--apple-blue)) 16%, #15151a);
+}
+.folder-option.suggested:not(.active) { border-style: dashed; border-color: color-mix(in srgb, var(--chip-color, var(--apple-blue)) 50%, transparent); }
+.folder-option strong { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: 0.01em; }
+.folder-option small { display: block; font-size: 11px; opacity: 0.75; line-height: 1.3; }
+.folder-option svg { width: 24px; height: 24px; color: var(--chip-color, var(--apple-blue)); }
+.folder-path {
+  margin-top: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--apple-secondary-label);
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+.folder-path b { color: var(--apple-label); font-weight: 600; }
+
+/* ---------- Arquivos do OneDrive ---------- */
+.files-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.files-crumbs { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 12.5px; color: var(--apple-secondary-label); }
+.files-crumbs button { background: none; border: 0; color: inherit; cursor: pointer; padding: 2px 4px; border-radius: 6px; font: inherit; }
+.files-crumbs button:hover { color: var(--apple-label); background: rgba(255, 255, 255, 0.06); }
+.files-crumbs b { color: var(--apple-label); font-weight: 600; }
+.files-list { display: grid; gap: 4px; }
+.file-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  color: var(--apple-label);
+  text-decoration: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.file-row:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.08); }
+.file-row .file-name { font-size: 13.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-row .file-meta { font-size: 11.5px; color: var(--apple-tertiary-label); white-space: nowrap; }
+.file-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--file-color, #8b7cff) 22%, #15151a);
+  border: 1px solid color-mix(in srgb, var(--file-color, #8b7cff) 40%, transparent);
+  color: var(--file-color, #8b7cff);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.file-icon svg { width: 20px; height: 20px; }
+.files-drop {
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  color: var(--apple-tertiary-label);
+  font-size: 12.5px;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.files-drop.over { border-color: var(--apple-blue); background: var(--apple-blue-soft); color: var(--apple-label); }
+
+/* ---------- Escritório (pixel art) ---------- */
+.office-page { display: grid; gap: 16px; }
+.office-stage {
+  position: relative;
+  border-radius: var(--apple-radius-panel);
+  border: 1px solid var(--card-border);
+  background: #0e0f12;
+  overflow: hidden;
+  box-shadow: var(--apple-shadow-card);
+}
+.office-stage canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; image-rendering: crisp-edges; }
+.office-topbar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  pointer-events: none;
+}
+.office-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(10, 10, 14, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  color: var(--apple-secondary-label);
+  font-size: 12px;
+  font-weight: 600;
+}
+.office-stat b { color: var(--apple-label); font-size: 15px; }
+.office-stat.alert b { color: #f5c35a; }
+.office-stat.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4ad07a; box-shadow: 0 0 10px #4ad07a; animation: pulse 1.6s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.office-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+@media (max-width: 980px) { .office-grid { grid-template-columns: 1fr; } }
+.office-side { display: grid; gap: 12px; }
+.agent-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 6px;
+  border-radius: 12px;
+}
+.agent-row:hover { background: rgba(255, 255, 255, 0.04); }
+.agent-row canvas { width: 40px; height: 40px; image-rendering: pixelated; border-radius: 10px; background: rgba(255, 255, 255, 0.04); }
+.agent-row strong { display: block; font-size: 13.5px; }
+.agent-row span { display: block; font-size: 12px; color: var(--apple-secondary-label); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.agent-dot { width: 9px; height: 9px; border-radius: 50%; background: #6d6d78; }
+.agent-dot.working { background: #4ad07a; box-shadow: 0 0 10px #4ad07a; }
+.agent-dot.needs { background: #f5b63b; box-shadow: 0 0 10px #f5b63b; }
+.agent-dot.error { background: #ff5a4f; box-shadow: 0 0 10px #ff5a4f; }
+.office-feed { display: grid; gap: 2px; max-height: 320px; overflow: auto; font-size: 12.5px; }
+.office-feed div { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding: 6px 6px; border-radius: 8px; color: var(--apple-secondary-label); }
+.office-feed div:hover { background: rgba(255, 255, 255, 0.04); }
+.office-feed time { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; color: var(--apple-tertiary-label); }
+.office-feed b { color: var(--apple-label); font-weight: 600; }
+.office-empty { padding: 18px; text-align: center; color: var(--apple-tertiary-label); font-size: 13px; }
+
+/* ---------- Ajustes gerais ---------- */
+.primary-button {
+  background: linear-gradient(180deg, #9a8dff, #7b6cff);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(123, 108, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+.primary-button:hover { background: linear-gradient(180deg, #a79cff, #8b7cff); }
+.secondary-button, .ghost-button {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--apple-label);
+}
+.secondary-button:hover, .ghost-button:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(255, 255, 255, 0.2); }
+input, select, textarea {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--apple-label);
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--apple-blue); box-shadow: 0 0 0 3px var(--apple-blue-soft); }
+input::placeholder, textarea::placeholder { color: var(--apple-tertiary-label); }
+select option { background: #1c1c20; color: var(--apple-label); }
+.progress-track { background: rgba(255, 255, 255, 0.08); }
+.progress-fill { background: linear-gradient(90deg, #7b6cff, #4ad07a); }
+.task-check { accent-color: #8b7cff; }
+.sidebar, .topbar { backdrop-filter: blur(14px); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.modal.compact-modal { max-height: min(92vh, 980px); overflow: auto; }
+.topbar { background: linear-gradient(180deg, rgba(20, 20, 24, 0.9), rgba(14, 14, 17, 0.85)); border-bottom: 1px solid var(--card-border); }

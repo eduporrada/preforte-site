@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import "./preforte-apple-interface.css";
+import "./preforte-dark.css";
+import "./preforte-dark-extras.css";
+import "./preforte-premium.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -21,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     manifest: "/manifest.webmanifest",
-    themeColor: "#F5F5F7",
+    themeColor: "#0b0b0d",
     appleWebApp: {
       capable: true,
       title: "Preforte",

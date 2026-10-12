@@ -43,11 +43,14 @@ import {
   Wrench,
   X,
   type LucideIcon,
+  Bot,
 } from "lucide-react";
 import { OverviewDashboard } from "./components/OverviewDashboard";
 import dynamic from "next/dynamic";
 import { ProjectFiles } from "./components/ProjectFiles";
-import { CATEGORIAS } from "./categorias";
+import { Escritorio } from "./components/Escritorio";
+import { FolderPicker, ICONE_PASTA, ServiceTypePicker, corDoTipo } from "./components/kit";
+import { categoriaDoTipo } from "./categorias";
 const ReceivablesPage = dynamic(() => import("./components/ReceivablesPage").then((module) => module.ReceivablesPage), { loading: () => <div className="loading" role="status">Carregando contas a receber…</div> });
 const TimeReportPage = dynamic(() => import("./components/TimeReportPage").then((module) => module.TimeReportPage), { loading: () => <div className="loading" role="status">Carregando relatório de tempo…</div> });
 import { officeDateISO } from "./date-utils";
@@ -56,6 +59,7 @@ type Status = string;
 type Priority = "urgent" | "high" | "medium" | "normal" | "low";
 type Page =
   | "overview"
+  | "agents"
   | "projects"
   | "construction"
   | "finance"
@@ -192,6 +196,7 @@ const columnColorOptions = [
 
 const pageMeta: Record<Page, { eyebrow: string; title: string }> = {
   overview: { eyebrow: "Painel principal", title: "Início" },
+  agents: { eyebrow: "Equipe de agentes", title: "Escritório" },
   projects: { eyebrow: "Quadro principal", title: "Projetos do escritório" },
   finance: { eyebrow: "Visão financeira", title: "Faturamento" },
   receivables: { eyebrow: "Fluxo de caixa", title: "Contas a receber" },
@@ -203,6 +208,7 @@ const pageMeta: Record<Page, { eyebrow: string; title: string }> = {
 
 const nav: { id: Page; label: string; icon: LucideIcon; group?: string }[] = [
   { id: "overview", label: "Início", icon: PanelsTopLeft, group: "Workspace" },
+  { id: "agents", label: "Escritório", icon: Bot },
   { id: "projects", label: "Projetos e Kanban", icon: Layers3 },
   { id: "construction", label: "Obras", icon: BrickWall },
   { id: "finance", label: "Financeiro", icon: ChartSpline, group: "Gestão" },
@@ -625,6 +631,8 @@ export function OfficeApp({ initialUser }: { initialUser?: WorkspaceUser }) {
           <div className="loading">Carregando seu quadro…</div>
         ) : (
           <>
+            {page === "overview" && <Escritorio compacto />}
+            {page === "agents" && <Escritorio />}
             {page === "overview" && (
               <OverviewDashboard
                 projects={projects}
@@ -785,6 +793,8 @@ export function OfficeApp({ initialUser }: { initialUser?: WorkspaceUser }) {
             const ok = await patchProject({ action: "update-notes", projectId: selected.id, notes });
             if (ok) notify("Observações salvas.");
           }}
+          columns={columns}
+          onMove={(status) => moveProject(selected.id, status)}
         />
       )}
 
@@ -1241,6 +1251,16 @@ function ProjectCard({
   const animationFrame = useRef<number | null>(null);
   const [pointerDragging, setPointerDragging] = useState(false);
   const [previewWidth, setPreviewWidth] = useState(260);
+  const [landing, setLanding] = useState(false);
+  const prevStatus = useRef(project.status);
+  useEffect(() => {
+    if (prevStatus.current !== project.status) {
+      prevStatus.current = project.status;
+      setLanding(true);
+      const t = window.setTimeout(() => setLanding(false), 450);
+      return () => window.clearTimeout(t);
+    }
+  }, [project.status]);
 
   useEffect(() => {
     if (!pointerDragging || !overlayRef.current || !pointerStart.current) return;
@@ -1257,6 +1277,8 @@ function ProjectCard({
     };
   }, []);
 
+  const lastPointer = useRef({ x: 0, t: 0 });
+  const tilt = useRef(0);
   function updateOverlay(x: number, y: number) {
     latestPointer.current = { x, y };
     if (animationFrame.current !== null) return;
@@ -1264,7 +1286,14 @@ function ProjectCard({
       animationFrame.current = null;
       const start = pointerStart.current;
       if (!start || !overlayRef.current) return;
+      const now = performance.now();
+      const dt = Math.max(16, now - lastPointer.current.t);
+      const vx = (latestPointer.current.x - lastPointer.current.x) / dt; // px/ms
+      lastPointer.current = { x: latestPointer.current.x, t: now };
+      const alvo = Math.max(-8, Math.min(8, vx * 6));
+      tilt.current += (alvo - tilt.current) * 0.25;
       overlayRef.current.style.transform = `translate3d(${latestPointer.current.x - start.offsetX}px, ${latestPointer.current.y - start.offsetY}px, 0)`;
+      overlayRef.current.style.setProperty("--tilt", `${tilt.current.toFixed(2)}deg`);
     });
   }
 
@@ -1285,7 +1314,7 @@ function ProjectCard({
   return (
     <article
       ref={cardRef}
-      className={`card card-priority-${project.priority} ${dragging ? "is-drag-source" : ""}`}
+      className={`card card-priority-${project.priority} ${dragging ? "is-drag-source" : ""} ${landing ? "is-landing" : ""}`}
       style={{ "--project-accent": project.color || projectAccent(project.id) } as React.CSSProperties}
       onPointerDown={(event) => {
         if ((event.target as HTMLElement).closest("button,input,label,a,select,textarea")) return;
@@ -1357,13 +1386,15 @@ function ProjectCard({
       >
         •••
       </button>
-      <div className="card-labels">
-        {(project.priority === "urgent" || project.priority === "high") && (
-          <span className={`priority-tag priority-${project.priority}`}>
-            {project.priority === "urgent" || project.priority === "high" ? "Alta prioridade" : "Média prioridade"}
-          </span>
-        )}
-        <span className="service-tag">{project.type}</span>
+      <div className="card-head">
+        <span className="card-kind" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{ICONE_PASTA[categoriaDoTipo(project.type).pasta]}</span>
+        <div className="card-labels">
+          {(project.priority === "urgent" || project.priority === "high") && (
+            <span className={`priority-tag priority-${project.priority}`}>Alta</span>
+          )}
+          {project.priority === "medium" && <span className="priority-tag priority-medium">Média</span>}
+          <span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span>
+        </div>
       </div>
       <h3 className="card-title">{project.name}</h3>
       {project.client && <p className="card-client">{project.client}</p>}
@@ -1422,13 +1453,13 @@ function ProjectCard({
             style={{ "--project-accent": project.color || projectAccent(project.id) } as React.CSSProperties}
           >
             <span className="card-menu-button drag-follow-menu" aria-hidden="true">•••</span>
-            <div className="card-labels">
-              {(project.priority === "urgent" || project.priority === "high") && (
-                <span className={`priority-tag priority-${project.priority}`}>
-                  {project.priority === "urgent" || project.priority === "high" ? "Alta prioridade" : "Média prioridade"}
-                </span>
-              )}
-              <span className="service-tag">{project.type}</span>
+            <div className="card-head">
+              <span className="card-kind" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{ICONE_PASTA[categoriaDoTipo(project.type).pasta]}</span>
+              <div className="card-labels">
+                {(project.priority === "urgent" || project.priority === "high") && <span className={`priority-tag priority-${project.priority}`}>Alta</span>}
+                {project.priority === "medium" && <span className="priority-tag priority-medium">Média</span>}
+                <span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span>
+              </div>
             </div>
             <h3 className="card-title">{project.name}</h3>
             {project.client && <p className="card-client">{project.client}</p>}
@@ -3274,6 +3305,7 @@ function SettingsPage({
           <div className="mini-row"><div><strong>Preforte Engenharia e Construtora</strong><span>Gestão do escritório</span></div><span className="tag good">Ativo</span></div>
           <div className="mini-row"><div><strong>Dados na nuvem</strong><span>Projetos sincronizados</span></div><span className="tag good">Conectado</span></div>
           <div className="mini-row"><div><strong>OneDrive</strong><span>Pastas dos projetos em EDUARDO</span></div><a className="tag good" href="/onedrive">Configurar</a></div>
+          <div className="mini-row"><div><strong>Paperclip</strong><span>Escritório dos agentes (só leitura)</span></div><a className="tag good" href="/paperclip">Configurar</a></div>
         </div>
       </section>
       <section className="panel">
@@ -3371,19 +3403,23 @@ function NewProjectModal({
   onCreated: () => void;
 }) {
   const [saving, setSaving] = useState(false);
+  const [tipo, setTipo] = useState("");
+  const [pasta, setPasta] = useState("");
+  const [cliente, setCliente] = useState("");
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!tipo.trim()) return;
     setSaving(true);
     const form = new FormData(event.currentTarget);
     const payload = {
       name: String(form.get("name") || ""),
-      client: String(form.get("client") || ""),
-      type: String(form.get("type") || ""),
+      client: cliente,
+      type: tipo,
       address: String(form.get("address") || ""),
       startDate: String(form.get("startDate") || ""),
       dueDate: String(form.get("dueDate") || ""),
       price: Math.round(Number(form.get("price") || 0) * 100),
-      pasta: String(form.get("pasta") || ""),
+      pasta,
     };
     try {
       const response = await fetch("/api/projects", {
@@ -3408,28 +3444,23 @@ function NewProjectModal({
           <div className="form-grid">
             <div className="field full"><label htmlFor="project-name">Nome do projeto</label><input id="project-name" name="name" required placeholder="Ex.: Projeto de incêndio — Galpão Sul" autoFocus /></div>
             <div className="field full">
-              <label htmlFor="project-type">Tipo de serviço</label>
-              <input id="project-type" name="type" list="service-types" required placeholder="Escreva ou escolha um tipo já usado" autoComplete="off" />
-              <datalist id="service-types">{serviceTypes.map((type) => <option key={type} value={type} />)}</datalist>
-              <span className="field-help">Novos tipos serão sugeridos automaticamente nos próximos projetos.</span>
+              <label>Tipo de serviço</label>
+              <ServiceTypePicker value={tipo} onChange={setTipo} existentes={serviceTypes} />
+              {!tipo && <span className="field-help">Escolha uma tag ou escreva outro tipo.</span>}
             </div>
-            <div className="field full">
-              <label htmlFor="project-folder">Pasta no OneDrive</label>
-              <select id="project-folder" name="pasta" defaultValue="">
-                <option value="">Automático pelo tipo de serviço</option>
-                {CATEGORIAS.map((c) => <option key={c.pasta} value={c.pasta}>{c.pasta} — {c.rotulo}</option>)}
-              </select>
-              <span className="field-help">A pasta com o nome do cliente é criada dentro desta pasta, em OneDrive › EDUARDO.</span>
-            </div>
-            <div className="field"><label htmlFor="project-client">Cliente <small>opcional</small></label><input id="project-client" name="client" placeholder="Nome do cliente" /></div>
+            <div className="field"><label htmlFor="project-client">Cliente</label><input id="project-client" name="client" value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="Nome do cliente (nome da pasta)" /></div>
             <div className="field"><label htmlFor="price">Valor contratado</label><input id="price" name="price" type="number" min="0" step="0.01" required placeholder="0,00" /></div>
+            <div className="field full">
+              <label>Pasta no OneDrive</label>
+              <FolderPicker value={pasta} tipo={tipo} cliente={cliente} onChange={setPasta} />
+            </div>
             <div className="field full"><label htmlFor="project-address">Endereço <small>opcional</small></label><input id="project-address" name="address" placeholder="Rua, bairro e cidade" /></div>
             <div className="field"><label htmlFor="start-date">Data de início <small>opcional</small></label><input id="start-date" name="startDate" type="date" /></div>
             <div className="field"><label htmlFor="due-date">Previsão de término <small>opcional</small></label><input id="due-date" name="dueDate" type="date" /></div>
           </div>
           <div className="form-actions">
             <button className="ghost-button" type="button" onClick={onClose}>Cancelar</button>
-            <button className="primary-button" type="submit" disabled={saving}>{saving ? "Criando…" : "Criar projeto"}</button>
+            <button className="primary-button" type="submit" disabled={saving || !tipo.trim()}>{saving ? "Criando…" : "Criar projeto"}</button>
           </div>
         </form>
       </div>
@@ -3448,6 +3479,8 @@ function SimplifiedProjectDrawer({
   onPayment,
   onDeletePayment,
   onUpdateNotes,
+  columns,
+  onMove,
 }: {
   project: Project;
   onClose: () => void;
@@ -3459,6 +3492,8 @@ function SimplifiedProjectDrawer({
   onPayment: (amount: number, paidAt: string) => void;
   onDeletePayment: (paymentId: string) => void;
   onUpdateNotes: (notes: string) => void;
+  columns: BoardColumn[];
+  onMove: (status: Status) => void;
 }) {
   const [payment, setPayment] = useState("");
   const [paymentDate, setPaymentDate] = useState(officeDateISO());
@@ -3546,8 +3581,21 @@ function SimplifiedProjectDrawer({
             </div>
           </div>
           <div className="drawer-side">
-            <div className="drawer-control-card">
-              <div className="field"><label>Prioridade</label><div className="priority-picker priority-picker-two">{([["normal", "Normal", "#1A1A1A"], ["high", "Alta", "#E5322D"]] as const).map(([value, label, color]) => <button key={value} type="button" className={(value === "normal" ? !(project.priority === "urgent" || project.priority === "high") : project.priority === "urgent" || project.priority === "high") ? "active" : ""} style={{ "--priority-color": color } as React.CSSProperties} onClick={() => onUpdatePriority(value)}><span />{label}</button>)}</div></div>
+            {project.status !== "done" ? (
+              <button className="secondary-button wide-button complete-button" type="button" onClick={() => onMove("done")}>✓ Marcar como concluído</button>
+            ) : (
+              <button className="secondary-button wide-button" type="button" onClick={() => onMove(columns[0]?.id ?? "backlog")}>↩ Reabrir projeto</button>
+            )}
+            <div className="attrs">
+              <h4>Atributos</h4>
+              <div className="attr"><span className="attr-label">Etapa</span><select className="attr-select" value={project.status} onChange={(e) => onMove(e.target.value as Status)}>{columns.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</select></div>
+              <div className="attr"><span className="attr-label">Prioridade</span><div className="attr-chips">{([["normal", "Normal"], ["high", "Alta"]] as const).map(([value, label]) => <button key={value} type="button" className={`chip ${value === "high" ? "chip-red" : ""} ${project.priority === value || (value === "high" && project.priority === "urgent") ? "active" : ""}`} onClick={() => onUpdatePriority(value)}>{label}</button>)}</div></div>
+              <div className="attr"><span className="attr-label">Tipo</span><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
+              <div className="attr"><span className="attr-label">Cliente</span><span className="attr-value">{project.client || "—"}</span></div>
+              <div className="attr"><span className="attr-label">Valor</span><span className="attr-value">{money(project.price)}</span></div>
+              <div className="attr"><span className="attr-label">Prazo</span><span className="attr-value">{project.dueDate ? shortDate(project.dueDate) : "—"}</span></div>
+              <div className="attr"><span className="attr-label">Endereço</span><span className="attr-value">{project.address || "—"}</span></div>
+              <div className="attr"><span className="attr-label">Pasta</span><span className="attr-value attr-folder">{ICONE_PASTA[categoriaDoTipo(project.type).pasta]} {categoriaDoTipo(project.type).pasta}</span></div>
             </div>
             <button className="delete-button" type="button" onClick={onDelete}>Excluir projeto</button>
           </div>
