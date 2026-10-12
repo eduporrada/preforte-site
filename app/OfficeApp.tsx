@@ -44,7 +44,6 @@ import {
   X,
   type LucideIcon,
   Bot,
-  ClipboardList,
 } from "lucide-react";
 import { OverviewDashboard } from "./components/OverviewDashboard";
 import dynamic from "next/dynamic";
