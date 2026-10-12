@@ -646,3 +646,115 @@ body {
 }
 .cmd-acoes select { width: auto; min-width: 180px; }
 .cmd-acoes button { min-height: 36px; }
+
+/* =====================================================================
+   Referência: quadro escuro com cards de borda clara, pílulas com sinal,
+   painel de atributos com ícones. Tipografia Inter mais aberta.
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+:root {
+  --apple-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --apple-bg: #121214;
+  --apple-label: #f1f1f3;
+  --apple-secondary-label: #b4b4bb;
+  --apple-tertiary-label: #7d7d86;
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-border-hover: rgba(255, 255, 255, 0.28);
+  --satin: #1b1b1e;
+  --satin-strong: #1d1d21;
+}
+html { background: #121214; }
+body {
+  font-size: 15px;
+  background:
+    radial-gradient(1200px 700px at 15% -10%, rgba(255,255,255,.05), transparent 55%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 2px, transparent 2px 9px),
+    #121214;
+}
+.sidebar { background: rgba(18, 18, 20, 0.92); }
+.topbar { background: rgba(18, 18, 20, 0.85); }
+.page-title { font-weight: 600; letter-spacing: -0.03em; }
+
+/* Colunas e cards */
+.column { background: transparent; border: 0; padding: 0 2px; }
+.column-head { border: 0; padding: 6px 4px 10px; }
+.column-title { font-size: 16px; font-weight: 500; color: var(--apple-label); }
+.column-title::before { width: 9px; height: 9px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--column-accent, #9c9ea8) 22%, transparent); }
+.count { background: transparent; color: var(--apple-tertiary-label); font-weight: 400; font-size: 15px; padding: 0 2px; }
+.card {
+  padding: 16px 16px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #1f1f23, #19191c);
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.35);
+}
+.card:hover { border-color: var(--card-border-hover); }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.card-kind {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px;
+  background: color-mix(in srgb, var(--tag-color, #8d8f99) 32%, #15151a);
+  border: 1px solid color-mix(in srgb, var(--tag-color, #8d8f99) 55%, transparent);
+  color: #fff;
+}
+.card-kind svg { width: 18px; height: 18px; }
+.card-title { font-size: 17px; font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 4px; }
+.card-client { font-size: 14px; color: var(--apple-secondary-label); margin: 0 0 12px; }
+.card-labels { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+/* Pílulas: ponto/sinal + texto, borda da cor, fundo escuro */
+.service-tag, .priority-tag, .tag, .chip, .status-badge, .late-pill, .cmd-estado, .escritorio-contadores > span {
+  height: 30px; padding: 0 12px 0 10px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  background: #141417; border: 1px solid rgba(255,255,255,.12); color: var(--apple-label);
+}
+.service-tag::before { width: 8px; height: 8px; }
+.service-tag { border-color: color-mix(in srgb, var(--tag-color, #8d8f99) 45%, transparent); }
+.priority-tag { gap: 7px; }
+.priority-tag .sinal { width: 13px; height: 11px; fill: currentColor; }
+.priority-tag.priority-high, .priority-tag.priority-urgent { color: #ff6b63; border-color: rgba(255,107,99,.55); background: rgba(255,107,99,.08); }
+.priority-tag.priority-medium { color: #e6b84a; border-color: rgba(230,184,74,.55); background: rgba(230,184,74,.08); }
+.priority-tag.priority-normal, .priority-tag.priority-low { color: #5ad37a; border-color: rgba(90,211,122,.55); background: rgba(90,211,122,.08); }
+.status-badge.danger { color: #ff6b63 !important; border-color: rgba(255,107,99,.55) !important; background: rgba(255,107,99,.08) !important; }
+.status-badge.info { color: #5ad37a !important; border-color: rgba(90,211,122,.55) !important; background: rgba(90,211,122,.08) !important; }
+.late-pill { color: #ff6b63; border-color: rgba(255,107,99,.55); }
+
+/* Painel do projeto */
+.drawer { width: min(820px, 96vw); background: #141417; }
+.modal-head { background: #141417; }
+.drawer-type { height: 28px; padding: 0 10px; border-radius: 999px; background: #1d1d21; border: 1px solid rgba(255,255,255,.12); font-size: 13px; }
+.complete-button {
+  min-height: 48px !important; border-radius: 12px !important; font-size: 16px !important;
+  background: #1d1d21 !important; color: var(--apple-label) !important; border: 1px solid rgba(255,255,255,.14) !important;
+}
+.attrs { padding: 14px 16px 16px; background: transparent; border: 0; }
+.attrs h4 { font-size: 15px; font-weight: 500; color: var(--apple-secondary-label); text-transform: none; margin-bottom: 12px; }
+.attr { grid-template-columns: 112px 1fr; min-height: 40px; font-size: 15px; }
+.attr-label { display: inline-flex; align-items: center; gap: 10px; color: var(--apple-secondary-label); }
+.attr-label svg { color: var(--apple-tertiary-label); }
+.attr-value { font-size: 15px; }
+.attr-select { height: 32px; border-radius: 999px; background: #141417; }
+.chip { height: 30px; }
+.detail-metric strong { font-size: 20px; }
+.section-title { font-size: 16px; font-weight: 500; color: var(--apple-secondary-label); }
+
+/* Lista de arquivos no painel */
+.project-files .file-row, .project-files > div > div[style] { border-radius: 12px; }
+.file-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(90,160,255,.14); border: 1px solid rgba(90,160,255,.35); color: #7cb6ff; }
+
+/* Comando e demais listas herdam as pílulas */
+.cmd-estado { height: 28px; }
+.cmd-abas button { font-size: 15px; }
+.priority-tag::before { content: none !important; }
+.card-head { padding-right: 34px; }
+.card-menu-button { top: 14px; right: 12px; }
+.drawer { width: min(860px, 96vw); overflow-x: hidden; }
+.drawer-grid { grid-template-columns: minmax(0, 1fr) 250px; padding: 22px 24px 32px; gap: 18px; }
+.drawer-side { min-width: 0; }
+.attr { grid-template-columns: 100px minmax(0, 1fr); }
+.attr-select { width: 100%; max-width: 100%; }
+.attr .service-tag { max-width: 100%; white-space: normal; height: auto; min-height: 30px; padding: 4px 12px 4px 10px; line-height: 1.2; }
+.attr-chips { flex-wrap: wrap; }
+.complete-button { width: 100%; }
+.drawer-grid .delete-button { width: 100%; }
+@media (max-width: 860px) { .drawer-grid { grid-template-columns: 1fr; } }
+.card-head { margin-bottom: 12px; }
+.priority-tag { height: 28px; font-size: 13px; }

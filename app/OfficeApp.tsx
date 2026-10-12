@@ -263,6 +263,10 @@ const isOverdue = (project: Project) =>
       new Date(`${project.dueDate}T23:59:59`).getTime() < Date.now(),
   );
 
+function Sinal() {
+  return <svg className="sinal" viewBox="0 0 12 10" aria-hidden="true"><rect x="0" y="6" width="2.5" height="4" rx=".6" /><rect x="4.5" y="3.5" width="2.5" height="6.5" rx=".6" /><rect x="9" y="0" width="2.5" height="10" rx=".6" /></svg>;
+}
+
 function projectProgress(project: Project) {
   if (!project.tasks.length) return project.status === "done" ? 100 : 0;
   return Math.round(
@@ -1393,16 +1397,11 @@ function ProjectCard({
       </button>
       <div className="card-head">
         <span className="card-kind" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{ICONE_PASTA[categoriaDoTipo(project.type).pasta]}</span>
-        <div className="card-labels">
-          {(project.priority === "urgent" || project.priority === "high") && (
-            <span className={`priority-tag priority-${project.priority}`}>Alta</span>
-          )}
-          {project.priority === "medium" && <span className="priority-tag priority-medium">Média</span>}
-          <span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span>
-        </div>
+        <span className={`priority-tag priority-${project.priority === "urgent" ? "high" : project.priority}`}><Sinal />{project.priority === "urgent" || project.priority === "high" ? "Alta" : project.priority === "medium" ? "Média" : "Normal"}</span>
       </div>
       <h3 className="card-title">{project.name}</h3>
       {project.client && <p className="card-client">{project.client}</p>}
+      <div className="card-labels"><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
       {project.tasks.length > 0 && (
         <ul className="task-list">
           {project.tasks.slice(0, 10).map((task) => (
@@ -1460,14 +1459,11 @@ function ProjectCard({
             <span className="card-menu-button drag-follow-menu" aria-hidden="true">•••</span>
             <div className="card-head">
               <span className="card-kind" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{ICONE_PASTA[categoriaDoTipo(project.type).pasta]}</span>
-              <div className="card-labels">
-                {(project.priority === "urgent" || project.priority === "high") && <span className={`priority-tag priority-${project.priority}`}>Alta</span>}
-                {project.priority === "medium" && <span className="priority-tag priority-medium">Média</span>}
-                <span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span>
-              </div>
+              <span className={`priority-tag priority-${project.priority === "urgent" ? "high" : project.priority}`}><Sinal />{project.priority === "urgent" || project.priority === "high" ? "Alta" : project.priority === "medium" ? "Média" : "Normal"}</span>
             </div>
             <h3 className="card-title">{project.name}</h3>
             {project.client && <p className="card-client">{project.client}</p>}
+            <div className="card-labels"><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
             {project.tasks.length > 0 && (
               <ul className="task-list">
                 {project.tasks.slice(0, 10).map((task) => (
@@ -3550,7 +3546,7 @@ function SimplifiedProjectDrawer({
               <textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Digite informações, lembretes ou observações sobre este projeto..." rows={5} />
               <button className="secondary-button" type="button" onClick={() => onUpdateNotes(notes)}>Salvar observações</button>
             </div>
-            <h3 className="section-title">Arquivos no OneDrive</h3>
+            <h3 className="section-title">Arquivos</h3>
             <ProjectFiles projectId={project.id} />
             <h3 className="section-title">Pagamentos</h3>
             <div className="payment-box project-payment-box">
@@ -3590,14 +3586,14 @@ function SimplifiedProjectDrawer({
             )}
             <div className="attrs">
               <h4>Atributos</h4>
-              <div className="attr"><span className="attr-label">Etapa</span><select className="attr-select" value={project.status} onChange={(e) => onMove(e.target.value as Status)}>{columns.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</select></div>
-              <div className="attr"><span className="attr-label">Prioridade</span><div className="attr-chips">{([["normal", "Normal"], ["high", "Alta"]] as const).map(([value, label]) => <button key={value} type="button" className={`chip ${value === "high" ? "chip-red" : ""} ${project.priority === value || (value === "high" && project.priority === "urgent") ? "active" : ""}`} onClick={() => onUpdatePriority(value)}>{label}</button>)}</div></div>
-              <div className="attr"><span className="attr-label">Tipo</span><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
-              <div className="attr"><span className="attr-label">Cliente</span><span className="attr-value">{project.client || "—"}</span></div>
-              <div className="attr"><span className="attr-label">Valor</span><span className="attr-value">{money(project.price)}</span></div>
-              <div className="attr"><span className="attr-label">Prazo</span><span className="attr-value">{project.dueDate ? shortDate(project.dueDate) : "—"}</span></div>
-              <div className="attr"><span className="attr-label">Endereço</span><span className="attr-value">{project.address || "—"}</span></div>
-              <div className="attr"><span className="attr-label">Pasta</span><span className="attr-value attr-folder">{ICONE_PASTA[categoriaDoTipo(project.type).pasta]} {categoriaDoTipo(project.type).pasta}</span></div>
+              <div className="attr"><span className="attr-label"><Layers3 size={15} />Etapa</span><select className="attr-select" value={project.status} onChange={(e) => onMove(e.target.value as Status)}>{columns.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</select></div>
+              <div className="attr"><span className="attr-label"><Bell size={15} />Prioridade</span><div className="attr-chips">{([["normal", "Normal"], ["high", "Alta"]] as const).map(([value, label]) => <button key={value} type="button" className={`chip ${value === "high" ? "chip-red" : ""} ${project.priority === value || (value === "high" && project.priority === "urgent") ? "active" : ""}`} onClick={() => onUpdatePriority(value)}>{label}</button>)}</div></div>
+              <div className="attr"><span className="attr-label"><Shapes size={15} />Tipo</span><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
+              <div className="attr"><span className="attr-label"><UsersRound size={15} />Cliente</span><span className="attr-value">{project.client || "—"}</span></div>
+              <div className="attr"><span className="attr-label"><CircleDollarSign size={15} />Valor</span><span className="attr-value">{money(project.price)}</span></div>
+              <div className="attr"><span className="attr-label"><Timer size={15} />Prazo</span><span className="attr-value">{project.dueDate ? shortDate(project.dueDate) : "—"}</span></div>
+              <div className="attr"><span className="attr-label"><Package2 size={15} />Endereço</span><span className="attr-value">{project.address || "—"}</span></div>
+              <div className="attr"><span className="attr-label"><ArchiveRestore size={15} />Pasta</span><span className="attr-value attr-folder">{ICONE_PASTA[categoriaDoTipo(project.type).pasta]} {categoriaDoTipo(project.type).pasta}</span></div>
             </div>
             <button className="delete-button" type="button" onClick={onDelete}>Excluir projeto</button>
           </div>
