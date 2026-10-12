@@ -412,3 +412,5 @@ body {
 .bottom-nav { background: rgba(12, 12, 15, 0.96) !important; border-top: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(18px); }
 .bottom-nav-glass { background: rgba(12, 12, 15, 0.9) !important; }
 .attr .service-tag { display: inline-flex; overflow: visible; white-space: normal; line-height: 1.2; height: auto; min-height: 24px; padding: 3px 9px; }
+.escritorio-mapa { background: #2f5f33; }
+.escritorio-carregando { position: absolute; inset: 0; display: grid; place-items: center; color: #dfe; font-size: 14px; }
