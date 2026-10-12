@@ -10,7 +10,7 @@ export async function proxy(request: NextRequest) {
 
   // Agentes do Paperclip: só as APIs, nunca restaurar backup nem trocar a conexão do OneDrive.
   if (pathname.startsWith("/api/") && isAgentRequest(request.headers.get("authorization"))) {
-    if (pathname.startsWith("/api/restaurar") || pathname === "/api/onedrive") {
+    if (pathname.startsWith("/api/restaurar") || pathname === "/api/onedrive" || pathname.startsWith("/api/pc/") || pathname === "/api/paperclip") {
       return NextResponse.json({ error: "Não permitido para agentes" }, { status: 403 });
     }
     return NextResponse.next();

@@ -44,11 +44,13 @@ import {
   X,
   type LucideIcon,
   Bot,
+  ClipboardList,
 } from "lucide-react";
 import { OverviewDashboard } from "./components/OverviewDashboard";
 import dynamic from "next/dynamic";
 import { ProjectFiles } from "./components/ProjectFiles";
 import { Escritorio } from "./components/Escritorio";
+import { Comando } from "./components/Comando";
 import { FolderPicker, ICONE_PASTA, ServiceTypePicker, corDoTipo } from "./components/kit";
 import { categoriaDoTipo } from "./categorias";
 const ReceivablesPage = dynamic(() => import("./components/ReceivablesPage").then((module) => module.ReceivablesPage), { loading: () => <div className="loading" role="status">Carregando contas a receber…</div> });
@@ -60,6 +62,7 @@ type Priority = "urgent" | "high" | "medium" | "normal" | "low";
 type Page =
   | "overview"
   | "agents"
+  | "comando"
   | "projects"
   | "construction"
   | "finance"
@@ -197,6 +200,7 @@ const columnColorOptions = [
 const pageMeta: Record<Page, { eyebrow: string; title: string }> = {
   overview: { eyebrow: "Painel principal", title: "Início" },
   agents: { eyebrow: "Equipe de agentes", title: "Escritório" },
+  comando: { eyebrow: "Paperclip", title: "Comando dos agentes" },
   projects: { eyebrow: "Quadro principal", title: "Projetos do escritório" },
   finance: { eyebrow: "Visão financeira", title: "Faturamento" },
   receivables: { eyebrow: "Fluxo de caixa", title: "Contas a receber" },
@@ -209,6 +213,7 @@ const pageMeta: Record<Page, { eyebrow: string; title: string }> = {
 const nav: { id: Page; label: string; icon: LucideIcon; group?: string }[] = [
   { id: "overview", label: "Início", icon: PanelsTopLeft, group: "Workspace" },
   { id: "agents", label: "Escritório", icon: Bot },
+  { id: "comando", label: "Comando", icon: ClipboardList },
   { id: "projects", label: "Projetos e Kanban", icon: Layers3 },
   { id: "construction", label: "Obras", icon: BrickWall },
   { id: "finance", label: "Financeiro", icon: ChartSpline, group: "Gestão" },
@@ -633,6 +638,7 @@ export function OfficeApp({ initialUser }: { initialUser?: WorkspaceUser }) {
           <>
             {page === "overview" && <Escritorio compacto />}
             {page === "agents" && <Escritorio />}
+            {page === "comando" && <Comando />}
             {page === "overview" && (
               <OverviewDashboard
                 projects={projects}
@@ -1519,30 +1525,27 @@ function ArchivePage({
 }) {
   return (
     <div className="content-wrap archive-page">
-      <div className="archive-intro">
+      <div className="archive-head">
         <div>
-          <span className="section-kicker">Arquivo automático</span>
-          <h2>Projetos concluídos há mais de 30 dias.</h2>
-          <p>O quadro principal permanece limpo sem apagar o histórico comercial e financeiro.</p>
+          <h2>Arquivo</h2>
+          <p>Projetos concluídos há mais de 30 dias saem do quadro e ficam aqui, com o histórico financeiro.</p>
         </div>
-        <span className="archive-count">{projects.length} arquivados</span>
+        <span className="archive-total">{projects.length} projetos · {money(projects.reduce((s, p) => s + p.price, 0))}</span>
       </div>
-      <div className="archive-grid">
+      <div className="archive-list">
+        {projects.length > 0 && (
+          <div className="archive-row archive-row-head"><span>Projeto</span><span>Cliente</span><span>Serviço</span><span>Concluído</span><span className="num">Valor</span></div>
+        )}
         {projects
           .slice()
           .sort((a, b) => (b.completedAt || b.dueDate).localeCompare(a.completedAt || a.dueDate))
           .map((project) => (
-            <button className="archive-card" type="button" key={project.id} onClick={() => onOpen(project.id)}>
-              <div className="archive-card-top">
-                <span>{project.type}</span>
-                <span className={`priority-dot priority-${project.priority}`} />
-              </div>
-              <h3>{project.name}</h3>
-              <p>{project.client || "Cliente não informado"}</p>
-              <div className="archive-card-bottom">
-                <span>Concluído em {shortDate(project.completedAt || project.dueDate)}</span>
-                <strong>{money(project.price)}</strong>
-              </div>
+            <button className="archive-row" type="button" key={project.id} onClick={() => onOpen(project.id)}>
+              <strong>{project.name}</strong>
+              <span>{project.client || "—"}</span>
+              <span className="archive-type"><i style={{ background: corDoTipo(project.type) }} />{project.type}</span>
+              <span>{shortDate(project.completedAt || project.dueDate)}</span>
+              <span className="num">{money(project.price)}</span>
             </button>
           ))}
         {!projects.length && (

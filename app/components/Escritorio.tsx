@@ -14,7 +14,7 @@ const W = 1774;
 const H = 887;
 const CORREDOR_Y = 392;
 const CELL_W = 96;
-const CELL_H = 132;
+const CELL_H = 140;
 const ESCALA = 0.5; // bonecos ~60px no mapa
 const PERSONAGENS = ["eduardo", "gerente", "revit", "autocad", "redator", "redatora", "secretaria"] as const;
 type Personagem = (typeof PERSONAGENS)[number];
@@ -27,21 +27,22 @@ type Room = { id: RoomId; x0: number; y0: number; x1: number; y1: number; porta:
 
 // Salas no sistema de coordenadas do desenho (1774×887). A porta fica no lado do corredor.
 const SALAS: Room[] = [
-  { id: "recepcao", x0: 125, y0: 80, x1: 345, y1: 345, porta: { x: 325, y: 342 } },
-  { id: "hall", x0: 345, y0: 80, x1: 535, y1: 345, porta: { x: 445, y: 342 } },
-  { id: "revit", x0: 535, y0: 80, x1: 855, y1: 345, porta: { x: 562, y: 342 } },
-  { id: "autocad", x0: 855, y0: 80, x1: 1180, y1: 345, porta: { x: 882, y: 342 } },
-  { id: "reuniao", x0: 1180, y0: 80, x1: 1450, y1: 345, porta: { x: 1205, y: 342 } },
-  { id: "presidencia", x0: 1450, y0: 80, x1: 1762, y1: 345, porta: { x: 1475, y: 342 } },
-  { id: "banheiros", x0: 125, y0: 430, x1: 370, y1: 680, porta: { x: 342, y: 436 } },
-  { id: "copa", x0: 370, y0: 430, x1: 660, y1: 680, porta: { x: 398, y: 436 } },
-  { id: "lounge", x0: 660, y0: 430, x1: 945, y1: 680, porta: { x: 688, y: 436 } },
-  { id: "memoriais", x0: 945, y0: 430, x1: 1275, y1: 680, porta: { x: 970, y: 436 } },
-  { id: "gerencia", x0: 1275, y0: 430, x1: 1515, y1: 680, porta: { x: 1300, y: 436 } },
-  { id: "expansao", x0: 1515, y0: 430, x1: 1762, y1: 680, porta: { x: 1540, y: 436 } },
+  { id: "recepcao", x0: 125, y0: 80, x1: 345, y1: 345, porta: { x: 325, y: 349 } },
+  { id: "hall", x0: 345, y0: 80, x1: 535, y1: 345, porta: { x: 445, y: 349 } },
+  { id: "revit", x0: 535, y0: 80, x1: 855, y1: 345, porta: { x: 556, y: 349 } },
+  { id: "autocad", x0: 855, y0: 80, x1: 1180, y1: 345, porta: { x: 881, y: 349 } },
+  { id: "reuniao", x0: 1180, y0: 80, x1: 1450, y1: 345, porta: { x: 1212, y: 349 } },
+  { id: "presidencia", x0: 1450, y0: 80, x1: 1762, y1: 345, porta: { x: 1478, y: 349 } },
+  { id: "banheiros", x0: 125, y0: 430, x1: 370, y1: 680, porta: { x: 347, y: 437 } },
+  { id: "copa", x0: 370, y0: 430, x1: 660, y1: 680, porta: { x: 399, y: 437 } },
+  { id: "lounge", x0: 660, y0: 430, x1: 945, y1: 680, porta: { x: 685, y: 437 } },
+  { id: "memoriais", x0: 945, y0: 430, x1: 1275, y1: 680, porta: { x: 973, y: 437 } },
+  { id: "gerencia", x0: 1275, y0: 430, x1: 1515, y1: 680, porta: { x: 1298, y: 437 } },
+  { id: "expansao", x0: 1515, y0: 430, x1: 1762, y1: 680, porta: { x: 1543, y: 437 } },
 ];
-// Portas com folha animada (abre quando alguém passa). "hall" não tem porta.
-const PORTAS = SALAS.filter((s) => s.id !== "hall").map((s) => ({ sala: s.id, p: s.porta, lado: s.y0 < CORREDOR_Y ? "cima" : "baixo" }));
+// Portas do desenho (folhas recortadas em portas.webp; o fundo mostra a porta fechada).
+const PORTAS: { x: number; y: number; lado: "c" | "b" }[] = [[311, 302, "c"], [542, 302, "c"], [819, 302, "c"], [867, 302, "c"], [1139, 302, "c"], [1198, 302, "c"], [1409, 302, "c"], [1464, 302, "c"], [1704, 302, "c"], [333, 427, "b"], [385, 427, "b"], [626, 427, "b"], [671, 427, "b"], [914, 427, "b"], [959, 427, "b"], [1236, 427, "b"], [1284, 427, "b"], [1480, 427, "b"], [1529, 427, "b"], [1699, 427, "b"]].map(([x, y, lado]) => ({ x: x as number, y: y as number, lado: lado as "c" | "b" }));
+const PORTA_W = 28, PORTA_H = 56;
 
 // Mesas: posição dos pés do boneco sentado (de costas, olhando a mesa). Acima da mesa fica o "monitor"/prancheta que acende.
 const MESAS: Record<string, Px[]> = {
@@ -65,10 +66,8 @@ const DESCANSO: { p: Px; dir: Dir; falas: string[]; acao: string }[] = [
   { p: { x: 880, y: 625 }, dir: "esquerda", falas: ["📖"], acao: "lendo no lounge" },
   { p: { x: 345, y: 540 }, dir: "costas", falas: ["🚻"], acao: "no banheiro" },
   { p: { x: 345, y: 590 }, dir: "costas", falas: ["🪞"], acao: "no banheiro" },
-  { p: { x: 200, y: 318 }, dir: "frente", falas: ["📰"], acao: "esperando na recepção" },
-  { p: { x: 445, y: 300 }, dir: "frente", falas: ["🛗"], acao: "no hall dos elevadores" },
-  { p: { x: 720, y: 402 }, dir: "frente", falas: ["💬"], acao: "no corredor" },
-  { p: { x: 1330, y: 402 }, dir: "frente", falas: ["📱"], acao: "no corredor" },
+  { p: { x: 760, y: 520 }, dir: "frente", falas: ["📺"], acao: "vendo TV no lounge" },
+  { p: { x: 830, y: 520 }, dir: "frente", falas: ["😌"], acao: "descansando no lounge" },
 ];
 const SOFA: Px = { x: 790, y: 575 };
 
@@ -144,27 +143,19 @@ function desenharBoneco(c: CanvasRenderingContext2D, sheet: HTMLImageElement, b:
   c.fillStyle = "#f3f3f5"; c.fillText(nome, lx + 14, ly + 12.5);
 }
 
-function desenharPortas(c: CanvasRenderingContext2D, bonecos: Iterable<Boneco>, dt: number) {
+function desenharPortas(c: CanvasRenderingContext2D, img: HTMLImageElement, bonecos: Iterable<Boneco>, dt: number) {
   const lista = Array.from(bonecos);
-  for (const d of PORTAS) {
-    const chave = `${d.p.x},${d.p.y}`;
-    const perto = lista.some((b) => b.andando && Math.abs(b.pos.x - d.p.x) < 40 && Math.abs(b.pos.y - d.p.y) < 48);
-    const atual = portasAbertura.get(chave) ?? 0;
-    const alvo = perto ? 1 : 0;
-    const novo = atual + (alvo - atual) * Math.min(1, dt * (perto ? 9 : 4));
-    portasAbertura.set(chave, novo);
-    const ab = novo;
-    // duas folhas de vidro; fechadas ficam na linha da parede, abertas giram para dentro da sala
-    const y = d.p.y, folha = 20;
-    const dirY = d.lado === "cima" ? -1 : 1;
-    for (const lado of [-1, 1]) {
-      const x0 = d.p.x + lado * 2;
-      const largura = folha * (1 - ab), altura = folha * ab;
-      c.fillStyle = "rgba(120,170,230,.65)"; c.strokeStyle = "rgba(255,255,255,.8)"; c.lineWidth = 1;
-      c.beginPath(); c.rect(lado < 0 ? x0 - largura : x0, y - 3, Math.max(2, largura), 6); c.fill(); c.stroke();
-      if (ab > 0.05) { c.beginPath(); c.rect(lado < 0 ? x0 - folha - 1 : x0 + folha - 5, dirY < 0 ? y - altura : y, 6, altura); c.fill(); c.stroke(); }
-    }
-  }
+  PORTAS.forEach((d, i) => {
+    const cx = d.x + PORTA_W / 2, cy = d.lado === "c" ? d.y + 47 : d.y + 10;
+    const perto = lista.some((b) => Math.abs(b.pos.x - cx) < 34 && Math.abs(b.pos.y - cy) < 50);
+    const atual = portasAbertura.get(String(i)) ?? 0;
+    const novo = atual + ((perto ? 1 : 0) - atual) * Math.min(1, dt * (perto ? 10 : 3.5));
+    portasAbertura.set(String(i), novo);
+    if (novo < 0.03 || !img.complete || !img.naturalWidth) return;
+    const h = PORTA_H * novo;
+    const dy = d.lado === "c" ? d.y + PORTA_H - h : d.y;
+    c.drawImage(img, i * PORTA_W, d.lado === "c" ? PORTA_H - h : 0, PORTA_W, h, d.x, dy, PORTA_W, h);
+  });
 }
 function desenharLuzMesa(c: CanvasRenderingContext2D, b: Boneco, t: number) {
   if (b.andando || (b.dados.estado !== "trabalhando" && b.dados.estado !== "esperando_voce")) return;
@@ -188,6 +179,7 @@ function desenharPensamento(c: CanvasRenderingContext2D, b: Boneco, t: number) {
 }
 
 function desenharBalao(c: CanvasRenderingContext2D, b: Boneco, t: number) {
+  if (b.andando) return;
   if (desenharPensamento(c, b, t)) return;
   if (!b.fala || t > b.falaAte) return;
   const emoji = [...b.fala].length <= 2;
@@ -250,8 +242,9 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const c = canvas.getContext("2d")!;
-    const fundo = new Image(); fundo.src = "/escritorio/fundo.webp";
-    const sheet = new Image(); sheet.src = "/escritorio/sprites.webp";
+    const fundo = new Image(); fundo.src = "/escritorio/fundo.webp?v=3";
+    const sheet = new Image(); sheet.src = "/escritorio/sprites.webp?v=2";
+    const portasImg = new Image(); portasImg.src = "/escritorio/portas.webp";
     let carregados = 0;
     const ok = () => { carregados++; if (carregados === 2) setPronto(true); };
     fundo.onload = ok; sheet.onload = ok;
@@ -310,7 +303,7 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
       if (fundo.complete && fundo.naturalWidth) c.drawImage(fundo, 0, 0, W, H);
       const ordenados = Array.from(bonecos.current.values()).sort((a, b) => a.pos.y - b.pos.y);
       for (const b of ordenados) desenharLuzMesa(c, b, agora);
-      desenharPortas(c, ordenados, dt);
+      desenharPortas(c, portasImg, ordenados, dt);
       if (sheet.complete && sheet.naturalWidth) {
         for (const b of ordenados) desenharBoneco(c, sheet, b, agora);
         for (const b of ordenados) desenharBalao(c, b, agora);
