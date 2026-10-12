@@ -1,0 +1,27 @@
+{
+  "name": "Preforte — Gestão de Engenharia",
+  "short_name": "Preforte",
+  "description": "Projetos, faturamento e gestão de obras da Preforte.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F5F4F2",
+  "theme_color": "#F5F4F2",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

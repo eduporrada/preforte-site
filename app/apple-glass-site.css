@@ -1,0 +1,1415 @@
+/*
+ * Preforte Apple Glass system
+ * Final visual layer. Presentation only: application behavior and data remain intact.
+ */
+
+:root {
+  color-scheme: dark;
+  --ag-bg: #080d12;
+  --ag-bg-soft: #101820;
+  --ag-glass: rgba(117, 130, 140, .28);
+  --ag-glass-soft: rgba(141, 153, 162, .19);
+  --ag-glass-strong: rgba(48, 59, 68, .72);
+  --ag-control: rgba(77, 90, 100, .58);
+  --ag-card: rgba(29, 39, 47, .76);
+  --ag-line: rgba(255, 255, 255, .17);
+  --ag-line-strong: rgba(255, 255, 255, .27);
+  --ag-highlight: rgba(255, 255, 255, .12);
+  --ag-text: #f7f9fb;
+  --ag-text-2: rgba(247, 249, 251, .76);
+  --ag-text-3: rgba(247, 249, 251, .58);
+  --ag-blue: #0a84ff;
+  --ag-blue-soft: rgba(10, 132, 255, .18);
+  --ag-green: #30d158;
+  --ag-green-soft: rgba(48, 209, 88, .17);
+  --ag-red: #ff453a;
+  --ag-red-soft: rgba(255, 69, 58, .17);
+  --ag-amber: #ff9f0a;
+  --ag-amber-soft: rgba(255, 159, 10, .17);
+  --ag-radius-shell: 32px;
+  --ag-radius-panel: 27px;
+  --ag-radius-card: 19px;
+  --ag-radius-control: 14px;
+  --ag-shadow: 0 26px 72px rgba(0, 0, 0, .38);
+  --ag-shadow-soft: 0 12px 32px rgba(0, 0, 0, .22);
+  --ag-blur: 28px;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--ag-bg) !important;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 18px;
+  overflow-x: hidden;
+  color: var(--ag-text) !important;
+  background:
+    linear-gradient(rgba(3, 8, 12, .48), rgba(3, 8, 12, .72)),
+    radial-gradient(circle at 72% 20%, rgba(92, 116, 128, .27), transparent 25rem),
+    radial-gradient(circle at 22% 72%, rgba(10, 132, 255, .12), transparent 30rem),
+    linear-gradient(135deg, #111a20 0%, #071016 46%, #11171b 100%) !important;
+  background-attachment: fixed !important;
+  font-family: var(--font-dashboard), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: -.012em;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  opacity: .48;
+  background:
+    linear-gradient(90deg, transparent 0 13%, rgba(255,255,255,.045) 13.1% 13.22%, transparent 13.3% 41%, rgba(255,255,255,.035) 41.1% 41.2%, transparent 41.3% 72%, rgba(255,255,255,.035) 72.1% 72.2%, transparent 72.3%),
+    linear-gradient(0deg, transparent 0 18%, rgba(255,255,255,.035) 18.1% 18.2%, transparent 18.3% 72%, rgba(255,255,255,.035) 72.1% 72.2%, transparent 72.3%);
+}
+
+body::after {
+  background: linear-gradient(115deg, rgba(255,255,255,.025), transparent 24%, transparent 72%, rgba(255,255,255,.018));
+}
+
+button,
+input,
+select,
+textarea { font: inherit; }
+
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app[data-theme="neo"] {
+  --canvas: transparent;
+  --canvas-deep: transparent;
+  --shell: transparent;
+  --shell-deep: transparent;
+  --sidebar: rgba(31, 43, 52, .68);
+  --surface: var(--ag-glass);
+  --surface-2: var(--ag-glass-soft);
+  --surface-3: var(--ag-glass-strong);
+  --card: var(--ag-card);
+  --card-hover: rgba(49, 63, 73, .82);
+  --field: rgba(24, 35, 43, .72);
+  --text: var(--ag-text);
+  --text-soft: var(--ag-text-2);
+  --muted: var(--ag-text-2);
+  --muted-2: var(--ag-text-3);
+  --line: var(--ag-line);
+  --line-strong: var(--ag-line-strong);
+  --brand: var(--ag-blue);
+  --brand-strong: #0071e3;
+  --danger: var(--ag-red);
+  --success: var(--ag-green);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 1640px;
+  min-height: calc(100vh - 36px);
+  margin: 0 auto;
+  overflow: clip;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: var(--ag-radius-shell) !important;
+  background: linear-gradient(145deg, rgba(43, 56, 65, .47), rgba(13, 22, 28, .58)) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(138%);
+  backdrop-filter: blur(34px) saturate(138%);
+}
+
+.app[data-theme="neo"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 79% 8%, rgba(255,255,255,.075), transparent 22rem),
+    linear-gradient(118deg, rgba(255,255,255,.055), transparent 24%);
+}
+
+.app[data-theme="neo"],
+.app[data-theme="neo"] * { box-sizing: border-box; }
+
+.app[data-theme="neo"] :is(h1,h2,h3,h4,strong,b) {
+  color: var(--ag-text);
+  letter-spacing: -.028em;
+}
+
+.app[data-theme="neo"] :is(p,small,label,.muted,.eyebrow,.section-kicker) {
+  color: var(--ag-text-2);
+}
+
+.app[data-theme="neo"] :is(.eyebrow,.section-kicker) {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .06em;
+  text-transform: none;
+}
+
+/* Navigation rail */
+.app[data-theme="neo"] .sidebar {
+  position: relative !important;
+  z-index: 80;
+  width: 82px !important;
+  min-width: 82px !important;
+  padding: 16px 11px !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-right: 1px solid var(--ag-line) !important;
+  background: rgba(22, 32, 40, .58) !important;
+  box-shadow: inset -1px 0 rgba(255,255,255,.04), inset 0 1px 0 var(--ag-highlight) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(145%);
+  backdrop-filter: blur(30px) saturate(145%);
+}
+
+.app[data-theme="neo"] .sidebar-logo {
+  width: 52px !important;
+  height: 52px !important;
+  margin: 0 auto 19px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 17px !important;
+  background: rgba(255,255,255,.08) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+}
+
+.app[data-theme="neo"] .sidebar-logo img {
+  width: 31px !important;
+  height: 31px !important;
+  object-fit: contain !important;
+}
+
+.app[data-theme="neo"] .sidebar-nav,
+.app[data-theme="neo"] .nav {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+.app[data-theme="neo"] .nav-group-label { display: none !important; }
+
+.app[data-theme="neo"] .nav-button,
+.app[data-theme="neo"] .sidebar button:not(.sidebar-logo) {
+  width: 46px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  margin-inline: auto !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  border: 1px solid transparent !important;
+  border-radius: 15px !important;
+  background: transparent !important;
+  color: var(--ag-text-2) !important;
+  box-shadow: none !important;
+  transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+
+.app[data-theme="neo"] .nav-button:hover,
+.app[data-theme="neo"] .sidebar button:not(.sidebar-logo):hover {
+  transform: translateY(-1px);
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: rgba(255,255,255,.09) !important;
+}
+
+.app[data-theme="neo"] .nav-button.active,
+.app[data-theme="neo"] .sidebar button.active {
+  border-color: rgba(10,132,255,.5) !important;
+  background: var(--ag-blue) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px rgba(10,132,255,.27), inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+
+.app[data-theme="neo"] .nav-button svg,
+.app[data-theme="neo"] .sidebar button svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+}
+
+.app[data-theme="neo"] .sidebar-tooltip {
+  z-index: 9999 !important;
+  padding: 9px 12px !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 11px !important;
+  background: rgba(17, 25, 31, .94) !important;
+  color: var(--ag-text) !important;
+  box-shadow: var(--ag-shadow-soft) !important;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+/* Main and topbar */
+.app[data-theme="neo"] .main {
+  min-width: 0;
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .topbar {
+  min-height: 108px !important;
+  padding: 22px clamp(20px, 3vw, 38px) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ag-line) !important;
+  background: rgba(21, 31, 38, .28) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(22px) saturate(135%);
+}
+
+.app[data-theme="neo"] .topbar-heading { min-width: 0; }
+
+.app[data-theme="neo"] .page-title {
+  margin: 2px 0 0 !important;
+  color: var(--ag-text) !important;
+  font-size: clamp(28px, 3vw, 40px) !important;
+  font-weight: 650 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.04em !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .topbar-date {
+  margin-top: 7px !important;
+  color: var(--ag-text-2) !important;
+  font-size: 13px !important;
+}
+
+.app[data-theme="neo"] .top-actions {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+/* Controls */
+.app[data-theme="neo"] :is(
+  .primary-button,.secondary-button,.ghost-button,.back-button,.register-button,
+  .complete-work-button,.column-add,.budget-add-button,.diary-print-button,
+  .form-actions button,.modal-submit,.wide-button
+) {
+  min-height: 44px !important;
+  padding: 0 17px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-align: center !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 999px !important;
+  background: var(--ag-control) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), 0 8px 20px rgba(0,0,0,.14) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+
+.app[data-theme="neo"] :is(.primary-button,.register-button,.budget-add-button,.modal-submit) {
+  border-color: rgba(10,132,255,.55) !important;
+  background: var(--ag-blue) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 24px rgba(10,132,255,.24), inset 0 1px 0 rgba(255,255,255,.25) !important;
+}
+
+.app[data-theme="neo"] :is(button,.primary-button,.secondary-button,.ghost-button):hover {
+  filter: brightness(1.1);
+}
+
+.app[data-theme="neo"] :is(.icon-button,.notification-button,.close-button,.card-menu-button,.list-menu-button,.work-card-menu-button,.construction-panel-close) {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  text-align: center !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,.08) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight) !important;
+}
+
+.app[data-theme="neo"] :is(button,a,input,select,textarea):focus-visible {
+  outline: 3px solid rgba(10,132,255,.38) !important;
+  outline-offset: 2px !important;
+}
+
+/* Fields */
+.app[data-theme="neo"] :is(input,select,textarea,.select,.money-input,.editable-work-input) {
+  min-height: 44px !important;
+  color: var(--ag-text) !important;
+  caret-color: var(--ag-blue) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: var(--ag-radius-control) !important;
+  background: rgba(14, 24, 31, .62) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+
+.app[data-theme="neo"] textarea {
+  min-height: 112px !important;
+  padding: 13px 15px !important;
+}
+
+.app[data-theme="neo"] :is(input,textarea)::placeholder {
+  color: var(--ag-text-3) !important;
+  opacity: 1 !important;
+}
+
+.app[data-theme="neo"] select option {
+  color: #fff !important;
+  background: #172129 !important;
+}
+
+.app[data-theme="neo"] .field > label,
+.app[data-theme="neo"] .field > span,
+.app[data-theme="neo"] .date-filter {
+  color: var(--ag-text-2) !important;
+}
+
+/* Shared glass surfaces */
+.app[data-theme="neo"] :is(
+  .panel,.metric,.home-summary-grid > article,.home-chart-card,.insight-strip > article,
+  .time-kpis > article,.time-panel,.receivable-kpis > article,.receivable-table-card,
+  .archive-intro,.archive-card,.archive-empty,.settings-grid > section,
+  .work-card,.work-dashboard-header,.work-finance-strip,.work-module-layout,.work-module-nav,
+  .work-module-content,.work-section,.budget-workspace,.budget-table-shell,
+  .cost-analysis-card,.report-filter-panel,.report-donut-card,.report-payment-card,
+  .report-leading-category,.diary-composer,.diary-entry,.diary-feed-aside,
+  .payment-box,.construction-payment-summary,.construction-payment-form,
+  .drawer-control-card,.detail-metric,.project-notes-box,.finance-gadget
+) {
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: var(--ag-radius-panel) !important;
+  background: linear-gradient(145deg, rgba(134,147,156,.22), rgba(51,64,73,.24)) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+  -webkit-backdrop-filter: blur(var(--ag-blur)) saturate(138%);
+  backdrop-filter: blur(var(--ag-blur)) saturate(138%);
+}
+
+.app[data-theme="neo"] .content-wrap {
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] :is(.home-page,.finance-report,.time-page,.receivables-page,.archive-page,.settings-grid,.work-dashboard) {
+  padding: clamp(18px, 2.4vw, 34px) !important;
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+/* Overview */
+.app[data-theme="neo"] .home-summary-grid {
+  gap: 14px !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.app[data-theme="neo"] .home-summary-grid > article {
+  min-height: 176px !important;
+  padding: 21px !important;
+  overflow: hidden !important;
+}
+
+.app[data-theme="neo"] .home-summary-grid strong,
+.app[data-theme="neo"] .metric-value {
+  color: var(--ag-text) !important;
+  font-size: clamp(30px, 3vw, 48px) !important;
+  font-weight: 570 !important;
+  font-variant-numeric: tabular-nums;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .summary-card-head,
+.app[data-theme="neo"] .metric-head {
+  align-items: center !important;
+}
+
+.app[data-theme="neo"] :is(.summary-card-head svg,.metric-icon,.bento-icon,.report-highlight-icon) {
+  color: #fff !important;
+  border: 1px solid rgba(10,132,255,.45) !important;
+  background: linear-gradient(145deg, #178fff, #0069d5) !important;
+  box-shadow: 0 10px 24px rgba(10,132,255,.22), inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+
+.app[data-theme="neo"] .home-charts-grid {
+  gap: 14px !important;
+}
+
+.app[data-theme="neo"] .home-chart-card {
+  min-height: 350px !important;
+  padding: 22px !important;
+}
+
+.app[data-theme="neo"] :is(.project-bars,.revenue-spark) > * {
+  color: var(--ag-text-2) !important;
+}
+
+.app[data-theme="neo"] :is(.project-bars i,.revenue-spark i,.chart-bar,.ranking-fill,.cost-month-bar) {
+  background: var(--ag-blue) !important;
+}
+
+.app[data-theme="neo"] .insight-strip {
+  gap: 14px !important;
+}
+
+.app[data-theme="neo"] .insight-strip > article {
+  min-height: 118px !important;
+  padding: 18px 20px !important;
+}
+
+/* Kanban */
+.app[data-theme="neo"] .board-surface {
+  min-height: calc(100vh - 108px) !important;
+  padding: clamp(18px, 2.4vw, 34px) !important;
+  overflow: visible !important;
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .kanban-toolbar {
+  margin-bottom: 18px !important;
+  align-items: center !important;
+}
+
+.app[data-theme="neo"] .kanban {
+  min-height: 0 !important;
+  height: auto !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  padding: 2px 2px 22px !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .column {
+  flex: 0 0 clamp(286px, 24vw, 340px) !important;
+  min-width: 286px !important;
+  height: auto !important;
+  min-height: 154px !important;
+  max-height: none !important;
+  overflow: visible !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 25px !important;
+  background: linear-gradient(160deg, rgba(129,143,152,.23), rgba(39,51,60,.30)) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(138%);
+  backdrop-filter: blur(24px) saturate(138%);
+}
+
+.app[data-theme="neo"] .column::before {
+  height: 4px !important;
+  left: 18px !important;
+  right: 18px !important;
+  top: 0 !important;
+  border-radius: 0 0 999px 999px !important;
+}
+
+.app[data-theme="neo"] .column-head {
+  min-height: 67px !important;
+  padding: 14px 17px !important;
+  display: flex !important;
+  align-items: center !important;
+  color: var(--ag-text) !important;
+  border-bottom: 1px solid var(--ag-line) !important;
+  background: rgba(255,255,255,.035) !important;
+}
+
+.app[data-theme="neo"] .column-title {
+  min-width: 0 !important;
+  color: var(--ag-text) !important;
+  font-weight: 620 !important;
+  line-height: 1.2 !important;
+}
+
+.app[data-theme="neo"] .column-cards {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 11px !important;
+  display: grid !important;
+  gap: 11px !important;
+}
+
+.app[data-theme="neo"] .card {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 17px !important;
+  overflow: visible !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-left: 4px solid var(--project-accent, var(--ag-blue)) !important;
+  border-radius: var(--ag-radius-card) !important;
+  background: rgba(24, 34, 42, .74) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 10px 25px rgba(0,0,0,.2) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+
+.app[data-theme="neo"] .card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--ag-line-strong) !important;
+  border-left-color: var(--project-accent, var(--ag-blue)) !important;
+  background: rgba(36, 48, 57, .82) !important;
+}
+
+.app[data-theme="neo"] .card.card-priority-high {
+  background: rgba(10, 18, 25, .88) !important;
+}
+
+.app[data-theme="neo"] :is(.card-title,.card-client,.card-meta,.card-financial-grid,.card-bottom,.task-list,.task-group) {
+  min-width: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.app[data-theme="neo"] .card-title {
+  color: var(--ag-text) !important;
+  font-size: 17px !important;
+  font-weight: 620 !important;
+  line-height: 1.28 !important;
+}
+
+.app[data-theme="neo"] .card-client { color: var(--ag-text-2) !important; }
+
+.app[data-theme="neo"] .card-financial-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 0 !important;
+  padding: 12px 0 !important;
+  border-block: 1px solid var(--ag-line) !important;
+}
+
+.app[data-theme="neo"] .card-financial-grid > * {
+  min-width: 0 !important;
+  color: var(--ag-text-2) !important;
+  text-align: center !important;
+}
+
+.app[data-theme="neo"] .card-financial-grid strong {
+  display: block !important;
+  margin-top: 3px !important;
+  color: var(--ag-text) !important;
+  font-size: 14px !important;
+  white-space: nowrap !important;
+}
+
+.app[data-theme="neo"] :is(.card-bottom,.card-meta) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.app[data-theme="neo"] :is(.card-meta span,.late-pill,.payment-state,.service-tag,.tag,.priority-tag) {
+  min-height: 28px !important;
+  padding: 5px 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.08) !important;
+}
+
+.app[data-theme="neo"] :is(.late-pill,.payment-state.pending,.tag.pending) {
+  color: #ffd6d3 !important;
+  border-color: rgba(255,69,58,.42) !important;
+  background: var(--ag-red-soft) !important;
+}
+
+.app[data-theme="neo"] :is(.payment-state.paid,.tag.good,.paid) {
+  color: #c9f8d4 !important;
+  border-color: rgba(48,209,88,.43) !important;
+  background: var(--ag-green-soft) !important;
+}
+
+.app[data-theme="neo"] .task-list { display: grid !important; gap: 7px !important; }
+.app[data-theme="neo"] .task-check { color: var(--ag-text) !important; }
+
+.app[data-theme="neo"] .drag-follow-layer {
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line-strong) !important;
+  border-left: 4px solid var(--project-accent, var(--ag-blue)) !important;
+  border-radius: var(--ag-radius-card) !important;
+  background: rgba(24,34,42,.92) !important;
+  box-shadow: var(--ag-shadow) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+}
+
+/* Finance, reports and tables */
+.app[data-theme="neo"] .legacy-finance-filters { display: none !important; }
+
+.app[data-theme="neo"] .report-filter-summary {
+  margin-bottom: 16px !important;
+  padding: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  flex-wrap: wrap !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.055) !important;
+}
+
+.app[data-theme="neo"] .report-filter-summary > * {
+  color: var(--ag-text-2) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.06) !important;
+}
+
+.app[data-theme="neo"] :is(.metric-grid,.finance-primary-metrics,.finance-gadget-grid,.dashboard-grid,.report-bottom-grid,.cost-analysis-grid,.report-detail-grid) {
+  gap: 14px !important;
+}
+
+.app[data-theme="neo"] .metric {
+  min-height: 172px !important;
+  padding: 20px !important;
+  overflow: hidden !important;
+}
+
+.app[data-theme="neo"] :is(.data-table,.premium-table,.budget-table,.payment-ledger-table) {
+  width: 100% !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 18px !important;
+  background: rgba(14,24,31,.46) !important;
+  overflow: hidden !important;
+}
+
+.app[data-theme="neo"] :is(.data-table th,.data-table td,.premium-table-row > span,.budget-table th,.budget-table td) {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] :is(.data-table th,.premium-table-row.table-header,.budget-table th) {
+  color: var(--ag-text-2) !important;
+  background: rgba(255,255,255,.06) !important;
+}
+
+.app[data-theme="neo"] :is(.data-table td,.budget-value,.pending-value,.payment-ledger-total,.work-card-values strong) {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap !important;
+}
+
+.app[data-theme="neo"] .table-scroll {
+  overflow-x: auto !important;
+  border-radius: 18px !important;
+}
+
+/* Construction */
+.construction-panel-backdrop {
+  background: rgba(2,7,11,.72) !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.app[data-theme="neo"].construction-panel-drawer {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  border-radius: 28px 0 0 28px !important;
+  background: linear-gradient(145deg, rgba(48,61,70,.94), rgba(10,18,24,.97)) !important;
+  box-shadow: -24px 0 70px rgba(0,0,0,.42), inset 1px 0 rgba(255,255,255,.1) !important;
+}
+
+.app[data-theme="neo"] .work-inline-facts {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(145px,1fr)) !important;
+  gap: 10px !important;
+}
+
+.app[data-theme="neo"] .work-inline-facts > * {
+  min-width: 0 !important;
+  padding: 14px !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,.065) !important;
+}
+
+.app[data-theme="neo"] .work-finance-strip {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  overflow: hidden !important;
+}
+
+.app[data-theme="neo"] .work-finance-strip > * {
+  min-width: 0 !important;
+  padding: 20px !important;
+  border-right: 1px solid var(--ag-line) !important;
+}
+
+.app[data-theme="neo"] .work-module-layout {
+  display: grid !important;
+  grid-template-columns: 230px minmax(0,1fr) !important;
+  overflow: visible !important;
+}
+
+.app[data-theme="neo"] .work-module-nav {
+  border-radius: 27px 0 0 27px !important;
+}
+
+.app[data-theme="neo"] .work-module-content {
+  min-width: 0 !important;
+  border-radius: 0 27px 27px 0 !important;
+}
+
+.app[data-theme="neo"] .work-module-nav button {
+  width: 100% !important;
+  min-height: 50px !important;
+  padding: 8px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  color: var(--ag-text-2) !important;
+  border: 1px solid transparent !important;
+  border-radius: 15px !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .work-module-nav button.active {
+  color: #fff !important;
+  border-color: rgba(10,132,255,.45) !important;
+  background: var(--ag-blue) !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form {
+  padding: 14px !important;
+  display: grid !important;
+  grid-template-columns: minmax(150px, .8fr) minmax(170px, 1fr) minmax(180px, 1fr) auto !important;
+  gap: 10px !important;
+  align-items: end !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form :is(input,select) {
+  color: var(--ag-text) !important;
+  background: rgba(12,22,29,.76) !important;
+}
+
+.app[data-theme="neo"] .budget-table-shell,
+.app[data-theme="neo"] .budget-table { overflow-x: auto !important; }
+
+/* Drawers, modals, menus */
+.drawer-backdrop,
+.modal-backdrop,
+.budget-dialog-backdrop {
+  background: rgba(1, 6, 10, .72) !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.app[data-theme="neo"] :is(.drawer,.modal,.budget-dialog,.confirm-modal) {
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 27px !important;
+  background: linear-gradient(145deg, rgba(55,68,77,.96), rgba(11,20,27,.97)) !important;
+  box-shadow: var(--ag-shadow) !important;
+}
+
+.app[data-theme="neo"] .drawer {
+  border-radius: 28px 0 0 28px !important;
+}
+
+.app[data-theme="neo"] :is(.context-menu,.list-menu,.work-card-menu,.mobile-more-menu,.notification-panel) {
+  z-index: 9999 !important;
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 15px !important;
+  background: rgba(18, 27, 34, .97) !important;
+  box-shadow: var(--ag-shadow-soft) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(22px) saturate(135%);
+}
+
+.app[data-theme="neo"] :is(.context-menu button,.list-menu button,.work-card-menu button,.mobile-more-menu button) {
+  min-height: 42px !important;
+  padding: 8px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 9px !important;
+  color: var(--ag-text) !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
+.app[data-theme="neo"] .drawer-type {
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.08) !important;
+}
+
+/* Settings/status */
+.app[data-theme="neo"] .mini-row {
+  min-height: 58px !important;
+  padding: 10px 12px !important;
+  align-items: center !important;
+  color: var(--ag-text) !important;
+  border-bottom: 1px solid var(--ag-line) !important;
+}
+
+.app[data-theme="neo"] .tag.good {
+  min-width: 84px !important;
+  justify-content: center !important;
+}
+
+/* Scrollbars */
+.app[data-theme="neo"] * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.28) transparent;
+}
+
+.app[data-theme="neo"] *::-webkit-scrollbar { width: 9px; height: 9px; }
+.app[data-theme="neo"] *::-webkit-scrollbar-track { background: transparent; }
+.app[data-theme="neo"] *::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(255,255,255,.25);
+  background-clip: padding-box;
+}
+
+.app[data-theme="neo"] .bottom-nav { display: none !important; }
+
+@media (max-width: 1180px) {
+  .app[data-theme="neo"] .home-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .app[data-theme="neo"] .work-inline-facts { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .app[data-theme="neo"] .construction-payment-form { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+
+@media (max-width: 900px) {
+  body { padding: 10px !important; }
+  .app[data-theme="neo"] { min-height: calc(100vh - 20px); border-radius: 26px !important; }
+  .app[data-theme="neo"] .sidebar { width: 70px !important; min-width: 70px !important; }
+  .app[data-theme="neo"] .topbar { min-height: 96px !important; padding: 18px 20px !important; }
+  .app[data-theme="neo"] .page-title { font-size: 30px !important; }
+  .app[data-theme="neo"] .home-charts-grid,
+  .app[data-theme="neo"] .dashboard-grid,
+  .app[data-theme="neo"] .report-bottom-grid { grid-template-columns: 1fr !important; }
+  .app[data-theme="neo"] .work-module-layout { grid-template-columns: 1fr !important; }
+  .app[data-theme="neo"] .work-module-nav,
+  .app[data-theme="neo"] .work-module-content { border-radius: 24px !important; }
+  .app[data-theme="neo"] .work-module-nav { display: flex !important; gap: 8px !important; overflow-x: auto !important; }
+  .app[data-theme="neo"] .work-module-nav button { min-width: max-content !important; width: auto !important; }
+  .app[data-theme="neo"] .work-finance-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+
+@media (max-width: 680px) {
+  body { padding: 0 !important; background: #0a1117 !important; }
+  .app[data-theme="neo"] {
+    width: 100% !important;
+    min-height: 100vh !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .app[data-theme="neo"] .sidebar { display: none !important; }
+  .app[data-theme="neo"] .main { padding-bottom: 82px !important; }
+  .app[data-theme="neo"] .topbar {
+    min-height: 88px !important;
+    padding: 14px 15px !important;
+    align-items: center !important;
+  }
+  .app[data-theme="neo"] .page-title { font-size: 26px !important; }
+  .app[data-theme="neo"] .eyebrow { display: none !important; }
+  .app[data-theme="neo"] .topbar-date { font-size: 12px !important; }
+  .app[data-theme="neo"] .top-actions { gap: 7px !important; }
+  .app[data-theme="neo"] .top-actions .primary-button {
+    width: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    font-size: 0 !important;
+  }
+  .app[data-theme="neo"] .top-actions .primary-button svg { width: 20px !important; height: 20px !important; }
+  .app[data-theme="neo"] :is(.home-page,.finance-report,.time-page,.receivables-page,.archive-page,.settings-grid,.work-dashboard,.board-surface) {
+    padding: 14px !important;
+  }
+  .app[data-theme="neo"] .home-summary-grid { grid-template-columns: 1fr !important; }
+  .app[data-theme="neo"] .home-summary-grid > article { min-height: 148px !important; }
+  .app[data-theme="neo"] .home-chart-card { min-height: 300px !important; }
+  .app[data-theme="neo"] .metric-grid,
+  .app[data-theme="neo"] .finance-primary-metrics,
+  .app[data-theme="neo"] .finance-gadget-grid,
+  .app[data-theme="neo"] .receivable-kpis,
+  .app[data-theme="neo"] .time-kpis { grid-template-columns: 1fr !important; }
+  .app[data-theme="neo"] .kanban {
+    display: flex !important;
+    gap: 12px !important;
+    scroll-snap-type: x proximity;
+  }
+  .app[data-theme="neo"] .column {
+    flex-basis: min(86vw, 330px) !important;
+    min-width: min(86vw, 330px) !important;
+    scroll-snap-align: start;
+  }
+  .app[data-theme="neo"] .drawer {
+    width: calc(100% - 8px) !important;
+    max-width: none !important;
+    border-radius: 24px 0 0 24px !important;
+  }
+  .app[data-theme="neo"].construction-panel-drawer {
+    width: calc(100% - 8px) !important;
+    border-radius: 24px 0 0 24px !important;
+  }
+  .app[data-theme="neo"] .work-inline-facts,
+  .app[data-theme="neo"] .work-finance-strip,
+  .app[data-theme="neo"] .construction-payment-form { grid-template-columns: 1fr !important; }
+  .app[data-theme="neo"] .card-financial-grid strong { font-size: 13px !important; }
+  .app[data-theme="neo"] .premium-table { min-width: 720px !important; }
+  .app[data-theme="neo"] .receivable-table-card { overflow-x: auto !important; }
+  .app[data-theme="neo"] .bottom-nav {
+    position: fixed !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    z-index: 1000 !important;
+    min-height: 62px !important;
+    padding: 7px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    gap: 4px !important;
+    border: 1px solid var(--ag-line) !important;
+    border-radius: 999px !important;
+    background: rgba(38,50,59,.78) !important;
+    box-shadow: var(--ag-shadow-soft), inset 0 1px 0 var(--ag-highlight) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(145%);
+    backdrop-filter: blur(26px) saturate(145%);
+  }
+  .app[data-theme="neo"] .bottom-nav button {
+    width: 46px !important;
+    height: 46px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    color: var(--ag-text-2) !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+  }
+  .app[data-theme="neo"] .bottom-nav button.active {
+    color: #fff !important;
+    background: var(--ag-blue) !important;
+  }
+}
+
+/*
+ * Conflict guard
+ * The application has historical theme layers with high-specificity `!important`
+ * declarations. These selectors deliberately sit at the end of the visual stack
+ * so every screen keeps the same dark glass surface and readable foreground.
+ */
+html body .app[data-theme="neo"] :is(
+  .home-summary-grid > article,.home-chart-card,.insight-strip > article,
+  .metric,.panel,.dashboard-grid > article,.report-bottom-grid > article,
+  .time-kpis > article,.receivable-kpis > article,.archive-intro,.archive-empty,
+  .work-card,.work-dashboard-header,.work-finance-strip,.work-module-layout,
+  .work-module-nav,.work-module-content,.work-section,.budget-workspace,
+  .budget-table-shell,.payment-summary,.construction-payment-form,
+  .drawer-control-card,.detail-metric,.project-notes-box,.finance-gadget
+) {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(145deg, rgba(126,140,150,.20), rgba(30,42,50,.30)) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+}
+
+html body .app[data-theme="neo"] :is(
+  .home-summary-grid strong,.home-chart-card h2,.home-chart-card strong,
+  .insight-strip strong,.metric strong,.metric-value,.panel h2,.panel h3,
+  .dashboard-grid h2,.dashboard-grid h3,.report-bottom-grid h2,
+  .time-kpis strong,.receivable-kpis strong,.archive-page h2,.archive-page h3,
+  .work-dashboard h1,.work-dashboard h2,.work-dashboard h3,.work-dashboard strong,
+  .finance-report h2,.finance-report h3,.finance-report strong,
+  .receivables-page h2,.receivables-page h3,.receivables-page strong,
+  .settings-grid h2,.settings-grid h3,.settings-grid strong
+) {
+  color: var(--ag-text) !important;
+  background: transparent !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,.24) !important;
+}
+
+html body .app[data-theme="neo"] :is(
+  .home-summary-grid p,.home-summary-grid span,.home-chart-card p,.home-chart-card span,
+  .insight-strip p,.insight-strip span,.metric p,.metric span,.panel p,.panel span,
+  .dashboard-grid p,.dashboard-grid span,.report-bottom-grid p,.report-bottom-grid span,
+  .archive-page p,.archive-page span,.time-page p,.time-page span,
+  .work-dashboard p,.work-dashboard span,.finance-report p,.finance-report span,
+  .receivables-page p,.receivables-page span,.settings-grid p,.settings-grid span
+) {
+  color: var(--ag-text-2) !important;
+}
+
+html body .app[data-theme="neo"] .insight-strip > article {
+  background-color: rgba(24,34,42,.68) !important;
+  background-image: linear-gradient(145deg, rgba(130,144,154,.19), rgba(28,40,48,.26)) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-overview .home-page > .insight-strip > article {
+  color: var(--ag-text) !important;
+  background: linear-gradient(145deg, #2c3942, #19242b) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-overview .home-page > .insight-strip > article :is(strong,span,p) {
+  color: var(--ag-text) !important;
+}
+
+html body .app[data-theme="neo"] .insight-strip :is(.metric-icon,.bento-icon,svg) {
+  color: #fff !important;
+  background-color: var(--ag-blue) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects > .board-surface {
+  color: var(--ag-text) !important;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(10,132,255,.10), transparent 25%),
+    linear-gradient(145deg, #17252e, #0c151b) !important;
+}
+
+html body .app[data-theme="neo"] .kanban {
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects .kanban > .column {
+  color: var(--ag-text) !important;
+  background: linear-gradient(160deg, #2b3943, #17232b) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects .kanban > .column > .column-head {
+  color: var(--ag-text) !important;
+  background: linear-gradient(145deg, #354650, #26343e) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects .kanban > .column > .column-cards {
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects .kanban .column .card,
+html body .app[data-theme="neo"] .drag-follow-layer {
+  color: var(--ag-text) !important;
+  border-left: 5px solid var(--project-accent, var(--ag-blue)) !important;
+  background: linear-gradient(145deg, #26333c, #172128) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects .kanban .column .card.card-priority-high {
+  border-left-color: var(--project-accent, var(--ag-blue)) !important;
+  background: linear-gradient(145deg, #131d23, #070d11) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects :is(.kanban-toolbar,.kanban-toolbar strong,.kanban-toolbar span) {
+  color: var(--ag-text) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-projects .kanban > .column > .column-head :is(.column-title,.column-title span,.column-title strong) {
+  color: var(--ag-text) !important;
+}
+
+html body .app[data-theme="neo"] .card :is(h3,.card-title,strong,label,.task-check) {
+  color: var(--ag-text) !important;
+}
+
+html body .app[data-theme="neo"] .card :is(p,.card-client,small,.card-label) {
+  color: var(--ag-text-2) !important;
+}
+
+html body .app[data-theme="neo"] .card-financial-grid {
+  color: var(--ag-text) !important;
+  background-color: rgba(0,0,0,.12) !important;
+  background-image: none !important;
+}
+
+html body .app[data-theme="neo"] :is(.add-card,.column-add,.add-stage-button) {
+  color: var(--ag-text-2) !important;
+  border-color: transparent !important;
+  background-color: rgba(255,255,255,.055) !important;
+  background-image: none !important;
+}
+
+html body .app[data-theme="neo"] :is(.add-card,.column-add,.add-stage-button):hover {
+  color: var(--ag-text) !important;
+  background-color: rgba(10,132,255,.20) !important;
+}
+
+html body .app[data-theme="neo"] :is(.primary-button,.new-project-button,.register-button,.budget-add-button,.modal-submit,.complete-work-button) {
+  color: #fff !important;
+  background-color: var(--ag-blue) !important;
+  background-image: linear-gradient(180deg, #1b92ff, #0877e8) !important;
+}
+
+html body .app[data-theme="neo"] :is(.secondary-button,.ghost-button,.back-button,.diary-print-button,.form-actions button) {
+  color: var(--ag-text) !important;
+  background-color: rgba(255,255,255,.085) !important;
+  background-image: none !important;
+}
+
+html body .app[data-theme="neo"] :is(input,select,textarea,.select,.money-input,.editable-work-input) {
+  color: var(--ag-text) !important;
+  -webkit-text-fill-color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background-color: rgba(8,16,22,.72) !important;
+  background-image: none !important;
+}
+
+html body .app[data-theme="neo"] :is(input,textarea)::placeholder {
+  color: var(--ag-text-3) !important;
+  -webkit-text-fill-color: var(--ag-text-3) !important;
+}
+
+html body .app[data-theme="neo"] .visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .content-wrap > .works-heading {
+  color: var(--ag-text) !important;
+  border: 1px solid var(--ag-line) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg, #2a3841, #18242b) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-card-grid > .work-card-shell,
+html body > .app[data-theme="neo"] > main.main.page-construction .work-card-grid > .work-card-shell > .work-card {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: linear-gradient(145deg, #2a3740, #172128) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-card :is(.work-card-body,h3,strong) {
+  color: var(--ag-text) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-card :is(p,small) {
+  color: var(--ag-text-2) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-dashboard :is(
+  .budget-summary-row,.budget-filter-bar
+) {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: linear-gradient(145deg, #28363f, #172229) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-dashboard .budget-summary-row > article {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: rgba(255,255,255,.04) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-dashboard :is(
+  .budget-summary-row,.budget-filter-bar,.budget-table,.budget-table-shell
+) :is(h2,h3,strong,th,td,label) {
+  color: var(--ag-text) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-construction .work-dashboard :is(
+  .budget-summary-row,.budget-filter-bar,.budget-table,.budget-table-shell
+) :is(p,span,small) {
+  color: var(--ag-text-2) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-receivables .receivables-page :is(
+  .receivable-kpis > article,.receivable-kpis > div,.receivable-table-card
+) {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: linear-gradient(145deg, #2b3942, #172229) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-receivables .receivables-page :is(
+  .receivable-kpis,.receivable-table-card
+) :is(h2,h3,strong,label,th,td) {
+  color: var(--ag-text) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-receivables .receivables-page :is(
+  .receivable-kpis,.receivable-table-card
+) :is(p,span,small) {
+  color: var(--ag-text-2) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-settings .access-note {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: linear-gradient(145deg, #2a3841, #172229) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-settings .access-note :is(h2,h3,strong) {
+  color: var(--ag-text) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-settings .access-note :is(p,span,small) {
+  color: var(--ag-text-2) !important;
+}
+
+html body .app[data-theme="neo"] :is(.data-table,.premium-table,.budget-table,.payment-ledger-table,.receivable-table-card) {
+  color: var(--ag-text) !important;
+  background-color: rgba(9,18,24,.42) !important;
+  background-image: none !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-finance .finance-report :is(
+  .finance-report-actions,.report-filter-summary,.finance-primary-metrics > .metric,
+  .finance-gadget-grid > .finance-gadget,.finance-gadget-grid > .finance-gadget > .metric,
+  .finance-metrics > .metric,
+  .dashboard-grid > .panel,.report-section,.payment-ledger
+) {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: linear-gradient(145deg, #2a3841, #172229) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight), var(--ag-shadow-soft) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-finance .finance-report :is(
+  .finance-report-actions,.report-filter-summary,.metric,.finance-gadget,.panel,.report-section,.payment-ledger
+) :is(h2,h3,h4,strong,label,th,td) {
+  color: var(--ag-text) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-finance .finance-report :is(
+  .finance-report-actions,.report-filter-summary,.metric,.finance-gadget,.panel,.report-section,.payment-ledger
+) :is(p,span,small) {
+  color: var(--ag-text-2) !important;
+}
+
+html body > .app[data-theme="neo"] > main.main.page-finance .finance-report .report-filter-summary > * {
+  color: var(--ag-text) !important;
+  background: rgba(255,255,255,.075) !important;
+}
+
+html body .app[data-theme="neo"] :is(.data-table th,.data-table td,.premium-table-row > span,.budget-table th,.budget-table td,.payment-ledger-table th,.payment-ledger-table td) {
+  color: var(--ag-text) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+html body .app[data-theme="neo"] :is(.drawer,.modal,.budget-dialog,.confirm-modal) :is(h1,h2,h3,h4,strong,label) {
+  color: var(--ag-text) !important;
+}
+
+html body .app[data-theme="neo"] :is(.drawer,.modal,.budget-dialog,.confirm-modal) :is(p,span,small) {
+  color: var(--ag-text-2) !important;
+}
+
+html body .app[data-theme="neo"] :is(.drawer,.modal,.budget-dialog,.confirm-modal) :is(input,select,textarea) {
+  color: var(--ag-text) !important;
+  -webkit-text-fill-color: var(--ag-text) !important;
+  background-color: rgba(7,15,21,.74) !important;
+}
+
+html body > .app[data-theme="neo"] > .drawer-backdrop > aside.drawer {
+  color: var(--ag-text) !important;
+  background: linear-gradient(145deg, #34434d, #111c23) !important;
+}
+
+html body > .app[data-theme="neo"] > .drawer-backdrop > aside.drawer :is(
+  .detail-metric,.detail-task,.task-detail-row,.payment-box,.payment-row,
+  .drawer-control-card,.project-notes-box
+) {
+  color: var(--ag-text) !important;
+  border-color: var(--ag-line) !important;
+  background: linear-gradient(145deg, #2a3841, #172229) !important;
+  box-shadow: inset 0 1px 0 var(--ag-highlight) !important;
+}
+
+html body > .app[data-theme="neo"] > .drawer-backdrop > aside.drawer :is(
+  h1,h2,h3,h4,.drawer-title,strong,label,.detail-metric strong,.detail-task strong
+) {
+  color: var(--ag-text) !important;
+  background: transparent !important;
+}
+
+html body > .app[data-theme="neo"] > .drawer-backdrop > aside.drawer :is(
+  p,span,small,.drawer-subtitle,.detail-metric span,.detail-task span
+) {
+  color: var(--ag-text-2) !important;
+}
+
+html body > .app[data-theme="neo"] > .drawer-backdrop > aside.drawer :is(
+  .detail-task,.task-detail-row,.payment-row
+) :is(input,button) {
+  flex: 0 0 auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app[data-theme="neo"] *,
+  .app[data-theme="neo"] *::before,
+  .app[data-theme="neo"] *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media print {
+  html,body { color-scheme: light !important; background: #fff !important; }
+  body { padding: 0 !important; color: #111 !important; }
+  .app[data-theme="neo"] { color: #111 !important; background: #fff !important; border: 0 !important; box-shadow: none !important; }
+  .app[data-theme="neo"] :is(.sidebar,.topbar,.bottom-nav,.top-actions,.work-module-nav,.no-print) { display: none !important; }
+  .app[data-theme="neo"] :is(.panel,.work-section,.diary-entry,.data-table,.budget-table) {
+    color: #111 !important;
+    border: 1px solid #d6d6d6 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .app[data-theme="neo"] * { color: #111 !important; text-shadow: none !important; }
+}

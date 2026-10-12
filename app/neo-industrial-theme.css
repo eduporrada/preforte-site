@@ -1,0 +1,4702 @@
+/*
+ * Preforte neo-industrial theme
+ * Visual-only layer. It intentionally loads after the legacy styles so the
+ * application logic and component structure remain untouched.
+ */
+
+:root {
+  color-scheme: light;
+  --canvas: #f5f4f2;
+  --canvas-deep: #f2f1ef;
+  --shell: #f5f4f2;
+  --shell-deep: #ffffff;
+  --sidebar: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #e8e7e4;
+  --surface-3: #f2f1ef;
+  --card: #ffffff;
+  --card-hover: #f2f1ef;
+  --field: #f2f1ef;
+  --text: #1a1a1a;
+  --text-soft: #1a1a1a;
+  --muted: #6b6b6b;
+  --muted-2: #6b6b6b;
+  --line: #e8e7e4;
+  --line-strong: #e8e7e4;
+  --brand: #e5322d;
+  --brand-soft: #e8e7e4;
+  --red: #e5322d;
+  --blue: #1a1a1a;
+  --green: #1a1a1a;
+  --yellow: #e5322d;
+  --orange: #e5322d;
+  --blue-soft: #e8e7e4;
+  --green-soft: #e8e7e4;
+  --yellow-soft: #e8e7e4;
+  --shadow-shell: none;
+  --shadow-card: none;
+  --shadow-float: none;
+  --radius-shell: 0;
+  --radius-xl: 30px;
+  --radius-lg: 26px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+}
+
+/* Final cascade for annotated readability fixes. */
+.app[data-theme="neo"] .page-projects .column { border-top: 0 !important; }
+.app[data-theme="neo"] .page-projects .column::before { display: none !important; }
+.app[data-theme="neo"] .page-projects .column-head {
+  border-top: 8px solid var(--column-accent) !important;
+  background: color-mix(in srgb, var(--column-accent) 9%, #fff) !important;
+}
+.app[data-theme="neo"] .page-projects .card-financial-grid strong,
+.app[data-theme="neo"] .page-projects .card-meta span,
+.app[data-theme="neo"] .page-projects .payment-state { white-space: nowrap !important; }
+.app[data-theme="neo"] .page-projects .card { border-left: 5px solid var(--project-accent) !important; }
+.app[data-theme="neo"] .page-projects .task-list { max-height: none !important; overflow: visible !important; }
+.app[data-theme="neo"] .page-projects .payment-state.paid { color: #fff !important; background: #1e5638 !important; border-color: #1e5638 !important; }
+.app[data-theme="neo"] .finance-report .filters,
+.app[data-theme="neo"] .finance-report .filter-group { background: transparent !important; }
+.app[data-theme="neo"] .finance-report :is(select, input) { color: #1a1a1a !important; background: #fff !important; }
+.app[data-theme="neo"] .page-projects .board-surface {
+  min-height: calc(100vh - 120px) !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.app[data-theme="neo"] .page-projects .kanban {
+  align-items: flex-start !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+.app[data-theme="neo"] .page-projects .column {
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+  align-self: flex-start !important;
+}
+.app[data-theme="neo"] .page-projects .column-cards {
+  max-height: none !important;
+  overflow: visible !important;
+  grid-auto-rows: max-content !important;
+}
+.app[data-theme="neo"] .page-projects .card {
+  flex: 0 0 auto !important;
+  min-height: max-content !important;
+  background-image: linear-gradient(to right, var(--project-accent) 0 5px, transparent 5px) !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Light, high-contrast construction payment form. */
+.app[data-theme="neo"] .construction-payment-form,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form {
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+  color-scheme: light !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form label,
+.app[data-theme="neo"] .construction-payment-form label > span,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form label,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form label > span {
+  color: #3f3f3f !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form :is(input, select),
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form :is(input, select) {
+  color: #1a1a1a !important;
+  background-color: #ffffff !important;
+  border: 1px solid #c9c7c2 !important;
+  color-scheme: light !important;
+  opacity: 1 !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form :is(input, select):focus,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form :is(input, select):focus {
+  outline: 2px solid #e5322d !important;
+  outline-offset: 1px !important;
+  border-color: #e5322d !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form input::placeholder,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form input::placeholder {
+  color: #77736f !important;
+  opacity: 1 !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form option,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form option {
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form .primary-button,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form .primary-button {
+  color: #1a1a1a !important;
+  background: #f2f1ef !important;
+  border: 1px solid #c9c7c2 !important;
+}
+
+.app[data-theme="neo"] .construction-payment-form .primary-button:hover,
+.construction-panel-drawer.app[data-theme="neo"] .construction-payment-form .primary-button:hover {
+  color: #ffffff !important;
+  background: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Project payment entry with explicit date. */
+.app[data-theme="neo"] .project-payment-box {
+  display: grid !important;
+  grid-template-columns: minmax(150px, .7fr) minmax(180px, 1fr) auto !important;
+  align-items: end !important;
+  gap: 10px !important;
+}
+.app[data-theme="neo"] .project-payment-box label { display: grid !important; gap: 6px !important; color: #4b4b4b !important; font-size: 12px !important; }
+.app[data-theme="neo"] .project-payment-box :is(input, button) { min-height: 44px !important; }
+.app[data-theme="neo"] .priority-picker-two { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+/* Persistent construction cover image. */
+.app[data-theme="neo"] .work-card-cover { position: relative !important; isolation: isolate; overflow: hidden !important; }
+.app[data-theme="neo"] .work-cover-image {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  background: #1a1a1a !important;
+}
+.app[data-theme="neo"] .work-card-cover > :not(.work-cover-image) { position: relative !important; z-index: 1 !important; }
+.app[data-theme="neo"] .work-cover-image[data-loaded="true"] + .work-status-completed,
+.app[data-theme="neo"] .work-cover-image[data-loaded="true"] + .work-status-progress { box-shadow: 0 0 0 999px rgba(0, 0, 0, .08) inset; }
+.app[data-theme="neo"] .work-card-menu { z-index: 80 !important; }
+.app[data-theme="neo"] .work-card-menu button { display: flex !important; align-items: center !important; gap: 8px !important; }
+
+/* Simplified finance overview and readable payment ledger. */
+.app[data-theme="neo"] .finance-report { color: #1a1a1a !important; background: #f5f4f2 !important; }
+.app[data-theme="neo"] .finance-report :is(.legacy-finance-filters, .report-filter-summary, .finance-metrics, .report-bottom-grid) { display: none !important; }
+.app[data-theme="neo"] .finance-report-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  margin-bottom: 18px !important;
+  padding: 18px 20px !important;
+  border: 1px solid #e0ded9 !important;
+  border-radius: 24px !important;
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+}
+.app[data-theme="neo"] .finance-report-actions p { margin: 5px 0 0 !important; color: #6b6b6b !important; }
+.app[data-theme="neo"] .finance-primary-metrics {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin-bottom: 30px !important;
+}
+.app[data-theme="neo"] .finance-primary-metrics .metric {
+  min-height: 190px !important;
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+  border: 1px solid #e0ded9 !important;
+  border-radius: 28px !important;
+}
+.app[data-theme="neo"] .finance-gadget-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin: 0 0 30px !important;
+}
+.app[data-theme="neo"] .finance-gadget {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  animation: finance-gadget-enter .45s ease both;
+}
+.app[data-theme="neo"] .finance-gadget .metric {
+  min-height: 150px !important;
+  padding-bottom: 38px !important;
+  color: #ffffff !important;
+  background: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+.app[data-theme="neo"] .finance-gadget :is(.metric-head, .metric-note, .metric-value, .metric-icon) { color: #ffffff !important; }
+.app[data-theme="neo"] .finance-gadget:nth-child(2) .metric { color: #1a1a1a !important; background: #e8e7e4 !important; border-color: #e8e7e4 !important; }
+.app[data-theme="neo"] .finance-gadget:nth-child(2) :is(.metric-head, .metric-note, .metric-value, .metric-icon) { color: #1a1a1a !important; }
+.app[data-theme="neo"] .gadget-caption { position: absolute; left: 22px; bottom: 15px; color: #9b9b9b; font-size: 11px; }
+@keyframes finance-gadget-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.app[data-theme="neo"] .finance-report :is(.panel, .report-section, .payment-ledger) { color: #1a1a1a !important; background: #ffffff !important; }
+.app[data-theme="neo"] .finance-report :is(h2, h3, th, td, strong, .panel-sub, .empty-copy) { color: #1a1a1a !important; }
+.app[data-theme="neo"] .finance-report .panel-sub { color: #6b6b6b !important; }
+.app[data-theme="neo"] .finance-report .data-table { width: 100% !important; min-width: 760px; table-layout: auto !important; }
+.app[data-theme="neo"] .finance-report .data-table :is(th, td) { padding: 14px 12px !important; white-space: nowrap !important; background: #ffffff !important; border-bottom: 1px solid #e8e7e4 !important; }
+.app[data-theme="neo"] .finance-report .data-table th { color: #5f5f5f !important; background: #f2f1ef !important; }
+.app[data-theme="neo"] .payment-ledger { margin-top: 20px !important; border-radius: 28px !important; }
+.app[data-theme="neo"] .payment-month-group { margin-top: 20px; border: 1px solid #e8e7e4; border-radius: 8px; overflow: hidden; }
+.app[data-theme="neo"] .payment-month-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 18px; background: #f2f1ef; }
+.app[data-theme="neo"] .payment-month-heading h3 { margin: 0; text-transform: capitalize; }
+.app[data-theme="neo"] .payment-ledger-table tfoot td { font-weight: 700 !important; background: #f2f1ef !important; }
+.app[data-theme="neo"] .payment-ledger-total { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; padding: 20px; border-radius: 999px; color: #ffffff; background: #1a1a1a; }
+.app[data-theme="neo"] .payment-ledger-total strong { color: #ffffff !important; font-size: 24px; }
+
+@media (max-width: 760px) {
+  .app[data-theme="neo"] .project-payment-box,
+  .app[data-theme="neo"] .finance-primary-metrics,
+  .app[data-theme="neo"] .finance-gadget-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .app[data-theme="neo"] .finance-report-actions { align-items: stretch !important; flex-direction: column !important; }
+}
+
+/* Clear, self-explanatory actions in accounts receivable. */
+.app[data-theme="neo"] .receivables-page .premium-table-row {
+  grid-template-columns: minmax(210px, 1.5fr) .65fr .65fr .75fr .75fr minmax(250px, 1.15fr) !important;
+}
+.app[data-theme="neo"] .receivables-page .row-actions {
+  display: flex !important;
+  align-items: center !important;
+  flex-flow: row nowrap !important;
+  gap: 8px !important;
+}
+.app[data-theme="neo"] .receivables-page .row-actions button {
+  display: inline-flex !important;
+  width: auto !important;
+  min-height: 36px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  padding: 0 12px !important;
+  border: 1px solid #d8d6d1 !important;
+  border-radius: 999px !important;
+  color: #1a1a1a !important;
+  background: #f2f1ef !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+.app[data-theme="neo"] .receivables-page .row-actions .register-button {
+  color: #ffffff !important;
+  background: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+.app[data-theme="neo"] .receivables-page .row-actions button svg {
+  width: 15px !important;
+  height: 15px !important;
+  flex: 0 0 auto !important;
+  color: currentColor !important;
+}
+@media (max-width: 760px) {
+  .app[data-theme="neo"] .receivables-page .row-actions { flex-wrap: wrap !important; }
+}
+
+/* Final cascade: force light, readable surfaces in the annotated views. */
+.construction-panel-drawer.app[data-theme="neo"],
+.construction-panel-drawer.app[data-theme="neo"] :is(.work-dashboard, .work-module-content, .work-dashboard-header) { color: #1a1a1a !important; background: #f5f4f2 !important; }
+.construction-panel-drawer.app[data-theme="neo"] :is(h1, h2, h3, h4, strong, label, dt, dd) { color: #1a1a1a !important; }
+.construction-panel-drawer.app[data-theme="neo"] :is(p, small) { color: #5f5f5f !important; }
+.construction-panel-drawer.app[data-theme="neo"] :is(.panel, .work-finance-strip, .work-module-nav, .budget-workspace, .work-section) { border-color: #e1dfdb !important; background: #fff !important; color: #1a1a1a !important; }
+.app[data-theme="neo"] .finance-report :is(.finance-toolbar, .report-filter-summary) { border: 1px solid #d8d6d1 !important; color: #1a1a1a !important; background: #fff !important; }
+.app[data-theme="neo"] .finance-report .filter-group { display: flex !important; align-items: center !important; gap: 10px !important; background: transparent !important; }
+.app[data-theme="neo"] .finance-report .date-filter { display: inline-flex !important; align-items: center !important; gap: 7px !important; min-height: 44px; padding: 0 8px 0 12px !important; border: 1px solid #d8d6d1 !important; color: #4b4b4b !important; background: #fff !important; overflow: hidden; white-space: nowrap; }
+.app[data-theme="neo"] .finance-report .date-filter input { width: 140px !important; min-width: 0 !important; height: 38px !important; padding: 0 8px !important; border: 0 !important; color: #1a1a1a !important; background: #fff !important; }
+.app[data-theme="neo"] .finance-report .report-filter-summary span { border-color: #d8d6d1 !important; color: #1a1a1a !important; background: #f2f1ef !important; }
+.app[data-theme="neo"] .receivables-page :is(.receivable-kpis > div, .receivable-table-card, .premium-table-row) { color: #1a1a1a !important; background-color: #fff !important; }
+.app[data-theme="neo"] .receivables-page :is(h2, strong, .premium-table-row > span) { color: #1a1a1a !important; }
+.app[data-theme="neo"] .receivables-page :is(p, small) { color: #5f5f5f !important; }
+.app[data-theme="neo"] .receivables-page .inline-search { border: 1px solid #d8d6d1 !important; color: #1a1a1a !important; background: #fff !important; }
+.app[data-theme="neo"] .receivables-page .inline-search input { color: #1a1a1a !important; background: transparent !important; }
+
+/* Final light-surface corrections for finance, receivables and the construction drawer. */
+.construction-panel-drawer.app[data-theme="neo"] {
+  display: block !important;
+  color: #1a1a1a !important;
+  background: #f5f4f2 !important;
+}
+.construction-panel-drawer.app[data-theme="neo"] .work-dashboard,
+.construction-panel-drawer.app[data-theme="neo"] .work-module-content,
+.construction-panel-drawer.app[data-theme="neo"] .work-dashboard-header {
+  color: #1a1a1a !important;
+  background: #f5f4f2 !important;
+}
+.construction-panel-drawer.app[data-theme="neo"] :is(h1, h2, h3, h4, strong, label, dt, dd) { color: #1a1a1a !important; }
+.construction-panel-drawer.app[data-theme="neo"] :is(p, small, span) { color: #5f5f5f; }
+.construction-panel-drawer.app[data-theme="neo"] :is(.panel, .work-finance-strip, .work-module-nav, .budget-workspace, .work-section) {
+  border-color: #e1dfdb !important;
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+.construction-panel-drawer.app[data-theme="neo"] .work-module-nav button.active,
+.construction-panel-drawer.app[data-theme="neo"] .primary-button {
+  color: #fff !important;
+  background: #1a1a1a !important;
+}
+.construction-panel-drawer.app[data-theme="neo"] .work-module-nav button.active * { color: #fff !important; }
+
+.app[data-theme="neo"] .finance-report .finance-toolbar {
+  align-items: center !important;
+  border: 1px solid #d8d6d1 !important;
+  background: #fff !important;
+}
+.app[data-theme="neo"] .finance-report .filter-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: transparent !important;
+}
+.app[data-theme="neo"] .finance-report .date-filter {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  min-height: 44px;
+  padding: 0 8px 0 12px !important;
+  border: 1px solid #d8d6d1 !important;
+  color: #4b4b4b !important;
+  background: #fff !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.app[data-theme="neo"] .finance-report .date-filter input {
+  width: 140px !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  padding: 0 8px !important;
+  border: 0 !important;
+  color: #1a1a1a !important;
+  background: #fff !important;
+}
+.app[data-theme="neo"] .finance-report .report-filter-summary {
+  border: 1px solid #e1dfdb !important;
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+.app[data-theme="neo"] .finance-report .report-filter-summary span {
+  border-color: #d8d6d1 !important;
+  color: #1a1a1a !important;
+  background: #f2f1ef !important;
+}
+
+.app[data-theme="neo"] .receivables-page,
+.app[data-theme="neo"] .receivables-page :is(.receivable-kpis > div, .receivable-table-card, .premium-table-row) {
+  color: #1a1a1a !important;
+}
+.app[data-theme="neo"] .receivables-page :is(p, small) { color: #5f5f5f !important; }
+.app[data-theme="neo"] .receivables-page :is(h2, strong, .premium-table-row > span) { color: #1a1a1a !important; }
+.app[data-theme="neo"] .receivables-page .inline-search {
+  border: 1px solid #d8d6d1 !important;
+  color: #1a1a1a !important;
+  background: #fff !important;
+}
+.app[data-theme="neo"] .receivables-page .inline-search input {
+  color: #1a1a1a !important;
+  background: transparent !important;
+}
+.app[data-theme="neo"] .receivables-page .row-actions button:not(.register-button) {
+  color: #1a1a1a !important;
+  background: #f2f1ef !important;
+}
+
+@media (max-width: 760px) {
+  .app[data-theme="neo"] .finance-report .filter-group { align-items: stretch !important; flex-direction: column; }
+  .app[data-theme="neo"] .finance-report .date-filter,
+  .app[data-theme="neo"] .finance-report .date-filter input { width: 100% !important; }
+}
+
+.app[data-theme="neo"] .page-projects .card {
+  border-left: 5px solid var(--project-accent) !important;
+}
+
+.app[data-theme="neo"] .page-projects .task-list {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.app[data-theme="neo"] .page-projects .payment-state.paid {
+  color: #fff !important;
+  background: #1e5638 !important;
+  border-color: #1e5638 !important;
+}
+
+.app[data-theme="neo"] .project-notes-box {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #e1dfdb;
+  background: #f5f4f2;
+}
+
+.app[data-theme="neo"] .project-notes-box textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 112px;
+  padding: 12px;
+  border: 1px solid #d8d6d1;
+  border-radius: 6px;
+  color: #1a1a1a;
+  background: #fff;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.app[data-theme="neo"] .construction-payments { display: grid; gap: 20px; }
+.app[data-theme="neo"] .construction-payment-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid #e1dfdb;
+}
+.app[data-theme="neo"] .construction-payment-summary article { display: grid; gap: 7px; padding: 18px; border-right: 1px solid #e1dfdb; }
+.app[data-theme="neo"] .construction-payment-summary article:last-child { border-right: 0; }
+.app[data-theme="neo"] .construction-payment-summary span { color: #6b6b6b; font-size: 12px; }
+.app[data-theme="neo"] .construction-payment-summary strong { color: #1a1a1a; font-family: var(--font-mono); font-size: 22px; }
+.app[data-theme="neo"] .construction-payment-form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
+.app[data-theme="neo"] .construction-payment-form label { display: grid; gap: 6px; color: #4b4b4b; font-size: 12px; }
+.app[data-theme="neo"] .construction-payment-form :is(input, select) { min-height: 44px; padding: 0 12px; border: 1px solid #d8d6d1; border-radius: 6px; color: #1a1a1a; background: #fff; }
+.app[data-theme="neo"] .construction-payment-list { border-top: 1px solid #e1dfdb; }
+.app[data-theme="neo"] .construction-payment-list > div { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; padding: 14px 4px; border-bottom: 1px solid #e1dfdb; color: #4b4b4b; }
+.app[data-theme="neo"] .construction-payment-list strong { color: #1a1a1a; }
+
+.app[data-theme="neo"] .finance-report,
+.app[data-theme="neo"] .finance-report :is(section, article, table, thead, tbody, tr, td, th) { color: #1a1a1a; }
+.app[data-theme="neo"] .finance-report .filters,
+.app[data-theme="neo"] .finance-report .filter-group { background: transparent !important; }
+.app[data-theme="neo"] .finance-report :is(select, input) { color: #1a1a1a !important; background: #fff !important; border-color: #d8d6d1 !important; }
+.app[data-theme="neo"] .finance-report :is(p, small, .metric-note) { color: #5f5f5f !important; }
+
+@media (max-width: 760px) {
+  .app[data-theme="neo"] .construction-payment-summary,
+  .app[data-theme="neo"] .construction-payment-form { grid-template-columns: 1fr; }
+  .app[data-theme="neo"] .construction-payment-summary article { border-right: 0; border-bottom: 1px solid #e1dfdb; }
+}
+
+/* July 31: readability, streamlined cards and contextual construction panel */
+.app[data-theme="neo"] .insight-strip article > svg {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 10px !important;
+  box-sizing: content-box;
+  color: #fff !important;
+  background: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  opacity: 1 !important;
+  stroke-width: 2.2 !important;
+}
+
+.app[data-theme="neo"] .settings-grid .tag.good,
+.app[data-theme="neo"] .mini-row > .tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 28px;
+  padding: 0 12px !important;
+  line-height: 1 !important;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.app[data-theme="neo"] .archive-page {
+  display: grid !important;
+  align-content: start;
+  gap: 18px !important;
+}
+
+.app[data-theme="neo"] .archive-intro {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  min-height: 0 !important;
+  padding: 24px !important;
+}
+
+.app[data-theme="neo"] .archive-intro > div {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.app[data-theme="neo"] .archive-intro :is(h2, p),
+.app[data-theme="neo"] .archive-empty :is(strong, p) {
+  position: static !important;
+  transform: none !important;
+  margin: 0 !important;
+  line-height: 1.45 !important;
+}
+
+.app[data-theme="neo"] .archive-count {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.app[data-theme="neo"] .archive-grid {
+  align-items: start !important;
+}
+
+.app[data-theme="neo"] .archive-empty {
+  grid-column: 1 / -1;
+  min-height: 180px !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 28px !important;
+  text-align: center;
+}
+
+.app[data-theme="neo"] .time-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.app[data-theme="neo"] .time-kpis article {
+  min-height: 132px;
+  padding: 20px !important;
+}
+
+.app[data-theme="neo"] .time-kpis article > svg {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 9px;
+  box-sizing: content-box;
+  color: #fff !important;
+  background: #1a1a1a !important;
+  border-radius: 999px;
+  opacity: 1 !important;
+  stroke-width: 2.2 !important;
+}
+
+.app[data-theme="neo"] .time-kpis span,
+.app[data-theme="neo"] .time-panel header span {
+  color: #4a4a4a !important;
+  font-size: 13px !important;
+}
+
+.app[data-theme="neo"] .time-kpis strong { font-size: 28px !important; }
+.app[data-theme="neo"] .time-kpis small,
+.app[data-theme="neo"] .time-panel small { color: #616161 !important; font-size: 12px !important; line-height: 1.45; }
+.app[data-theme="neo"] .time-panel h2 { font-size: 22px !important; }
+
+.app[data-theme="neo"] .page-projects .column {
+  border-top: 0 !important;
+  overflow: visible !important;
+}
+
+.app[data-theme="neo"] .page-projects .column::before { display: none !important; }
+
+.app[data-theme="neo"] .page-projects .column-head {
+  border-top: 8px solid var(--column-accent) !important;
+  border-radius: 24px 24px 0 0;
+  padding-top: 17px !important;
+  background: color-mix(in srgb, var(--column-accent) 9%, #fff) !important;
+}
+
+.app[data-theme="neo"] .page-projects .card-financial-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.app[data-theme="neo"] .page-projects .card-financial-grid > span { min-width: 0; }
+.app[data-theme="neo"] .page-projects .card-financial-grid strong {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap !important;
+  font-size: 12px !important;
+}
+
+.app[data-theme="neo"] .page-projects .card-bottom {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+}
+
+.app[data-theme="neo"] .page-projects .card-meta {
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-wrap: nowrap !important;
+}
+
+.app[data-theme="neo"] .page-projects .card-meta span,
+.app[data-theme="neo"] .page-projects .late-pill,
+.app[data-theme="neo"] .page-projects .payment-state {
+  white-space: nowrap !important;
+}
+
+.app[data-theme="neo"] .page-projects .payment-state {
+  flex: 0 0 auto;
+  font-size: 10px !important;
+}
+
+.construction-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  justify-content: flex-end;
+  background: rgb(26 26 26 / 28%);
+}
+
+.construction-panel-drawer {
+  position: relative;
+  width: min(900px, 74vw);
+  height: 100dvh;
+  overflow: auto;
+  background: #f5f4f2;
+  border-left: 1px solid #d7d6d3;
+}
+
+.construction-panel-close {
+  position: sticky;
+  top: 14px;
+  z-index: 20;
+  float: right;
+  width: 42px;
+  height: 42px;
+  margin: 14px 16px -56px 0;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: #1a1a1a;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.construction-panel-drawer .work-dashboard.is-embedded {
+  width: 100%;
+  max-width: none;
+  padding: 22px !important;
+}
+
+@media (max-width: 760px) {
+  .app[data-theme="neo"] .archive-intro { flex-direction: column; }
+  .app[data-theme="neo"] .time-kpis { grid-template-columns: 1fr !important; }
+  .construction-panel-drawer { width: 100vw; }
+  .construction-panel-drawer .work-dashboard.is-embedded { padding: 16px !important; }
+}
+
+html,
+body {
+  min-height: 100%;
+  background: #f5f4f2 !important;
+  color: #1a1a1a;
+}
+
+body {
+  font-family: var(--font-dashboard), Arial, sans-serif;
+  font-size: 14px;
+}
+
+.app,
+.app *,
+.app *::before,
+.app *::after,
+.modal-backdrop,
+.modal-backdrop *,
+.drawer-backdrop,
+.drawer-backdrop * {
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.app {
+  display: grid;
+  width: 100%;
+  max-width: none;
+  min-height: 100dvh;
+  grid-template-columns: 76px minmax(0, 1fr);
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: #f5f4f2 !important;
+  color: #1a1a1a;
+}
+
+/* Shell and navigation */
+.sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  min-height: 100dvh;
+  height: 100dvh;
+  padding: 16px 10px;
+  border-right: 1px solid #e8e7e4;
+  background: #ffffff !important;
+  backdrop-filter: none;
+}
+
+.brand {
+  min-height: 52px;
+  margin-bottom: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e8e7e4;
+}
+
+.brand-mark-compact,
+.mobile-logo {
+  width: 34px;
+  height: 34px;
+  filter: none;
+}
+
+.nav {
+  gap: 4px;
+}
+
+.nav-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent !important;
+  color: #6b6b6b;
+  transition: background-color 130ms ease, color 130ms ease, transform 130ms ease;
+}
+
+.nav-button svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.75;
+}
+
+.nav-button:hover {
+  border-color: #e8e7e4;
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+  transform: none;
+}
+
+.nav-button.active {
+  border-color: #e5322d;
+  background: #e5322d !important;
+  color: #ffffff;
+}
+
+.nav-button > span:last-child:not(.nav-icon) {
+  border: 1px solid #1a1a1a;
+  border-radius: 5px;
+  background: #1a1a1a !important;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.main {
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #f5f4f2 !important;
+}
+
+.topbar {
+  min-height: 104px;
+  padding: 19px 30px;
+  border-bottom: 1px solid #e8e7e4;
+  background: #f5f4f2 !important;
+  backdrop-filter: none;
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.page-title {
+  color: #1a1a1a;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  text-transform: none;
+}
+
+.topbar-date {
+  margin-top: 7px;
+  color: #6b6b6b;
+  font-size: 12px;
+}
+
+.top-actions {
+  gap: 8px;
+}
+
+.primary-button,
+.secondary-button,
+.ghost-button,
+.icon-button,
+.back-button,
+.register-button,
+.delete-button,
+.delete-confirm-button {
+  min-height: 42px;
+  border-radius: 999px;
+  padding-inline: 18px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.primary-button {
+  border: 1px solid #1a1a1a;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.primary-button:hover {
+  border-color: #e5322d;
+  background: #e5322d !important;
+  color: #ffffff;
+  transform: none;
+}
+
+.secondary-button,
+.ghost-button,
+.back-button {
+  border: 1px solid #e8e7e4;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.secondary-button:hover,
+.ghost-button:hover,
+.back-button:hover {
+  border-color: #1a1a1a;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.icon-button,
+.close-button {
+  width: 42px;
+  padding: 0;
+  border: 1px solid #e8e7e4;
+  border-radius: 50%;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.icon-button:hover,
+.close-button:hover {
+  border-color: #1a1a1a;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.notification-button > span {
+  border-color: #f5f4f2;
+  background: #e5322d !important;
+}
+
+.content-wrap,
+.home-page,
+.board-surface {
+  padding: 28px 30px 42px;
+}
+
+.loading {
+  color: #6b6b6b;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Dashboard */
+.home-page {
+  gap: 18px;
+}
+
+.home-summary-grid {
+  gap: 14px;
+}
+
+.home-summary-grid article,
+.home-chart-card,
+.insight-strip article,
+.metric,
+.panel,
+.time-kpis article,
+.time-panel,
+.receivable-kpis > div,
+.receivable-table-card {
+  border: 1px solid #e8e7e4;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.home-summary-grid article {
+  min-height: 190px;
+  padding: 22px;
+  border-radius: 7px;
+}
+
+.home-summary-grid article:nth-child(2),
+.home-summary-grid article:nth-child(4) {
+  border-radius: 30px;
+}
+
+.home-summary-grid article:nth-child(3) {
+  border-color: #1a1a1a;
+  border-radius: 30px;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.home-summary-grid article::after {
+  display: none;
+}
+
+.summary-card-head {
+  color: #6b6b6b;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.summary-card-head svg {
+  width: 15px;
+  height: 15px;
+  padding: 9px;
+  border: 1px solid #e8e7e4;
+  border-radius: 50%;
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.home-summary-grid article:nth-child(3) .summary-card-head,
+.home-summary-grid article:nth-child(3) > small {
+  color: #e8e7e4;
+}
+
+.home-summary-grid article:nth-child(3) .summary-card-head svg {
+  border-color: #ffffff;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.home-summary-grid article > strong,
+.metric-value,
+.time-kpis strong,
+.receivable-kpis strong,
+.chart-total,
+.report-leading-category > strong,
+.work-finance-strip strong,
+.budget-summary-row strong,
+.report-highlight-grid strong {
+  font-family: var(--font-dashboard-mono), monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-summary-grid article > strong {
+  margin: 30px 0 14px;
+  color: #1a1a1a;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.07em;
+}
+
+.home-summary-grid article:nth-child(3) > strong {
+  color: #ffffff;
+}
+
+.home-summary-grid article > small {
+  color: #6b6b6b;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.home-summary-grid article:last-child > small:hover {
+  color: #e5322d;
+}
+
+.home-charts-grid {
+  gap: 14px;
+}
+
+.home-chart-card {
+  min-height: 352px;
+  padding: 24px;
+  border-radius: 7px;
+}
+
+.home-chart-card:nth-child(2) {
+  border-radius: 30px;
+}
+
+.home-chart-card header span,
+.home-chart-card header > small,
+.time-panel header span,
+.time-panel header > small {
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.home-chart-card header h2,
+.time-panel header h2 {
+  margin-top: 6px;
+  color: #1a1a1a;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.project-bars,
+.revenue-spark {
+  gap: 7px;
+}
+
+.project-bars > div,
+.revenue-spark > div {
+  position: relative;
+  border-right: 1px solid #e8e7e4;
+}
+
+.project-bars > div > span,
+.revenue-spark > div > span {
+  width: clamp(28px, 4.2vw, 56px);
+  overflow: visible;
+  border-radius: 0;
+  background: #e8e7e4 !important;
+}
+
+.project-bars i,
+.revenue-spark > div > span,
+.revenue-spark > div > span.current {
+  min-height: 8px;
+  border-radius: 0;
+  background: #1a1a1a !important;
+}
+
+.project-bars > div:last-child i,
+.revenue-spark > div:last-child > span,
+.revenue-spark > div > span.current {
+  background: #e5322d !important;
+}
+
+.project-bars b {
+  color: #1a1a1a;
+  font-family: var(--font-dashboard-mono), monospace;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.project-bars small,
+.revenue-spark small {
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.chart-total {
+  color: #1a1a1a;
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.home-chart-card > p {
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.insight-strip {
+  gap: 14px;
+}
+
+.insight-strip article {
+  min-height: 112px;
+  border-radius: 7px;
+  padding: 18px;
+}
+
+.insight-strip article:first-child {
+  border-color: #e5322d;
+  border-radius: 28px;
+  background: #e5322d !important;
+  color: #ffffff;
+}
+
+.insight-strip article > svg {
+  width: 16px;
+  height: 16px;
+  padding: 10px;
+  border: 1px solid #e8e7e4;
+  border-radius: 50%;
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.insight-strip article:first-child > svg {
+  border-color: #ffffff;
+  background: #ffffff !important;
+}
+
+.insight-strip span,
+.insight-strip small {
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.insight-strip strong {
+  color: #1a1a1a;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.insight-strip article:first-child span,
+.insight-strip article:first-child small,
+.insight-strip article:first-child strong {
+  color: #ffffff;
+}
+
+/* Kanban */
+.board-surface {
+  background: #f5f4f2 !important;
+}
+
+.kanban-toolbar {
+  margin-bottom: 18px;
+}
+
+.kanban-status-copy {
+  gap: 4px;
+}
+
+.kanban-status-copy span,
+.kanban-status-copy strong {
+  color: #6b6b6b;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kanban-status-copy strong {
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.kanban-toolbar-controls > span,
+.archive-count,
+.report-filter-summary span {
+  min-height: 36px;
+  border: 1px solid #1a1a1a;
+  background: #ffffff !important;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kanban {
+  gap: 14px;
+  min-height: calc(100dvh - 225px);
+  padding: 0 1px 18px;
+}
+
+.column,
+.add-column-shell {
+  flex-basis: 316px;
+  width: 316px;
+}
+
+.column {
+  --column-accent: #1a1a1a;
+  max-height: calc(100dvh - 230px);
+  border: 1px solid #e8e7e4;
+  border-top: 4px solid #1a1a1a;
+  border-radius: 28px;
+  background: #ffffff !important;
+}
+
+.column[data-column-id="stopped"] {
+  --column-accent: #e5322d;
+  border-top-color: #e5322d;
+}
+
+.column[data-column-id="progress"],
+.column[data-column-id="done"],
+.column[data-column-id="backlog"] {
+  --column-accent: #1a1a1a;
+}
+
+.column.drag-over {
+  border-color: #e5322d;
+  background: #e8e7e4 !important;
+  transform: translateY(-2px);
+}
+
+.column-head {
+  min-height: 62px;
+  padding: 14px 16px 11px;
+  border-bottom: 1px solid #e8e7e4;
+}
+
+.column-title {
+  gap: 7px;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  text-transform: none;
+}
+
+.column-title::before {
+  width: 7px;
+  height: 7px;
+  background: var(--column-accent) !important;
+}
+
+.count {
+  min-width: auto;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: transparent !important;
+  color: #6b6b6b;
+  font-family: var(--font-dashboard-mono), monospace;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.count::before {
+  content: "/";
+}
+
+.list-menu-button,
+.card-menu-button {
+  border-radius: 50%;
+  background: transparent !important;
+  color: #6b6b6b;
+}
+
+.list-menu-button:hover,
+.card-menu-button:hover {
+  background: #e8e7e4 !important;
+  color: #1a1a1a;
+}
+
+.list-menu,
+.context-menu,
+.work-card-menu {
+  border: 1px solid #1a1a1a;
+  border-radius: 7px;
+  background: #ffffff !important;
+  backdrop-filter: none;
+}
+
+.list-menu button,
+.context-menu button,
+.work-card-menu button {
+  border-radius: 4px;
+  background: #ffffff !important;
+  color: #1a1a1a;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.list-menu button:hover,
+.context-menu button:hover,
+.work-card-menu button:hover {
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.column-cards {
+  gap: 9px;
+  padding: 11px 11px 4px;
+}
+
+.card {
+  --priority-color: #1a1a1a;
+  padding: 14px;
+  border: 1px solid #e8e7e4;
+  border-left: 1px solid #e8e7e4;
+  border-radius: 7px;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.card:hover {
+  border-color: #1a1a1a;
+  background: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.card-priority-urgent,
+.card-priority-high {
+  --priority-color: #e5322d;
+  border-color: #1a1a1a;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.card-priority-medium {
+  --priority-color: #e5322d;
+  border-left: 4px solid #e5322d;
+}
+
+.card-priority-normal,
+.card-priority-low {
+  --priority-color: #1a1a1a;
+}
+
+.priority-tag,
+.service-tag,
+.late-pill,
+.payment-state,
+.status-badge,
+.tag,
+.budget-category-tag,
+.budget-status-tag,
+.diary-entry-tags span {
+  min-height: 24px;
+  border-radius: 999px;
+  padding-inline: 9px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.priority-tag {
+  border-color: #e5322d;
+  background: #e5322d !important;
+  color: #ffffff;
+}
+
+.service-tag {
+  border-color: #e8e7e4;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.card-priority-urgent .service-tag,
+.card-priority-high .service-tag {
+  border-color: #ffffff;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.card-title {
+  margin-top: 15px;
+  color: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.card-client,
+.task-item,
+.card-meta {
+  color: #6b6b6b;
+  font-size: 12px;
+}
+
+.card-priority-urgent .card-client,
+.card-priority-high .card-client,
+.card-priority-urgent .task-item,
+.card-priority-high .task-item,
+.card-priority-urgent .card-meta,
+.card-priority-high .card-meta {
+  color: #e8e7e4;
+}
+
+.task-check {
+  border-radius: 3px;
+  accent-color: #e5322d;
+}
+
+.progress-track,
+.checklist-progress,
+.work-budget-track,
+.timeline-progress {
+  height: 5px;
+  border-radius: 0;
+  background: #e8e7e4 !important;
+}
+
+.progress-fill,
+.checklist-progress > span,
+.work-budget-track > span,
+.timeline-progress > span {
+  border-radius: 0;
+  background: #e5322d !important;
+}
+
+.card-financial-grid {
+  gap: 0;
+  margin-top: 12px;
+  padding: 11px 0;
+  border: 0;
+  border-top: 1px solid #e8e7e4;
+  border-bottom: 1px solid #e8e7e4;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.card-financial-grid > span {
+  padding: 0 8px;
+  border-right: 1px solid #e8e7e4;
+}
+
+.card-financial-grid > span:last-child {
+  border-right: 0;
+}
+
+.card-financial-grid small {
+  color: #6b6b6b;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.card-financial-grid strong {
+  color: inherit;
+  font-family: var(--font-dashboard-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.card-financial-grid > span:nth-child(2) strong,
+.card-financial-grid .has-debt strong {
+  color: inherit;
+}
+
+.card-priority-urgent .card-financial-grid,
+.card-priority-high .card-financial-grid,
+.card-priority-urgent .card-financial-grid > span,
+.card-priority-high .card-financial-grid > span {
+  border-color: #1a1a1a;
+}
+
+.card-priority-urgent .card-financial-grid small,
+.card-priority-high .card-financial-grid small {
+  color: #e8e7e4;
+}
+
+.late-pill,
+.payment-state.pending,
+.tag.pending,
+.status-badge.danger,
+.status-badge.warning {
+  border-color: #e5322d;
+  background: #e5322d !important;
+  color: #ffffff;
+}
+
+.payment-state.paid,
+.tag.good,
+.status-badge.info,
+.bento-icon.blue,
+.bento-icon.red,
+.bento-icon.orange {
+  border-color: #1a1a1a;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.column-add,
+.add-column-shell > button {
+  min-height: 42px;
+  border-radius: 6px;
+  background: transparent !important;
+  color: #6b6b6b;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.column-add:hover,
+.add-column-shell > button:hover {
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.add-column-shell {
+  border: 1px dashed #e8e7e4;
+  border-radius: 7px;
+  background: #ffffff !important;
+}
+
+/* Shared cards, forms and tables */
+.metric-grid,
+.dashboard-grid,
+.settings-grid,
+.time-grid,
+.calculator,
+.report-bottom-grid {
+  gap: 14px;
+}
+
+.metric,
+.panel,
+.time-panel,
+.receivable-table-card {
+  border-radius: 28px;
+}
+
+.metric:nth-child(even),
+.panel:nth-child(even) {
+  border-radius: 7px;
+}
+
+.metric {
+  min-height: 156px;
+  padding: 20px;
+}
+
+.metric-head,
+.metric-note,
+.panel-sub,
+.field-help,
+.receivable-kpis p,
+.receivable-kpis small,
+.time-kpis span,
+.time-kpis small {
+  color: #6b6b6b;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.metric-icon,
+.record-icon,
+.bento-icon {
+  border: 1px solid #e8e7e4;
+  border-radius: 50%;
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.metric-value {
+  color: #1a1a1a;
+  font-size: clamp(34px, 4vw, 50px);
+  font-weight: 400;
+  letter-spacing: -0.075em;
+}
+
+.panel {
+  padding: 22px;
+}
+
+.panel-head h2,
+.section-head h2,
+.pricing-intro h2,
+.archive-intro h2,
+.works-heading h2,
+.work-dashboard-header h2,
+.section-title {
+  color: #1a1a1a;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.field label,
+.field > span,
+.budget-dialog label > span,
+.diary-composer label > span {
+  color: #1a1a1a;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.field input,
+.field select,
+.field textarea,
+.inline-search,
+.add-checklist-form input,
+.add-checklist-form select,
+.payment-box input,
+.task-time-inputs input,
+.budget-dialog input,
+.budget-dialog select,
+.budget-dialog textarea,
+.diary-composer input,
+.diary-composer select,
+.diary-composer textarea {
+  border: 1px solid #e8e7e4;
+  border-radius: 6px;
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+.inline-search:focus-within,
+.add-checklist-form input:focus,
+.payment-box input:focus,
+.budget-dialog input:focus,
+.budget-dialog select:focus,
+.budget-dialog textarea:focus,
+.diary-composer input:focus,
+.diary-composer select:focus,
+.diary-composer textarea:focus {
+  border-color: #e5322d;
+  outline: 0;
+}
+
+.data-table,
+.budget-table {
+  color: #1a1a1a;
+}
+
+.data-table th,
+.data-table td,
+.budget-table th,
+.budget-table td {
+  border-color: #e8e7e4;
+  color: #1a1a1a;
+  font-size: 13px;
+}
+
+.data-table th,
+.budget-table th {
+  background: #f2f1ef !important;
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.data-table tbody tr:hover,
+.budget-table tbody tr:hover,
+.premium-table-row:not(.premium-table-head):hover {
+  background: #f2f1ef !important;
+}
+
+.premium-table,
+.budget-table-shell {
+  overflow: auto;
+  border: 1px solid #e8e7e4;
+  border-radius: 7px;
+  background: #ffffff !important;
+}
+
+.premium-table-row,
+.receivable-row,
+.mini-row,
+.record-row,
+.payment-row,
+.time-ranking > div,
+.task-time-row {
+  border-color: #e8e7e4;
+  border-radius: 5px;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.premium-table-head {
+  background: #f2f1ef !important;
+  color: #6b6b6b;
+}
+
+.ranking-track,
+.report-payment-track {
+  border-radius: 0;
+  background: #e8e7e4 !important;
+}
+
+.ranking-fill,
+.chart-bar,
+.report-payment-track .paid,
+.report-payment-track .pending {
+  --bar: #1a1a1a !important;
+  border-radius: 0;
+  background: #1a1a1a !important;
+}
+
+.ranking-row:first-child .ranking-fill,
+.chart-item:last-child .chart-bar,
+.report-payment-track .pending {
+  background: #e5322d !important;
+}
+
+/* Pricing, archive and construction list */
+.pricing-intro,
+.archive-intro,
+.works-heading,
+.work-dashboard-header {
+  border-color: #e8e7e4;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.pricing-intro {
+  border-radius: 30px;
+}
+
+.calc-result {
+  border: 1px solid #1a1a1a;
+  border-radius: 7px;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.calc-result strong {
+  color: #ffffff;
+  font-family: var(--font-dashboard-mono), monospace;
+  font-weight: 400;
+}
+
+.calc-result span,
+.calc-result small {
+  color: #e8e7e4;
+}
+
+.archive-card,
+.work-card-shell,
+.work-card {
+  border-color: #e8e7e4;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.archive-card {
+  border-radius: 7px;
+}
+
+.archive-card:nth-child(even) {
+  border-radius: 28px;
+}
+
+.priority-dot {
+  background: #e5322d !important;
+}
+
+.work-card-shell {
+  border-radius: 28px;
+}
+
+.work-card-cover {
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.work-card-cover strong,
+.work-card-cover span {
+  color: #ffffff;
+}
+
+.work-card:hover,
+.archive-card:hover {
+  border-color: #1a1a1a;
+  background: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Construction workspace */
+.work-dashboard,
+.budget-workspace,
+.construction-report-workspace,
+.diary-workspace,
+.work-module-content {
+  color: #1a1a1a;
+}
+
+.work-dashboard-header {
+  border: 0;
+  border-bottom: 1px solid #e8e7e4;
+  border-radius: 0;
+}
+
+.editable-work-field,
+.work-inline-facts button,
+.work-inline-facts span {
+  color: #1a1a1a !important;
+}
+
+.work-finance-strip,
+.work-module-layout,
+.work-module-nav,
+.work-module-content,
+.budget-workspace,
+.construction-report-workspace,
+.diary-workspace,
+.report-filter-panel,
+.budget-summary-row,
+.report-visual-summary > article,
+.report-kpi-grid > article,
+.report-highlight-grid > article,
+.cost-analysis-grid > article,
+.diary-composer,
+.diary-print-sheet,
+.diary-feed-aside {
+  border-color: #e8e7e4 !important;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.work-finance-strip,
+.work-module-content,
+.budget-workspace,
+.construction-report-workspace,
+.diary-workspace {
+  border-radius: 28px;
+}
+
+.work-finance-strip article + article,
+.budget-summary-row article + article {
+  border-color: #e8e7e4;
+}
+
+.work-finance-strip span,
+.work-finance-strip small,
+.budget-summary-row span,
+.budget-summary-row small,
+.report-card-title span,
+.report-donut-card small,
+.report-leading-category small,
+.report-payment-legend span {
+  color: #6b6b6b !important;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.work-finance-strip strong,
+.budget-summary-row strong,
+.report-card-title strong,
+.report-donut-card strong,
+.report-leading-category strong,
+.report-payment-legend strong {
+  color: #1a1a1a !important;
+}
+
+.work-module-nav {
+  border-radius: 7px;
+}
+
+.work-module-nav > button,
+.work-tabs button,
+.report-category-filter button,
+.budget-category-filter button {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent !important;
+  color: #6b6b6b;
+}
+
+.work-module-nav > button:hover,
+.work-tabs button:hover,
+.report-category-filter button:hover,
+.budget-category-filter button:hover {
+  border-color: #e8e7e4;
+  color: #1a1a1a;
+}
+
+.work-module-nav > button.active,
+.work-tabs button.active,
+.report-category-filter button.active,
+.budget-category-filter button.active {
+  border-color: #1a1a1a;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.work-module-nav > button svg,
+.work-tabs button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.budget-add-button,
+.diary-print-button {
+  border-radius: 999px;
+}
+
+.budget-category-tag,
+.budget-status-tag {
+  border-color: #1a1a1a !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.budget-status-tag.pending,
+.budget-category-tag[data-category="Outros"] {
+  border-color: #e5322d !important;
+  background: #e5322d !important;
+  color: #ffffff !important;
+}
+
+.budget-row-actions button,
+.row-actions button,
+.member-actions button,
+.work-card-menu-button {
+  border: 1px solid #e8e7e4;
+  border-radius: 50%;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.budget-row-actions button:hover,
+.row-actions button:hover,
+.member-actions button:hover,
+.work-card-menu-button:hover {
+  border-color: #1a1a1a;
+}
+
+.report-visual-summary > article,
+.report-kpi-grid > article,
+.report-highlight-grid > article,
+.cost-analysis-grid > article {
+  border-radius: 7px;
+}
+
+.report-visual-summary > article:first-child,
+.report-highlight-grid > article:first-child {
+  border-radius: 28px;
+}
+
+.report-donut {
+  border: 12px solid #1a1a1a;
+  background: #ffffff !important;
+}
+
+.report-donut::after {
+  background: #ffffff !important;
+}
+
+.report-waffle {
+  display: grid;
+  width: 76px;
+  grid-template-columns: repeat(5, 12px);
+  gap: 4px;
+  align-content: center;
+}
+
+.report-waffle > i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1a1a1a !important;
+}
+
+.report-waffle > i.active {
+  background: #e5322d !important;
+}
+
+.report-waffle > span {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.report-waffle > span strong {
+  color: #1a1a1a;
+  font-family: var(--font-dashboard-mono), monospace;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.report-waffle > span small {
+  color: #6b6b6b;
+  font-size: 9px;
+}
+
+.report-payment-legend i,
+.report-payment-legend i.paid,
+.report-payment-legend i.pending {
+  background: #e5322d !important;
+}
+
+/* Diary / social timeline */
+.diary-composer {
+  border: 1px solid #e8e7e4;
+  border-radius: 28px;
+}
+
+.diary-composer-heading > span,
+.diary-date-badge,
+.diary-aside-profile > span {
+  border-color: #1a1a1a;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.diary-composer-heading strong,
+.diary-entry-content strong,
+.diary-entry-content p,
+.diary-aside-profile strong,
+.diary-aside-stats strong,
+.diary-a4-card strong {
+  color: #1a1a1a !important;
+}
+
+.diary-composer-heading small,
+.diary-entry-content time,
+.diary-entry-block small,
+.diary-aside-profile small,
+.diary-aside-stats span,
+.diary-a4-card span {
+  color: #6b6b6b !important;
+}
+
+.diary-entry {
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.diary-entry-content {
+  border: 1px solid #e8e7e4;
+  border-radius: 7px;
+  background: #ffffff !important;
+}
+
+.diary-entry:nth-child(even) .diary-entry-content {
+  border-radius: 28px;
+}
+
+.diary-entry-rail > span {
+  background: #e8e7e4 !important;
+}
+
+.diary-entry-tags span {
+  border: 1px solid #e8e7e4;
+  background: #f2f1ef !important;
+  color: #1a1a1a !important;
+}
+
+.diary-entry-block.occurrence {
+  border-color: #e5322d;
+  background: #e8e7e4 !important;
+}
+
+.diary-feed-aside {
+  border-radius: 7px;
+}
+
+.diary-aside-stats div,
+.diary-a4-card {
+  border: 1px solid #e8e7e4;
+  border-radius: 6px;
+  background: #f2f1ef !important;
+}
+
+.diary-a4-card {
+  color: #e5322d;
+}
+
+.diary-a4-card button {
+  color: #e5322d;
+}
+
+/* Drawers and dialogs */
+.modal-backdrop,
+.drawer-backdrop,
+.budget-dialog-backdrop {
+  background: rgba(26, 26, 26, 0.44) !important;
+  backdrop-filter: none;
+}
+
+.modal,
+.drawer,
+.budget-dialog,
+.confirm-modal {
+  border: 1px solid #e8e7e4;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.modal,
+.budget-dialog,
+.confirm-modal {
+  border-radius: 30px;
+}
+
+.drawer {
+  border-radius: 30px 0 0 30px;
+}
+
+.modal-head h2,
+.modal-head p,
+.drawer h2,
+.drawer p {
+  color: #1a1a1a;
+}
+
+.modal-head p,
+.drawer .modal-head p {
+  color: #6b6b6b;
+}
+
+.drawer-type {
+  border: 1px solid #1a1a1a;
+  border-radius: 999px;
+  background: #1a1a1a !important;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.detail-metric,
+.drawer-control-card,
+.detail-task,
+.access-note,
+.invite-disclaimer,
+.modal-hint {
+  border-color: #e8e7e4;
+  background: #f2f1ef !important;
+  color: #1a1a1a;
+}
+
+.detail-metric {
+  border-radius: 7px;
+}
+
+.detail-metric:nth-child(1),
+.detail-metric:nth-child(4) {
+  border-radius: 24px;
+}
+
+.detail-metric > span,
+.detail-task label small,
+.project-info-list dt,
+.payment-row span {
+  color: #6b6b6b;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.detail-metric strong,
+.detail-price button {
+  color: #1a1a1a;
+  font-family: var(--font-dashboard-mono), monospace;
+  font-weight: 400;
+}
+
+.detail-task {
+  border-radius: 6px;
+}
+
+.detail-task.is-subtask {
+  border-left-color: #e5322d;
+}
+
+.task-timer-button,
+.priority-picker button {
+  border-color: #e8e7e4;
+  border-radius: 999px;
+  background: #ffffff !important;
+  color: #1a1a1a;
+}
+
+.task-timer-button.running,
+.priority-picker button.active {
+  --priority-color: #e5322d !important;
+  border-color: #e5322d;
+  background: #e5322d !important;
+  color: #ffffff;
+  animation: none;
+}
+
+.priority-picker button > span {
+  background: currentColor !important;
+}
+
+.payment-delete-button,
+.delete-button,
+.delete-confirm-button,
+.danger-menu-item {
+  border-color: #e5322d;
+  background: #e5322d !important;
+  color: #ffffff !important;
+}
+
+.project-info-list > div {
+  border-color: #e8e7e4;
+}
+
+.toast {
+  border: 1px solid #1a1a1a;
+  border-radius: 999px;
+  background: #1a1a1a !important;
+  color: #ffffff;
+}
+
+/* Responsive navigation and compact layouts */
+@media (max-width: 1020px) {
+  .home-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-card-grid,
+  .archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .app {
+    display: block;
+    min-height: 100dvh;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    min-height: 100dvh;
+    padding-bottom: 84px;
+  }
+
+  .topbar {
+    min-height: 86px;
+    padding: max(13px, env(safe-area-inset-top)) 16px 13px;
+  }
+
+  .mobile-logo {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .eyebrow,
+  .topbar-date {
+    display: none;
+  }
+
+  .page-title {
+    max-width: none;
+    font-size: 24px;
+  }
+
+  .top-actions .primary-button {
+    width: 42px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .top-actions .primary-button svg {
+    margin: 0;
+  }
+
+  .content-wrap,
+  .home-page,
+  .board-surface {
+    padding: 18px 14px 32px;
+  }
+
+  .home-summary-grid,
+  .insight-strip,
+  .work-card-grid,
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-summary-grid article {
+    min-height: 148px;
+  }
+
+  .home-summary-grid article > strong {
+    margin: 22px 0 10px;
+    font-size: 38px;
+  }
+
+  .home-chart-card {
+    min-height: 310px;
+    padding: 18px;
+  }
+
+  .project-bars > div > span,
+  .revenue-spark > div > span {
+    width: 26px;
+  }
+
+  .kanban-toolbar {
+    align-items: flex-start;
+  }
+
+  .kanban-status-copy strong {
+    font-size: 18px;
+  }
+
+  .kanban {
+    min-height: calc(100dvh - 204px);
+    scroll-snap-type: x mandatory;
+  }
+
+  .column,
+  .add-column-shell {
+    width: min(84vw, 326px);
+    flex-basis: min(84vw, 326px);
+    scroll-snap-align: start;
+  }
+
+  .column {
+    max-height: calc(100dvh - 220px);
+  }
+
+  .drawer {
+    width: 100%;
+    border-radius: 26px 26px 0 0;
+  }
+
+  .bottom-nav {
+    border: 1px solid #e8e7e4;
+    border-radius: 999px;
+    background: #ffffff !important;
+    backdrop-filter: none;
+  }
+
+  .bottom-nav button {
+    border-radius: 999px;
+    background: transparent !important;
+    color: #6b6b6b;
+  }
+
+  .bottom-nav button.active {
+    background: #1a1a1a !important;
+    color: #ffffff;
+  }
+
+  .mobile-more-menu {
+    border: 1px solid #1a1a1a;
+    border-radius: 18px;
+    background: #ffffff !important;
+    backdrop-filter: none;
+  }
+
+  .mobile-more-menu button {
+    background: #ffffff !important;
+    color: #1a1a1a;
+  }
+
+  .mobile-more-menu button:hover,
+  .mobile-more-menu button.active {
+    background: #f2f1ef !important;
+    color: #1a1a1a;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 21px;
+  }
+
+  .home-chart-card header {
+    display: grid;
+  }
+
+  .project-bars,
+  .revenue-spark {
+    gap: 3px;
+  }
+
+  .project-bars > div > span,
+  .revenue-spark > div > span {
+    width: 20px;
+  }
+}
+
+/*
+ * Legacy-cascade guard.
+ * The application still loads the construction foundations from globals.css;
+ * this scoped block wins over its historical high-specificity redesigns.
+ */
+@media screen {
+  body,
+  button,
+  input,
+  select,
+  textarea,
+  .app[data-theme="neo"],
+  .app[data-theme="neo"] * {
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .app[data-theme="neo"] {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100dvh !important;
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-color: #f5f4f2 !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .sidebar {
+    width: auto !important;
+    min-height: 100dvh !important;
+    padding: 16px 10px !important;
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .main,
+  .app[data-theme="neo"] .content-wrap,
+  .app[data-theme="neo"] .home-page,
+  .app[data-theme="neo"] .board-surface {
+    background-color: #f5f4f2 !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .main {
+    min-height: 100dvh !important;
+  }
+
+  .app[data-theme="neo"] .topbar {
+    min-height: 104px !important;
+    padding: 19px 30px !important;
+    border-color: #e8e7e4 !important;
+    background-color: #f5f4f2 !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .eyebrow,
+  .app[data-theme="neo"] .topbar-date {
+    color: #6b6b6b !important;
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .page-title,
+  .app[data-theme="neo"] h1,
+  .app[data-theme="neo"] h2,
+  .app[data-theme="neo"] h3 {
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .page-title {
+    font-size: clamp(28px, 3vw, 42px) !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .app[data-theme="neo"] .nav-button {
+    width: 44px !important;
+    height: 44px !important;
+    border-color: transparent !important;
+    border-radius: 999px !important;
+    background-color: transparent !important;
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .nav-button.active {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .sidebar .nav-button .nav-icon,
+  .app[data-theme="neo"] .sidebar .nav-button .nav-icon svg {
+    background-color: transparent !important;
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .sidebar .nav-button.active .nav-icon,
+  .app[data-theme="neo"] .sidebar .nav-button.active .nav-icon svg {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .primary-button {
+    border-color: #1a1a1a !important;
+    border-radius: 999px !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .primary-button:hover {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .secondary-button,
+  .app[data-theme="neo"] .ghost-button,
+  .app[data-theme="neo"] .back-button,
+  .app[data-theme="neo"] .icon-button,
+  .app[data-theme="neo"] .close-button {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .home-page {
+    gap: 18px !important;
+    padding: 28px 30px 42px !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid {
+    gap: 14px !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article,
+  .app[data-theme="neo"] .home-chart-card,
+  .app[data-theme="neo"] .insight-strip article,
+  .app[data-theme="neo"] .metric,
+  .app[data-theme="neo"] .panel,
+  .app[data-theme="neo"] .time-kpis article,
+  .app[data-theme="neo"] .time-panel,
+  .app[data-theme="neo"] .receivable-kpis > div,
+  .app[data-theme="neo"] .receivable-table-card {
+    border: 1px solid #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article {
+    min-height: 190px !important;
+    padding: 22px !important;
+    border-radius: 7px !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(2),
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(4) {
+    border-radius: 30px !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(3) {
+    border-color: #1a1a1a !important;
+    border-radius: 30px !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .summary-card-head,
+  .app[data-theme="neo"] .home-summary-grid article > small {
+    color: #6b6b6b !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .summary-card-head svg {
+    border-color: #e8e7e4 !important;
+    border-radius: 50% !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article > strong {
+    width: auto !important;
+    margin: 30px 0 14px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+    font-size: clamp(36px, 4vw, 52px) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.075em !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(3) .summary-card-head,
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(3) > strong,
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(3) > small {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(3) > strong,
+  .app[data-theme="neo"] .home-summary-grid article:nth-child(4) > strong {
+    font-size: clamp(25px, 2.8vw, 40px) !important;
+    letter-spacing: -0.07em !important;
+    white-space: nowrap !important;
+  }
+
+  .app[data-theme="neo"] .home-chart-card {
+    min-height: 352px !important;
+    padding: 24px !important;
+    border-radius: 7px !important;
+  }
+
+  .app[data-theme="neo"] .home-chart-card:nth-child(2) {
+    border-radius: 30px !important;
+  }
+
+  .app[data-theme="neo"] .home-chart-card header span,
+  .app[data-theme="neo"] .home-chart-card header > small,
+  .app[data-theme="neo"] .home-chart-card > p {
+    color: #6b6b6b !important;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .home-chart-card header h2 {
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-size: 22px !important;
+    font-weight: 500 !important;
+  }
+
+  .app[data-theme="neo"] .project-bars i,
+  .app[data-theme="neo"] .revenue-spark > div > span {
+    border-radius: 0 !important;
+    background-color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .project-bars > div:last-child i,
+  .app[data-theme="neo"] .revenue-spark > div:last-child > span,
+  .app[data-theme="neo"] .revenue-spark > div > span.current {
+    background-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .project-bars > div > span {
+    border-radius: 0 !important;
+    background-color: #e8e7e4 !important;
+  }
+
+  .app[data-theme="neo"] .project-bars small,
+  .app[data-theme="neo"] .revenue-spark small,
+  .app[data-theme="neo"] .project-bars b {
+    color: #6b6b6b !important;
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-weight: 400 !important;
+  }
+
+  .app[data-theme="neo"] .chart-total {
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+  }
+
+  .app[data-theme="neo"] .insight-strip article {
+    border-radius: 7px !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .insight-strip article:first-child {
+    border-color: #e5322d !important;
+    border-radius: 28px !important;
+    background-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .insight-strip article:first-child * {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .board-surface {
+    padding: 28px 30px 22px !important;
+    background-color: #f5f4f2 !important;
+  }
+
+  .app[data-theme="neo"] .kanban-status-copy span,
+  .app[data-theme="neo"] .kanban-status-copy strong,
+  .app[data-theme="neo"] .kanban-toolbar-controls > span {
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .kanban-status-copy strong {
+    color: #1a1a1a !important;
+    font-size: 20px !important;
+    font-weight: 500 !important;
+  }
+
+  .app[data-theme="neo"] .kanban-status-copy span {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .kanban-toolbar-controls > span {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .column {
+    width: 316px !important;
+    flex-basis: 316px !important;
+    border: 1px solid #e8e7e4 !important;
+    border-top: 4px solid #1a1a1a !important;
+    border-radius: 28px !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .column[data-column-id="stopped"] {
+    border-top-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .column::before {
+    background-color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .column[data-column-id="stopped"]::before {
+    background-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .column.drag-over {
+    border-color: #e5322d !important;
+    background-color: #e8e7e4 !important;
+  }
+
+  .app[data-theme="neo"] .column-head {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .column-title {
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .column-title {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .list-menu-button,
+  .app[data-theme="neo"] .page-projects .card-menu-button,
+  .app[data-theme="neo"] .page-projects .column-add,
+  .app[data-theme="neo"] .page-projects .add-column-shell > button {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .count {
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    align-items: center !important;
+    background-color: transparent !important;
+    color: #6b6b6b !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+    white-space: nowrap !important;
+  }
+
+  .app[data-theme="neo"] .card {
+    border: 1px solid #e8e7e4 !important;
+    border-radius: 7px !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+  }
+
+  .app[data-theme="neo"] .card::before {
+    display: none !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .card,
+  .app[data-theme="neo"] .page-projects .card:hover,
+  .app[data-theme="neo"] .page-projects .card:active {
+    box-shadow: none !important;
+  }
+
+  .app[data-theme="neo"] .card-priority-urgent,
+  .app[data-theme="neo"] .card-priority-high {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .card-priority-medium {
+    border-left: 4px solid #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .card-title {
+    color: inherit !important;
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+  }
+
+  .app[data-theme="neo"] .priority-tag {
+    border-color: #e5322d !important;
+    border-radius: 999px !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .service-tag {
+    border-color: #e8e7e4 !important;
+    border-radius: 999px !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .card-priority-urgent .service-tag,
+  .app[data-theme="neo"] .card-priority-high .service-tag {
+    border-color: #ffffff !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .card-financial-grid {
+    border: 0 !important;
+    border-top: 1px solid #e8e7e4 !important;
+    border-bottom: 1px solid #e8e7e4 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+  }
+
+  .app[data-theme="neo"] .card-financial-grid strong {
+    color: inherit !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .card-financial-grid small,
+  .app[data-theme="neo"] .page-projects .card-progress,
+  .app[data-theme="neo"] .page-projects .card-progress span,
+  .app[data-theme="neo"] .page-projects .task-item,
+  .app[data-theme="neo"] .page-projects .task-item span {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .card-priority-high .card-financial-grid small,
+  .app[data-theme="neo"] .page-projects .card-priority-high .task-item,
+  .app[data-theme="neo"] .page-projects .card-priority-high .task-item span,
+  .app[data-theme="neo"] .page-projects .card-priority-urgent .card-financial-grid small,
+  .app[data-theme="neo"] .page-projects .card-priority-urgent .task-item,
+  .app[data-theme="neo"] .page-projects .card-priority-urgent .task-item span {
+    color: #e8e7e4 !important;
+  }
+
+  .app[data-theme="neo"] .task-check {
+    color-scheme: light !important;
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    accent-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .card-bottom,
+  .app[data-theme="neo"] .card-bottom span,
+  .app[data-theme="neo"] .card-meta,
+  .app[data-theme="neo"] .card-meta span {
+    color: inherit !important;
+  }
+
+  .app[data-theme="neo"] .payment-state.paid,
+  .app[data-theme="neo"] .tag.good,
+  .app[data-theme="neo"] .status-badge.info {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .payment-state.paid {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .card-meta,
+  .app[data-theme="neo"] .page-projects .card-meta span {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .card-priority-high .card-meta,
+  .app[data-theme="neo"] .page-projects .card-priority-high .card-meta span,
+  .app[data-theme="neo"] .page-projects .card-priority-urgent .card-meta,
+  .app[data-theme="neo"] .page-projects .card-priority-urgent .card-meta span {
+    color: #e8e7e4 !important;
+  }
+
+  .app[data-theme="neo"] .payment-state.pending,
+  .app[data-theme="neo"] .tag.pending,
+  .app[data-theme="neo"] .status-badge.warning,
+  .app[data-theme="neo"] .status-badge.danger,
+  .app[data-theme="neo"] .late-pill {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .panel,
+  .app[data-theme="neo"] .metric,
+  .app[data-theme="neo"] .receivable-table-card,
+  .app[data-theme="neo"] .time-panel,
+  .app[data-theme="neo"] .pricing-intro,
+  .app[data-theme="neo"] .archive-card,
+  .app[data-theme="neo"] .work-card,
+  .app[data-theme="neo"] .work-card-shell,
+  .app[data-theme="neo"] .work-module-content,
+  .app[data-theme="neo"] .budget-workspace,
+  .app[data-theme="neo"] .construction-report-workspace,
+  .app[data-theme="neo"] .diary-workspace {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .metric-value,
+  .app[data-theme="neo"] .time-kpis strong,
+  .app[data-theme="neo"] .receivable-kpis strong,
+  .app[data-theme="neo"] .work-finance-strip strong,
+  .app[data-theme="neo"] .budget-summary-row strong,
+  .app[data-theme="neo"] .report-highlight-grid strong {
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+  }
+
+  .app[data-theme="neo"] .data-table th,
+  .app[data-theme="neo"] .budget-table th,
+  .app[data-theme="neo"] .premium-table-head {
+    background-color: #f2f1ef !important;
+    color: #6b6b6b !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .data-table td,
+  .app[data-theme="neo"] .budget-table td,
+  .app[data-theme="neo"] .premium-table-row {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-card-cover,
+  .app[data-theme="neo"] .calc-result {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .work-module-nav,
+  .app[data-theme="neo"] .work-finance-strip,
+  .app[data-theme="neo"] .budget-summary-row,
+  .app[data-theme="neo"] .report-filter-panel,
+  .app[data-theme="neo"] .report-visual-summary > article,
+  .app[data-theme="neo"] .report-kpi-grid > article,
+  .app[data-theme="neo"] .report-highlight-grid > article,
+  .app[data-theme="neo"] .cost-analysis-grid > article,
+  .app[data-theme="neo"] .diary-composer,
+  .app[data-theme="neo"] .diary-print-sheet,
+  .app[data-theme="neo"] .diary-feed-aside {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-dashboard-header .section-kicker,
+  .app[data-theme="neo"] .work-dashboard-header p,
+  .app[data-theme="neo"] .editable-work-field > span,
+  .app[data-theme="neo"] .work-module-nav-heading span,
+  .app[data-theme="neo"] .work-module-mini-summary > span,
+  .app[data-theme="neo"] .work-module-nav small,
+  .app[data-theme="neo"] .work-module-mini-summary small {
+    color: #6b6b6b !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .app[data-theme="neo"] .editable-work-field,
+  .app[data-theme="neo"] .editable-work-field:hover {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .editable-work-field.title,
+  .app[data-theme="neo"] .editable-work-field.title:hover {
+    border-color: transparent !important;
+    background-color: transparent !important;
+  }
+
+  .app[data-theme="neo"] .editable-work-field > strong,
+  .app[data-theme="neo"] .editable-work-field > svg,
+  .app[data-theme="neo"] .work-module-nav-heading strong,
+  .app[data-theme="neo"] .work-module-mini-summary strong {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .editable-work-field.title > strong {
+    font-family: var(--font-dashboard), Arial, sans-serif !important;
+    font-size: clamp(28px, 3vw, 42px) !important;
+    font-weight: 500 !important;
+  }
+
+  .app[data-theme="neo"] .complete-work-button,
+  .app[data-theme="neo"] .completed-work-badge {
+    border-color: #e5322d !important;
+    border-radius: 999px !important;
+    background-color: #ffffff !important;
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .complete-work-button:hover {
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .work-module-nav > button strong {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-module-nav > button.active strong,
+  .app[data-theme="neo"] .work-module-nav > button.active small {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .work-module-nav > button.active,
+  .app[data-theme="neo"] .work-tabs button.active,
+  .app[data-theme="neo"] .report-category-filter button.active,
+  .app[data-theme="neo"] .budget-category-filter button.active {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .diary-entry-content,
+  .app[data-theme="neo"] .diary-aside-stats div,
+  .app[data-theme="neo"] .diary-a4-card {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .modal,
+  .app[data-theme="neo"] .drawer,
+  .app[data-theme="neo"] .budget-dialog,
+  .app[data-theme="neo"] .confirm-modal {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .detail-metric,
+  .app[data-theme="neo"] .drawer-control-card,
+  .app[data-theme="neo"] .detail-task,
+  .app[data-theme="neo"] .access-note {
+    border-color: #e8e7e4 !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .priority-picker button.active,
+  .app[data-theme="neo"] .task-timer-button.running,
+  .app[data-theme="neo"] .delete-button,
+  .app[data-theme="neo"] .delete-confirm-button,
+  .app[data-theme="neo"] .payment-delete-button {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .sidebar .nav-button.active .nav-icon,
+  .app[data-theme="neo"] .page-projects .column:hover,
+  .app[data-theme="neo"] .page-projects .column::before,
+  .app[data-theme="neo"] .work-card-shell .work-card:hover,
+  .app[data-theme="neo"] .project-bars i,
+  .app[data-theme="neo"] .revenue-spark > div > span {
+    box-shadow: none !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .column:hover,
+  .app[data-theme="neo"] .work-card-shell .work-card:hover {
+    border-color: #e8e7e4 !important;
+    transform: none !important;
+  }
+
+  .app[data-theme="neo"] .brand-mark-compact,
+  .app[data-theme="neo"] .mobile-logo,
+  .app[data-theme="neo"] .smart-timer-note.active svg {
+    filter: none !important;
+  }
+}
+
+/* Final contrast, stacking and interaction-surface audit. */
+@media screen {
+  /* Keep every three-dot menu above the card/list that opened it. */
+  .app[data-theme="neo"] .column-head,
+  .app[data-theme="neo"] .list-menu-wrap,
+  .app[data-theme="neo"] .work-card-shell {
+    position: relative !important;
+    overflow: visible;
+  }
+
+  .app[data-theme="neo"] .column-head {
+    z-index: 20;
+  }
+
+  .app[data-theme="neo"] .column:has(.list-menu),
+  .app[data-theme="neo"] .column:focus-within,
+  .app[data-theme="neo"] .work-card-shell:has(.work-card-menu),
+  .app[data-theme="neo"] .work-card-shell:focus-within {
+    position: relative !important;
+    z-index: 80 !important;
+  }
+
+  .app[data-theme="neo"] .column:has(.list-menu) {
+    overflow: visible !important;
+  }
+
+  .app[data-theme="neo"] .list-menu-wrap {
+    z-index: 60;
+  }
+
+  .app[data-theme="neo"] .list-menu,
+  .app[data-theme="neo"] .work-card-menu {
+    position: absolute !important;
+    z-index: 1600 !important;
+  }
+
+  .app[data-theme="neo"] .context-menu {
+    position: fixed !important;
+    z-index: 2800 !important;
+  }
+
+  .app[data-theme="neo"] :is(.list-menu, .context-menu, .work-card-menu) {
+    isolation: isolate;
+    overflow: hidden;
+    border-color: #1a1a1a !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    backdrop-filter: none !important;
+  }
+
+  .app[data-theme="neo"] :is(.list-menu, .context-menu, .work-card-menu) button {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(.list-menu, .context-menu, .work-card-menu) button:hover {
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(.list-menu, .context-menu, .work-card-menu) .danger-menu-item,
+  .app[data-theme="neo"] :is(.list-menu, .context-menu, .work-card-menu) .danger-menu-item:hover {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  /* Icon-only controls stay circular, outlined and inherit the surface contrast. */
+  .app[data-theme="neo"] :is(
+    .list-menu-button,
+    .card-menu-button,
+    .work-card-menu-button,
+    .close-button,
+    .icon-button,
+    .budget-row-actions button,
+    .payment-delete-button
+  ) {
+    display: inline-grid !important;
+    flex: 0 0 auto;
+    place-items: center !important;
+    overflow: hidden;
+    aspect-ratio: 1;
+    border-radius: 999px !important;
+  }
+
+  .app[data-theme="neo"] button svg {
+    color: inherit !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .app[data-theme="neo"] :is(
+    .metric-icon,
+    .record-icon,
+    .bento-icon,
+    .budget-dialog-icon,
+    .report-filter-heading > span,
+    .report-highlight-icon,
+    .report-expense-icon,
+    .avatar,
+    .diary-avatar
+  ) {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #e8e7e4 !important;
+    border-radius: 999px !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(.avatar, .diary-avatar) img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: inherit;
+    object-fit: cover !important;
+  }
+
+  .app[data-theme="neo"] :is(.list-menu-button, .card-menu-button) {
+    background-color: transparent !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(.card-priority-high, .card-priority-urgent) .card-menu-button {
+    border-color: #6b6b6b !important;
+    background-color: transparent !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .work-card-menu-button,
+  .app[data-theme="neo"] .budget-row-actions button,
+  .app[data-theme="neo"] :is(.secondary-button, .ghost-button, .back-button, .icon-button, .close-button) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(
+    .primary-button,
+    .delete-button,
+    .delete-confirm-button,
+    .payment-delete-button,
+    .task-timer-button.running,
+    .priority-picker button.active
+  ),
+  .app[data-theme="neo"] :is(
+    .primary-button,
+    .delete-button,
+    .delete-confirm-button,
+    .payment-delete-button,
+    .task-timer-button.running,
+    .priority-picker button.active
+  ) svg {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-row-actions button.danger {
+    border-color: #e5322d !important;
+    background-color: #ffffff !important;
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .budget-row-actions button.danger:hover {
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  /* Project drawers: override the old dark-form rules on the new white surfaces. */
+  .app[data-theme="neo"] .drawer :is(.section-title, h2, h3, strong, label, dd),
+  .app[data-theme="neo"] .drawer-edit-form .field label,
+  .app[data-theme="neo"] .drawer-control-card .field > label,
+  .app[data-theme="neo"] .drawer .detail-task label strong,
+  .app[data-theme="neo"] .drawer .payment-row strong {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .drawer :is(.modal-head p, .empty-copy, dt, small),
+  .app[data-theme="neo"] .drawer .detail-task label small,
+  .app[data-theme="neo"] .drawer .payment-row > span {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .drawer :is(input, select, textarea),
+  .app[data-theme="neo"] .drawer :is(option) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    color-scheme: light !important;
+  }
+
+  .app[data-theme="neo"] .drawer :is(.detail-metric, .detail-task, .drawer-control-card, .payment-box, .payment-row),
+  .app[data-theme="neo"] .drawer .smart-timer-note {
+    border-color: #e8e7e4 !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .drawer .smart-timer-note.active {
+    border-color: #e5322d !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .drawer .smart-timer-note.active svg {
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .drawer .add-subtask-button {
+    background-color: transparent !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .drawer .add-subtask-button:hover {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .drawer :is(.primary-button, .delete-button, .payment-delete-button),
+  .app[data-theme="neo"] .drawer :is(.primary-button, .delete-button, .payment-delete-button) svg {
+    color: #ffffff !important;
+  }
+
+  /* Construction budget: every value and control is legible on the white table. */
+  .app[data-theme="neo"] .budget-workspace :is(.budget-header h2, .budget-description strong, .budget-value),
+  .app[data-theme="neo"] .budget-table tfoot td:first-child,
+  .app[data-theme="neo"] .budget-table tfoot td > strong,
+  .app[data-theme="neo"] .budget-empty-row > strong {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-workspace :is(
+    .budget-header p,
+    .budget-date,
+    .budget-supplier,
+    .budget-description small,
+    .budget-table tfoot td:first-child small,
+    .budget-empty-row > span
+  ) {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .budget-empty-row > svg {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-table tfoot td,
+  .app[data-theme="neo"] .budget-table tfoot td:first-child {
+    border-color: #e8e7e4 !important;
+    background-color: #f2f1ef !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-bar {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-bar button {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-bar button:hover {
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-bar button.active {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-bar button small {
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-bar button.active small {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-filter-dot,
+  .app[data-theme="neo"] .budget-filter-dot.all {
+    background-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .budget-status-tag.paid {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-status-tag.pending {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-status-tag.paid i {
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-status-tag.pending i {
+    background-color: #ffffff !important;
+  }
+
+  /* Budget dialog: white form, dark copy, and explicit active-state contrast. */
+  .app[data-theme="neo"] .budget-dialog > :is(header, footer) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog :is(h3, label) {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog :is(p, legend, label small) {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog :is(input, select, textarea, option) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    color-scheme: light !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog .money-input {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog .money-input > span {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog-categories button {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog-categories button:hover {
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog-categories button[aria-pressed="true"] {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog-categories button[aria-pressed="true"] * {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .budget-dialog :is(.primary-button, .primary-button svg) {
+    color: #ffffff !important;
+  }
+
+  /* Construction reports: remove white-on-white remnants from the legacy dark theme. */
+  .app[data-theme="neo"] .construction-report-workspace :is(
+    .report-filter-heading strong,
+    .cost-insight-grid strong,
+    .cost-analysis-heading h3,
+    .cost-month-chart strong,
+    .cost-ranking-list strong,
+    .report-highlight-grid strong,
+    .report-expense-row > div strong,
+    .report-expense-row > strong,
+    .report-expense-card > footer strong
+  ) {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace :is(
+    .report-filter-heading small,
+    .cost-insight-grid span,
+    .cost-insight-grid small,
+    .cost-analysis-heading span,
+    .cost-month-chart small,
+    .cost-ranking-list small,
+    .report-highlight-grid small,
+    .report-highlight-grid article > div > span,
+    .report-expense-row > div small,
+    .report-expense-row > span,
+    .report-expense-card > footer span
+  ) {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace :is(.cost-analysis-card, .report-expense-row) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace .report-expense-card > footer {
+    border-color: #e8e7e4 !important;
+    background-color: #f2f1ef !important;
+  }
+
+  .app[data-theme="neo"] .report-live-badge {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button > :is(span, strong) {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button > small {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button:hover {
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button.active {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button.active > :is(span, strong) {
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button.active > small {
+    color: #e8e7e4 !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace .cost-bar-row {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace .cost-bar-row:hover,
+  .app[data-theme="neo"] .construction-report-workspace .cost-bar-row.active {
+    background-color: #f2f1ef !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace .cost-bar-track {
+    background-color: #e8e7e4 !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace .cost-bar-track span,
+  .app[data-theme="neo"] .construction-report-workspace .cost-month-bar {
+    background-color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace .cost-bar-row.active .cost-bar-track span,
+  .app[data-theme="neo"] .construction-report-workspace .cost-month-chart > div:last-of-type .cost-month-bar {
+    background-color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace :is(.cost-status.paid, .profit-positive) {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .construction-report-workspace :is(.cost-status.pending, .profit-negative) {
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] :is(
+    .work-module-nav > button.active,
+    .work-tabs button.active,
+    .report-category-filter button.active,
+    .budget-category-filter button.active,
+    .budget-filter-bar button.active
+  ),
+  .app[data-theme="neo"] :is(
+    .work-module-nav > button.active,
+    .work-tabs button.active,
+    .report-category-filter button.active,
+    .budget-category-filter button.active,
+    .budget-filter-bar button.active
+  ) svg {
+    color: #ffffff !important;
+  }
+
+  /* Header notifications use the same flat, high-contrast surface language. */
+  .app[data-theme="neo"] .notification-wrap {
+    position: relative;
+    z-index: 120;
+  }
+
+  .app[data-theme="neo"] .notification-button {
+    position: relative;
+    overflow: visible;
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(.notification-button > span, .notification-badge) {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    place-items: center;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    background-color: #e5322d !important;
+    padding: 0 4px;
+    color: #ffffff !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .app[data-theme="neo"] .notification-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 3000;
+    display: grid;
+    width: min(360px, calc(100vw - 32px));
+    overflow: hidden;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 7px;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .notification-panel header {
+    display: grid;
+    gap: 2px;
+    border-bottom: 1px solid #e8e7e4;
+    background-color: #f2f1ef !important;
+    padding: 13px 14px;
+  }
+
+  .app[data-theme="neo"] .notification-panel header strong,
+  .app[data-theme="neo"] .notification-panel button strong {
+    color: #1a1a1a !important;
+    font-weight: 500;
+  }
+
+  .app[data-theme="neo"] .notification-panel :is(header small, button small, p) {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .notification-panel > button {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #e8e7e4;
+    border-radius: 0;
+    background-color: #ffffff !important;
+    padding: 12px 14px;
+    color: #1a1a1a !important;
+    text-align: left;
+  }
+
+  .app[data-theme="neo"] .notification-panel > button:hover {
+    background-color: #f2f1ef !important;
+  }
+
+  .app[data-theme="neo"] .notification-panel > button > span {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 999px;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+    font-size: 12px;
+  }
+
+  .app[data-theme="neo"] .notification-panel > button > div {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+  }
+
+  .app[data-theme="neo"] .notification-panel > p {
+    margin: 0;
+    padding: 18px 14px;
+  }
+
+  /* User-selected column colors are limited to the narrow top accent and swatches. */
+  .app[data-theme="neo"] .column,
+  .app[data-theme="neo"] .column[data-column-id="backlog"],
+  .app[data-theme="neo"] .column[data-column-id="progress"],
+  .app[data-theme="neo"] .column[data-column-id="stopped"],
+  .app[data-theme="neo"] .column[data-column-id="done"] {
+    border-top-color: var(--column-accent) !important;
+  }
+
+  .app[data-theme="neo"] .column::before,
+  .app[data-theme="neo"] .column[data-column-id="stopped"]::before,
+  .app[data-theme="neo"] .column-title::before {
+    background-color: var(--column-accent) !important;
+  }
+
+  .app[data-theme="neo"] .column-color-picker {
+    display: grid;
+    gap: 9px;
+    margin: 0 4px 5px;
+    border-bottom: 1px solid #e8e7e4;
+    padding: 7px 6px 13px;
+  }
+
+  .app[data-theme="neo"] .column-color-picker > span {
+    color: #6b6b6b !important;
+    font-size: 11px;
+  }
+
+  .app[data-theme="neo"] .column-color-picker > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+
+  .app[data-theme="neo"] .column-color-picker button,
+  .app[data-theme="neo"] .column-color-picker button:hover {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    border: 2px solid #ffffff !important;
+    border-radius: 999px;
+    background-color: var(--swatch) !important;
+    padding: 0;
+  }
+
+  .app[data-theme="neo"] .column-color-picker button.active {
+    border-color: #1a1a1a !important;
+    outline: 2px solid #e8e7e4;
+    outline-offset: 2px;
+  }
+
+  /* Inline construction values keep their white field and an anchored currency prefix. */
+  .app[data-theme="neo"] .editable-work-input {
+    display: grid;
+    width: 100%;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #e8e7e4;
+    border-radius: 6px;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .editable-work-input:focus-within {
+    border-color: #e5322d;
+  }
+
+  .app[data-theme="neo"] .editable-work-input > b {
+    align-self: stretch;
+    display: grid;
+    place-items: center;
+    border-right: 1px solid #e8e7e4;
+    background-color: #f2f1ef !important;
+    padding: 0 10px;
+    color: #1a1a1a !important;
+    font-family: var(--font-dashboard-mono), monospace !important;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .app[data-theme="neo"] .editable-work-input > input {
+    width: 100%;
+    min-width: 0;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-color: #ffffff !important;
+    padding-inline: 10px;
+    color: #1a1a1a !important;
+    outline: 0 !important;
+    color-scheme: light !important;
+  }
+
+  /* Completed works and profit/loss values use only black and the red accent. */
+  .app[data-theme="neo"] .work-card-shell.is-completed,
+  .app[data-theme="neo"] .work-card-shell.is-completed .work-card {
+    border-color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-card-cover .work-status-progress {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .work-card-cover .work-status-completed {
+    border-color: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-card-values .profit-positive,
+  .app[data-theme="neo"] .work-card-values .profit-positive small {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-card-values .profit-negative,
+  .app[data-theme="neo"] .work-card-values .profit-negative small,
+  .app[data-theme="neo"] .budget-summary-row .profit-negative {
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .budget-summary-row .profit-positive {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .work-card-shell.is-completed .work-budget-track > span {
+    background-color: #1a1a1a !important;
+  }
+
+  /* The summary now has four equal financial columns on wide screens. */
+  .app[data-theme="neo"] .budget-summary-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .app[data-theme="neo"] .budget-summary-row > article {
+    min-width: 0;
+    background-color: #ffffff !important;
+  }
+
+  /* Automatic project time replaces the old running-timer treatment. */
+  .app[data-theme="neo"] .automatic-time-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid #e8e7e4;
+    border-left: 4px solid #e5322d;
+    border-radius: 6px;
+    background-color: #f2f1ef !important;
+    padding: 10px 12px;
+    color: #1a1a1a !important;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .app[data-theme="neo"] .automatic-time-note svg {
+    flex: 0 0 auto;
+    color: #e5322d !important;
+    fill: none !important;
+    stroke: currentColor !important;
+  }
+
+  .app[data-theme="neo"] .automatic-time-note span {
+    color: #1a1a1a !important;
+  }
+
+  /* All three overview insights deliberately share the same neutral card. */
+  .app[data-theme="neo"] .insight-strip article,
+  .app[data-theme="neo"] .insight-strip article:first-child,
+  .app[data-theme="neo"] .insight-strip article:nth-child(2),
+  .app[data-theme="neo"] .insight-strip article:nth-child(3) {
+    border-color: #e8e7e4 !important;
+    border-radius: 7px !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .insight-strip article > svg,
+  .app[data-theme="neo"] .insight-strip article:first-child > svg,
+  .app[data-theme="neo"] .insight-strip article:nth-child(2) > svg,
+  .app[data-theme="neo"] .insight-strip article:nth-child(3) > svg {
+    border-color: #e8e7e4 !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .insight-strip article :is(span, small),
+  .app[data-theme="neo"] .insight-strip article:first-child :is(span, small) {
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .insight-strip article strong,
+  .app[data-theme="neo"] .insight-strip article:first-child strong {
+    color: #1a1a1a !important;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .app[data-theme="neo"] .budget-summary-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .app[data-theme="neo"] .budget-summary-row article:nth-child(odd) {
+    border-left: 0 !important;
+  }
+
+  .app[data-theme="neo"] .budget-summary-row article:nth-child(n + 3) {
+    border-top: 1px solid #e8e7e4 !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .app[data-theme="neo"] .budget-summary-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .app[data-theme="neo"] .budget-summary-row article + article {
+    border-top: 1px solid #e8e7e4 !important;
+    border-left: 0 !important;
+  }
+
+  .app[data-theme="neo"] .notification-panel {
+    position: fixed;
+    top: 82px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+}
+
+/* The drag preview is portaled to body, so it needs an explicit neo palette. */
+@media screen {
+  .app[data-theme="neo"] :is(input, select, textarea) {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] :is(input, textarea)::placeholder {
+    color: #6b6b6b !important;
+    -webkit-text-fill-color: #6b6b6b !important;
+    opacity: 1 !important;
+  }
+
+  .app[data-theme="neo"] .home-insight-grid article:first-child .insight-icon :is(svg, path, circle, line, polyline) {
+    color: #1a1a1a !important;
+    stroke: #1a1a1a !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-layer {
+    z-index: 4000 !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card {
+    border: 1px solid #e8e7e4 !important;
+    border-radius: 7px !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-low, .card-priority-normal) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card.card-priority-medium {
+    border: 1px solid #e8e7e4 !important;
+    border-left: 4px solid #e5322d !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card .drag-follow-title,
+  body.is-kanban-dragging .drag-follow-card .drag-follow-financial strong {
+    color: inherit !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card > small,
+  body.is-kanban-dragging .drag-follow-card .drag-follow-financial small,
+  body.is-kanban-dragging .drag-follow-card .drag-follow-bottom > span:first-child {
+    color: #6b6b6b !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) > small,
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) .drag-follow-financial small,
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) .drag-follow-bottom > span:first-child {
+    color: #e8e7e4 !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-financial {
+    border-color: #e8e7e4 !important;
+    background-color: #f2f1ef !important;
+    color: #1a1a1a !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) .drag-follow-financial {
+    border-color: #6b6b6b !important;
+    background-color: #161616 !important;
+    color: #ffffff !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card .priority-tag,
+  body.is-kanban-dragging .drag-follow-card .payment-state.pending {
+    border-color: #e5322d !important;
+    background-color: #e5322d !important;
+    color: #ffffff !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card .service-tag {
+    border-color: #1a1a1a !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) .service-tag {
+    border-color: #ffffff !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card .payment-state.paid {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  body.is-kanban-dragging .drag-follow-card:is(.card-priority-high, .card-priority-urgent) .payment-state.paid {
+    border-color: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .app[data-theme="neo"] .construction-table tbody tr {
+    border-bottom: 1px solid #e8e7e4 !important;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .app[data-theme="neo"] {
+    display: block !important;
+  }
+
+  .app[data-theme="neo"] .sidebar {
+    display: none !important;
+  }
+
+  .app[data-theme="neo"] .main {
+    min-height: 100dvh !important;
+    padding-bottom: 84px !important;
+  }
+
+  .app[data-theme="neo"] .topbar {
+    min-height: 86px !important;
+    padding: max(13px, env(safe-area-inset-top)) 16px 13px !important;
+  }
+
+  .app[data-theme="neo"] .mobile-logo {
+    display: block !important;
+  }
+
+  .app[data-theme="neo"] .eyebrow,
+  .app[data-theme="neo"] .topbar-date {
+    display: none !important;
+  }
+
+  .app[data-theme="neo"] .page-title {
+    max-width: none !important;
+    font-size: 24px !important;
+  }
+
+  .app[data-theme="neo"] .topbar-heading {
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  .app[data-theme="neo"] .top-actions {
+    flex: 0 0 auto !important;
+  }
+
+  .app[data-theme="neo"] .top-actions .primary-button {
+    width: 42px !important;
+    min-width: 42px !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+  }
+
+  .app[data-theme="neo"] .top-actions .primary-button::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .app[data-theme="neo"] .content-wrap,
+  .app[data-theme="neo"] .home-page,
+  .app[data-theme="neo"] .board-surface,
+  .app[data-theme="neo"] .page-projects .board-surface {
+    padding: 18px 14px 32px !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid,
+  .app[data-theme="neo"] .insight-strip,
+  .app[data-theme="neo"] .work-card-grid,
+  .app[data-theme="neo"] .archive-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article {
+    min-height: 148px !important;
+  }
+
+  .app[data-theme="neo"] .home-summary-grid article > strong {
+    margin: 22px 0 10px !important;
+    font-size: 38px !important;
+  }
+
+  .app[data-theme="neo"] .column,
+  .app[data-theme="neo"] .add-column-shell {
+    width: min(84vw, 326px) !important;
+    flex-basis: min(84vw, 326px) !important;
+  }
+
+  .app[data-theme="neo"] .bottom-nav {
+    display: grid !important;
+    border-color: #e8e7e4 !important;
+    border-radius: 999px !important;
+    background-color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .bottom-nav button {
+    border-radius: 999px !important;
+    background-color: transparent !important;
+    color: #6b6b6b !important;
+  }
+
+  .app[data-theme="neo"] .bottom-nav button.active {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .app[data-theme="neo"] .page-title {
+    max-width: 210px !important;
+    overflow: hidden !important;
+    font-size: 20px !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Clean, white A4 output for every report, especially the construction diary. */
+@page {
+  size: A4;
+  margin: 16mm;
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  .app,
+  .main,
+  .content-wrap,
+  .work-module-content,
+  .diary-social-layout,
+  .diary-print-sheet {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app {
+    display: block;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .sidebar,
+  .topbar,
+  .bottom-nav,
+  .mobile-more-menu,
+  .work-module-nav,
+  .work-finance-strip,
+  .diary-feed-aside,
+  .diary-composer,
+  .diary-section-head,
+  .toast {
+    display: none !important;
+  }
+
+  body.print-construction-diary .work-dashboard-header,
+  body.print-construction-diary .back-button,
+  body.print-construction-diary .work-module-nav,
+  body.print-construction-diary .work-finance-strip,
+  body.print-construction-diary .diary-feed-aside,
+  body.print-construction-diary .diary-composer,
+  body.print-construction-diary .diary-section-head {
+    display: none !important;
+  }
+
+  body.print-construction-diary .work-module-layout,
+  body.print-construction-diary .work-module-content,
+  body.print-construction-diary .diary-social-layout,
+  body.print-construction-diary .diary-print-sheet {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  .diary-entry,
+  .diary-entry-content,
+  .panel,
+  .metric,
+  .data-table tr,
+  .budget-table tr {
+    break-inside: avoid;
+  }
+
+  .diary-entry-content,
+  .panel,
+  .metric,
+  .receivable-table-card {
+    border: 1px solid #e8e7e4 !important;
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .diary-entry-content *,
+  .panel *,
+  .metric *,
+  .data-table *,
+  .budget-table * {
+    color: #1a1a1a !important;
+  }
+}
+
+@media screen {
+  .app[data-theme="neo"] .work-card-cover .work-status-completed,
+  .app[data-theme="neo"] .completed-work-badge {
+    border-color: #15803d !important;
+    background-color: #15803d !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] :is(
+    .work-card-values .profit-positive,
+    .work-card-values .profit-positive small,
+    .budget-summary-row .profit-positive,
+    .work-finance-strip .profit-positive,
+    .construction-profit-report .profit-positive
+  ) {
+    color: #15803d !important;
+  }
+
+  .app[data-theme="neo"] :is(
+    .work-card-values .profit-negative,
+    .work-card-values .profit-negative small,
+    .budget-summary-row .profit-negative,
+    .work-finance-strip .profit-negative,
+    .construction-profit-report .profit-negative
+  ) {
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .work-card-shell.is-completed,
+  .app[data-theme="neo"] .work-card-shell.is-completed .work-card {
+    border-color: #15803d !important;
+  }
+}
+
+/* Final Kanban, report-filter and construction-diary refinements. */
+@media screen {
+  /* Dates and urgency pills stay intact even in compact cards. */
+  .app[data-theme="neo"] .card-meta > span:first-child,
+  .app[data-theme="neo"] .late-pill {
+    flex: 0 0 auto;
+    white-space: nowrap !important;
+  }
+
+  /* A broad accent rail identifies each list without putting text on a variable color. */
+  .app[data-theme="neo"] .page-projects .column,
+  .app[data-theme="neo"] .page-projects .column[data-column-id] {
+    border-top-color: var(--column-accent) !important;
+    background-color: #f2f1ef !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .column::before,
+  .app[data-theme="neo"] .page-projects .column[data-column-id]::before {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 10px !important;
+    border-radius: 24px 24px 0 0 !important;
+    background-color: var(--column-accent) !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .column-head {
+    min-height: 70px !important;
+    padding-top: 24px !important;
+    background-color: color-mix(in srgb, var(--column-accent) 11%, #ffffff) !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .column-cards {
+    background-color: #f2f1ef !important;
+    padding-top: 12px !important;
+  }
+
+  .app[data-theme="neo"] .page-projects .card:not(.card-priority-high, .card-priority-urgent) {
+    border-color: #e8e7e4 !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  /* Center the report-filter hierarchy and keep every category internally aligned. */
+  .app[data-theme="neo"] .report-filter-panel {
+    padding: 18px !important;
+  }
+
+  .app[data-theme="neo"] .report-filter-heading {
+    justify-content: center;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .app[data-theme="neo"] .report-filter-heading > div {
+    justify-items: center;
+  }
+
+  .app[data-theme="neo"] .report-category-filter {
+    align-items: stretch;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button {
+    align-content: center;
+    justify-items: center;
+    min-height: 78px;
+    padding: 11px 9px;
+    text-align: center;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button > span {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .app[data-theme="neo"] .report-category-filter button > strong {
+    font-family: var(--font-dashboard-mono), monospace !important;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Reserved attachment surfaces inherit the same flat visual language. */
+  .app[data-theme="neo"] :is(
+    .diary-attachments,
+    .diary-attachment-area,
+    .diary-attachment-zone,
+    .diary-upload-area,
+    [data-diary-attachments]
+  ) {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    gap: 8px;
+    border: 1px dashed #e8e7e4;
+    border-radius: 7px;
+    background-color: #f2f1ef !important;
+    padding: 14px;
+    color: #1a1a1a !important;
+  }
+
+  /* Photo capture stays compact in the composer and readable in the timeline. */
+  .app[data-theme="neo"] .diary-photo-picker {
+    display: grid;
+    gap: 10px;
+    border-top: 1px solid #e8e7e4 !important;
+    padding-top: 16px !important;
+  }
+
+  .app[data-theme="neo"] .diary-photo-picker legend,
+  .app[data-theme="neo"] .diary-photo-picker p {
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .diary-photo-picker > p:not(.diary-photo-status) {
+    margin: 0;
+    color: #6b6b6b !important;
+    font-size: 12px;
+  }
+
+  .app[data-theme="neo"] .diary-photo-actions {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .app[data-theme="neo"] .diary-photo-actions .ghost-button {
+    border-color: #1a1a1a !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+
+  .app[data-theme="neo"] .diary-photo-preview-grid,
+  .app[data-theme="neo"] .diary-entry-photo-grid {
+    min-width: 0;
+  }
+
+  .app[data-theme="neo"] .diary-photo-preview,
+  .app[data-theme="neo"] .diary-entry-photo {
+    overflow: hidden;
+    border: 1px solid #e8e7e4;
+    background-color: #ffffff;
+  }
+
+  .app[data-theme="neo"] .diary-photo-remove {
+    border-color: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .app[data-theme="neo"] .diary-photo-status {
+    min-height: 18px;
+    margin: 0;
+    color: #6b6b6b !important;
+    font-size: 12px;
+  }
+
+  .app[data-theme="neo"] .diary-photo-status[role="alert"] {
+    color: #e5322d !important;
+  }
+
+  .app[data-theme="neo"] .diary-entry-photos {
+    border-color: #e8e7e4 !important;
+    background-color: #f5f4f2 !important;
+  }
+
+  .app[data-theme="neo"] .diary-entry-photo img {
+    background-color: #e8e7e4;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .app[data-theme="neo"] .diary-workspace {
+    min-width: 0;
+    border-radius: 18px !important;
+    padding: 14px !important;
+  }
+
+  .app[data-theme="neo"] .diary-section-head,
+  .app[data-theme="neo"] .diary-composer-footer,
+  .app[data-theme="neo"] .diary-timeline-heading {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .app[data-theme="neo"] .diary-print-button,
+  .app[data-theme="neo"] .diary-composer-footer .primary-button {
+    justify-content: center;
+    width: 100% !important;
+  }
+
+  .app[data-theme="neo"] .diary-composer {
+    display: block !important;
+    min-width: 0;
+    border-radius: 18px !important;
+    padding: 14px !important;
+  }
+
+  .app[data-theme="neo"] .diary-composer-heading {
+    align-items: flex-start;
+  }
+
+  .app[data-theme="neo"] .diary-composer-heading > div,
+  .app[data-theme="neo"] .diary-composer-body,
+  .app[data-theme="neo"] .diary-print-sheet {
+    min-width: 0;
+  }
+
+  .app[data-theme="neo"] .diary-text-fields,
+  .app[data-theme="neo"] .diary-composer-controls,
+  .app[data-theme="neo"] .diary-social-layout,
+  .app[data-theme="neo"] .diary-feed-aside,
+  .app[data-theme="neo"] .diary-aside-stats {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .app[data-theme="neo"] .diary-text-fields,
+  .app[data-theme="neo"] .diary-composer-controls {
+    gap: 12px;
+  }
+
+  .app[data-theme="neo"] .diary-text-fields > label,
+  .app[data-theme="neo"] .diary-composer-controls label {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .app[data-theme="neo"] .diary-composer textarea {
+    width: 100%;
+    min-height: 112px;
+  }
+
+  .app[data-theme="neo"] .diary-composer-controls :is(input, select),
+  .app[data-theme="neo"] .diary-composer-controls input[type="number"] {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+  }
+
+  .app[data-theme="neo"] .diary-composer-footer {
+    gap: 12px;
+  }
+
+  .app[data-theme="neo"] .diary-photo-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .app[data-theme="neo"] .diary-photo-actions .ghost-button {
+    justify-content: center;
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .app[data-theme="neo"] .diary-photo-preview-grid,
+  .app[data-theme="neo"] .diary-entry-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .app[data-theme="neo"] .diary-social-layout {
+    display: grid;
+    gap: 16px;
+  }
+
+  .app[data-theme="neo"] .diary-feed-aside {
+    position: static !important;
+    display: grid;
+  }
+
+  .app[data-theme="neo"] .diary-a4-card {
+    grid-column: auto !important;
+  }
+
+  .app[data-theme="neo"] .diary-timeline-heading > div:last-child {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .app[data-theme="neo"] .diary-entry {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .app[data-theme="neo"] .diary-entry-rail {
+    align-items: flex-start;
+  }
+
+  .app[data-theme="neo"] .diary-entry-rail > span {
+    display: none;
+  }
+
+  .app[data-theme="neo"] .diary-entry-content {
+    min-width: 0;
+    padding: 14px !important;
+  }
+
+  .app[data-theme="neo"] .diary-entry-content > header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .app[data-theme="neo"] .diary-entry-tags {
+    flex-wrap: wrap;
+  }
+
+  .app[data-theme="neo"] :is(
+    .diary-attachments,
+    .diary-attachment-area,
+    .diary-attachment-zone,
+    .diary-upload-area,
+    [data-diary-attachments]
+  ) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    min-height: 96px;
+  }
+}
+
+@media print {
+  body.print-construction-diary .diary-entry-photos,
+  body.print-construction-diary .diary-entry-photo,
+  body.print-construction-diary .diary-entry-photo img {
+    break-inside: avoid !important;
+  }
+
+  body.print-construction-diary .diary-entry-photo-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 3mm !important;
+  }
+
+  body.print-construction-diary .diary-entry-photo {
+    border: 0 !important;
+    background: #ffffff !important;
+  }
+
+  body.print-construction-diary .diary-entry-photo img {
+    width: 100% !important;
+    height: 52mm !important;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+  }
+}
+
+/* Final cascade for the annotated archive, time and Kanban refinements. */
+.app[data-theme="neo"] .page-projects .column { border-top: 0 !important; }
+.app[data-theme="neo"] .page-projects .column::before { display: none !important; }
+.app[data-theme="neo"] .page-projects .column-head {
+  border-top: 8px solid var(--column-accent) !important;
+  background: color-mix(in srgb, var(--column-accent) 9%, #fff) !important;
+}
+.app[data-theme="neo"] .page-projects .card-financial-grid strong,
+.app[data-theme="neo"] .page-projects .card-meta span,
+.app[data-theme="neo"] .page-projects .payment-state { white-space: nowrap !important; }
+.app[data-theme="neo"] .page-projects .card { border-left: 5px solid var(--project-accent) !important; }
+.app[data-theme="neo"] .page-projects .task-list { max-height: none !important; overflow: visible !important; }
+.app[data-theme="neo"] .page-projects .payment-state.paid { color: #fff !important; background: #1e5638 !important; border-color: #1e5638 !important; }
+.app[data-theme="neo"] .finance-report .filters,
+.app[data-theme="neo"] .finance-report .filter-group { background: transparent !important; }
+.app[data-theme="neo"] .finance-report :is(select, input) { color: #1a1a1a !important; background: #fff !important; }
+.app[data-theme="neo"] .page-projects .board-surface { min-height: calc(100vh - 120px) !important; height: auto !important; overflow: visible !important; }
+.app[data-theme="neo"] .page-projects .kanban { align-items: flex-start !important; min-height: 0 !important; max-height: none !important; height: auto !important; overflow-x: auto !important; overflow-y: visible !important; }
+.app[data-theme="neo"] .page-projects .column { max-height: none !important; height: auto !important; overflow: visible !important; align-self: flex-start !important; }
+.app[data-theme="neo"] .page-projects .column-cards { max-height: none !important; overflow: visible !important; grid-auto-rows: max-content !important; }
+.app[data-theme="neo"] .page-projects .card {
+  flex: 0 0 auto !important;
+  min-height: max-content !important;
+  background-image: linear-gradient(to right, var(--project-accent) 0 5px, transparent 5px) !important;
+  background-repeat: no-repeat !important;
+}
