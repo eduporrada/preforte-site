@@ -3,6 +3,7 @@ import { getMediaBucket } from "../../../db/storage";
 import { officeDateISO } from "../../date-utils";
 
 export const runtime = "edge";
+import { criarPastaDoProjeto } from "../../onedrive";
 
 const projectSeeds = [
   ["p-residencia", "Residência Vale Verde", "Marina & Gustavo", "Setor Bueno, Goiânia", "2026-06-02", "2026-08-18", 2850000, 1710000, "progress", "high", "Projeto arquitetônico", 242, "#f2535c", "2026-06-02"],
@@ -210,7 +211,20 @@ export async function POST(request: Request) {
       randomProjectAccent(),
       createdAt,
     ).run();
-  return Response.json({ id }, { status: 201 });
+  // Cria a pasta do cliente no OneDrive (se estiver conectado). Falha aqui não impede o projeto.
+  let pasta: string | null = null;
+  try {
+    pasta = await criarPastaDoProjeto({
+      id,
+      name: String(body.name).trim(),
+      client: String(body.client ?? ""),
+      type: String(body.type ?? "Projeto"),
+      pasta: String(body.pasta ?? ""),
+    });
+  } catch (error) {
+    console.error("OneDrive: não criou a pasta do projeto", error);
+  }
+  return Response.json({ id, pasta }, { status: 201 });
 }
 
 export async function PATCH(request: Request) {

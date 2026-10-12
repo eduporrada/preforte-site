@@ -43,6 +43,10 @@ fi
 
 if [ "$REDE" = "host" ]; then REDE_SERVICO=""; REDE_FIM=""; REDE_LABEL="";
 else REDE_SERVICO="    networks: [proxy]"; REDE_FIM=$'networks:\n  proxy:\n    external: true\n    name: '"$REDE"; REDE_LABEL="      - traefik.docker.network=$REDE"; fi
+if ! grep -q PREFORTE_CHAVE_AGENTES "$DIR/.env"; then
+  echo "PREFORTE_CHAVE_AGENTES=$(openssl rand -hex 32)" >> "$DIR/.env"
+fi
+
 cat > "$DIR/docker-compose.yml" <<EOF
 services:
   site:
@@ -66,4 +70,4 @@ echo "== Construindo e ligando o site (leva alguns minutos)"
 cd "$DIR" && docker compose up -d --build
 echo
 echo "PRONTO. Abra https://$DOMINIO (o certificado pode levar 1 minuto)."
-echo "Primeira vez: depois de entrar, abra https://$DOMINIO/restaurar e envie o ZIP do backup."
+echo "OneDrive: abra https://$DOMINIO/onedrive para conectar."

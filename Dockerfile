@@ -6,6 +6,7 @@ COPY . .
 RUN npm run build
 
 FROM node:22-slim
+RUN apt-get update && apt-get install -y --no-install-recommends rclone ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 ENV NODE_ENV=production PREFORTE_DATA_DIR=/dados PORT=3000
 COPY --from=build /app /app

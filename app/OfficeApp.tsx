@@ -46,6 +46,8 @@ import {
 } from "lucide-react";
 import { OverviewDashboard } from "./components/OverviewDashboard";
 import dynamic from "next/dynamic";
+import { ProjectFiles } from "./components/ProjectFiles";
+import { CATEGORIAS } from "./categorias";
 const ReceivablesPage = dynamic(() => import("./components/ReceivablesPage").then((module) => module.ReceivablesPage), { loading: () => <div className="loading" role="status">Carregando contas a receber…</div> });
 const TimeReportPage = dynamic(() => import("./components/TimeReportPage").then((module) => module.TimeReportPage), { loading: () => <div className="loading" role="status">Carregando relatório de tempo…</div> });
 import { officeDateISO } from "./date-utils";
@@ -3271,6 +3273,7 @@ function SettingsPage({
         <div className="mini-list">
           <div className="mini-row"><div><strong>Preforte Engenharia e Construtora</strong><span>Gestão do escritório</span></div><span className="tag good">Ativo</span></div>
           <div className="mini-row"><div><strong>Dados na nuvem</strong><span>Projetos sincronizados</span></div><span className="tag good">Conectado</span></div>
+          <div className="mini-row"><div><strong>OneDrive</strong><span>Pastas dos projetos em EDUARDO</span></div><a className="tag good" href="/onedrive">Configurar</a></div>
         </div>
       </section>
       <section className="panel">
@@ -3380,6 +3383,7 @@ function NewProjectModal({
       startDate: String(form.get("startDate") || ""),
       dueDate: String(form.get("dueDate") || ""),
       price: Math.round(Number(form.get("price") || 0) * 100),
+      pasta: String(form.get("pasta") || ""),
     };
     try {
       const response = await fetch("/api/projects", {
@@ -3408,6 +3412,14 @@ function NewProjectModal({
               <input id="project-type" name="type" list="service-types" required placeholder="Escreva ou escolha um tipo já usado" autoComplete="off" />
               <datalist id="service-types">{serviceTypes.map((type) => <option key={type} value={type} />)}</datalist>
               <span className="field-help">Novos tipos serão sugeridos automaticamente nos próximos projetos.</span>
+            </div>
+            <div className="field full">
+              <label htmlFor="project-folder">Pasta no OneDrive</label>
+              <select id="project-folder" name="pasta" defaultValue="">
+                <option value="">Automático pelo tipo de serviço</option>
+                {CATEGORIAS.map((c) => <option key={c.pasta} value={c.pasta}>{c.pasta} — {c.rotulo}</option>)}
+              </select>
+              <span className="field-help">A pasta com o nome do cliente é criada dentro desta pasta, em OneDrive › EDUARDO.</span>
             </div>
             <div className="field"><label htmlFor="project-client">Cliente <small>opcional</small></label><input id="project-client" name="client" placeholder="Nome do cliente" /></div>
             <div className="field"><label htmlFor="price">Valor contratado</label><input id="price" name="price" type="number" min="0" step="0.01" required placeholder="0,00" /></div>
@@ -3501,6 +3513,8 @@ function SimplifiedProjectDrawer({
               <textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Digite informações, lembretes ou observações sobre este projeto..." rows={5} />
               <button className="secondary-button" type="button" onClick={() => onUpdateNotes(notes)}>Salvar observações</button>
             </div>
+            <h3 className="section-title">Arquivos no OneDrive</h3>
+            <ProjectFiles projectId={project.id} />
             <h3 className="section-title">Pagamentos</h3>
             <div className="payment-box project-payment-box">
               <label><span>Data do pagamento</span><input type="date" value={paymentDate} onChange={(event) => setPaymentDate(event.target.value)} aria-label="Data do pagamento" /></label>

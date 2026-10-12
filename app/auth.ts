@@ -53,3 +53,17 @@ export function readCookie(header: string | null, name: string) {
   }
   return null;
 }
+
+/**
+ * Chave dos agentes do Paperclip (variável PREFORTE_CHAVE_AGENTES).
+ * Enviada como "Authorization: Bearer <chave>". Não abre páginas, só /api.
+ */
+export function isAgentRequest(header: string | null | undefined) {
+  const key = process.env.PREFORTE_CHAVE_AGENTES ?? "";
+  if (key.length < 32 || !header?.startsWith("Bearer ")) return false;
+  const given = header.slice(7).trim();
+  if (given.length !== key.length) return false;
+  let diff = 0;
+  for (let i = 0; i < key.length; i++) diff |= key.charCodeAt(i) ^ given.charCodeAt(i);
+  return diff === 0;
+}

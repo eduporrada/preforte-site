@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, readSessionToken } from "./app/auth";
+import { SESSION_COOKIE, isAgentRequest, readSessionToken } from "./app/auth";
 
 // Tudo exige login, menos a tela de entrada e os arquivos públicos.
 const PUBLIC = [/^\/entrar$/, /^\/api\/entrar$/, /^\/(favicon-32|icon-\d+|preforte-logo-2026-128|og)\.png$/, /^\/manifest\.webmanifest$/];
@@ -7,6 +7,14 @@ const PUBLIC = [/^\/entrar$/, /^\/api\/entrar$/, /^\/(favicon-32|icon-\d+|prefor
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (PUBLIC.some((p) => p.test(pathname))) return NextResponse.next();
+
+  // Agentes do Paperclip: só as APIs, nunca restaurar backup nem trocar a conexão do OneDrive.
+  if (pathname.startsWith("/api/") && isAgentRequest(request.headers.get("authorization"))) {
+    if (pathname.startsWith("/api/restaurar") || pathname === "/api/onedrive") {
+      return NextResponse.json({ error: "Não permitido para agentes" }, { status: 403 });
+    }
+    return NextResponse.next();
+  }
 
   const email = await readSessionToken(request.cookies.get(SESSION_COOKIE)?.value);
   if (email) return NextResponse.next();
