@@ -3,8 +3,8 @@
 export const CATEGORIAS: { pasta: string; rotulo: string; palavras: string[] }[] = [
   { pasta: "BOMBEIROS", rotulo: "Bombeiros / PPCI", palavras: ["bombeiro", "ppci", "incêndio", "incendio", "cercon", "cbm"] },
   { pasta: "DESDOBRO", rotulo: "Desmembramento, remembramento, retificação", palavras: ["desmembr", "remembr", "retifica", "desdobr", "unifica"] },
-  { pasta: "LOTEAMENTO", rotulo: "Loteamento", palavras: ["loteamento", "lotear"] },
-  { pasta: "TOPOGRAFIA", rotulo: "Topografia / ortomosaico", palavras: ["topograf", "ortomosaico", "drone", "georreferenc", "planialtim"] },
+  { pasta: "LOTEAMENTO", rotulo: "Loteamento e condomínios", palavras: ["loteamento", "lotear", "condomín", "condomin"] },
+  { pasta: "TOPOGRAFIA", rotulo: "Topografia, ortomosaico e drone (Agisoft)", palavras: ["topograf", "ortomosaico", "drone", "agisoft", "aerofoto", "georreferenc", "planialtim"] },
   { pasta: "LAUDOS", rotulo: "Laudos", palavras: ["laudo", "vistoria", "perícia", "pericia"] },
   { pasta: "CAIXA FINANCIAMENTO", rotulo: "Avaliação Caixa", palavras: ["avaliação caixa", "avaliacao caixa", "avalia bens", "avaliação de imóvel"] },
   { pasta: "REDUÇÃO DO INSS", rotulo: "Redução do INSS", palavras: ["inss"] },
