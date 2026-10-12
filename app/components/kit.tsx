@@ -5,21 +5,21 @@ import { CATEGORIAS, categoriaDoTipo } from "../categorias";
 
 /* ---------- Cores por pasta/categoria ---------- */
 export const COR_PASTA: Record<string, string> = {
-  BOMBEIROS: "#ff5a4f",
-  DESDOBRO: "#f5b63b",
-  LOTEAMENTO: "#e0a458",
-  TOPOGRAFIA: "#4ad07a",
-  LAUDOS: "#38bdf8",
-  "CAIXA FINANCIAMENTO": "#22c1c3",
-  "REDUÇÃO DO INSS": "#c084fc",
-  "ESTRUTURA METÁLICAS": "#94a3b8",
-  SUVISA: "#f472b6",
-  ORÇAMENTO: "#facc15",
-  CONSTRUÇÕES: "#8b7cff",
+  BOMBEIROS: "#c97465",
+  DESDOBRO: "#c7a35f",
+  LOTEAMENTO: "#b8905f",
+  TOPOGRAFIA: "#7fae89",
+  LAUDOS: "#7c9fc0",
+  "CAIXA FINANCIAMENTO": "#6fa9a4",
+  "REDUÇÃO DO INSS": "#a58cc2",
+  "ESTRUTURA METÁLICAS": "#9aa2ad",
+  SUVISA: "#c08ba3",
+  ORÇAMENTO: "#c6b462",
+  CONSTRUÇÕES: "#9c9ea8",
 };
 
 export function corDoTipo(tipo: string) {
-  return COR_PASTA[categoriaDoTipo(tipo).pasta] ?? "#8b7cff";
+  return COR_PASTA[categoriaDoTipo(tipo).pasta] ?? "#9c9ea8";
 }
 
 /* ---------- Ícones (SVG simples, 24x24, stroke) ---------- */
@@ -86,13 +86,13 @@ const KINDS: Record<string, FileKind> = {
 export function FileIcon({ nome, pasta }: { nome: string; pasta?: boolean }) {
   if (pasta) {
     return (
-      <span className="file-icon" style={{ "--file-color": "#f5b63b" } as React.CSSProperties}>
+      <span className="file-icon" style={{ "--file-color": "#c7a35f" } as React.CSSProperties}>
         {P("M3 7h6l2 2h10v10H3z")}
       </span>
     );
   }
   const ext = nome.split(".").pop()?.toLowerCase() ?? "";
-  const k = KINDS[ext] ?? { label: ext.slice(0, 4).toUpperCase() || "ARQ", color: "#8b7cff" };
+  const k = KINDS[ext] ?? { label: ext.slice(0, 4).toUpperCase() || "ARQ", color: "#9c9ea8" };
   return (
     <span className="file-icon" style={{ "--file-color": k.color } as React.CSSProperties} title={ext.toUpperCase()}>
       {k.icon ?? k.label}
@@ -177,7 +177,7 @@ export function FolderPicker({ value, tipo, cliente, onChange }: { value: string
             role="option"
             aria-selected={efetiva === c.pasta}
             className={`folder-option ${efetiva === c.pasta ? "active" : ""} ${sugerida === c.pasta ? "suggested" : ""}`}
-            style={{ "--chip-color": COR_PASTA[c.pasta] ?? "#8b7cff" } as React.CSSProperties}
+            style={{ "--chip-color": COR_PASTA[c.pasta] ?? "#9c9ea8" } as React.CSSProperties}
             onClick={() => onChange(c.pasta === sugerida ? "" : c.pasta)}
           >
             {ICONE_PASTA[c.pasta]}

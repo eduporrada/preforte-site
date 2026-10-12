@@ -27,47 +27,48 @@ type Room = { id: RoomId; x0: number; y0: number; x1: number; y1: number; porta:
 
 // Salas no sistema de coordenadas do desenho (1774×887). A porta fica no lado do corredor.
 const SALAS: Room[] = [
-  { id: "recepcao", x0: 125, y0: 80, x1: 345, y1: 345, porta: { x: 300, y: 345 } },
-  { id: "hall", x0: 345, y0: 80, x1: 535, y1: 345, porta: { x: 445, y: 345 } },
-  { id: "revit", x0: 535, y0: 80, x1: 855, y1: 345, porta: { x: 575, y: 345 } },
-  { id: "autocad", x0: 855, y0: 80, x1: 1180, y1: 345, porta: { x: 895, y: 345 } },
-  { id: "reuniao", x0: 1180, y0: 80, x1: 1450, y1: 345, porta: { x: 1215, y: 345 } },
-  { id: "presidencia", x0: 1450, y0: 80, x1: 1762, y1: 345, porta: { x: 1485, y: 345 } },
-  { id: "banheiros", x0: 125, y0: 430, x1: 370, y1: 680, porta: { x: 345, y: 430 } },
-  { id: "copa", x0: 370, y0: 430, x1: 660, y1: 680, porta: { x: 405, y: 430 } },
-  { id: "lounge", x0: 660, y0: 430, x1: 945, y1: 680, porta: { x: 695, y: 430 } },
-  { id: "memoriais", x0: 945, y0: 430, x1: 1275, y1: 680, porta: { x: 975, y: 430 } },
-  { id: "gerencia", x0: 1275, y0: 430, x1: 1515, y1: 680, porta: { x: 1305, y: 430 } },
-  { id: "expansao", x0: 1515, y0: 430, x1: 1762, y1: 680, porta: { x: 1545, y: 430 } },
+  { id: "recepcao", x0: 125, y0: 80, x1: 345, y1: 345, porta: { x: 325, y: 342 } },
+  { id: "hall", x0: 345, y0: 80, x1: 535, y1: 345, porta: { x: 445, y: 342 } },
+  { id: "revit", x0: 535, y0: 80, x1: 855, y1: 345, porta: { x: 562, y: 342 } },
+  { id: "autocad", x0: 855, y0: 80, x1: 1180, y1: 345, porta: { x: 882, y: 342 } },
+  { id: "reuniao", x0: 1180, y0: 80, x1: 1450, y1: 345, porta: { x: 1205, y: 342 } },
+  { id: "presidencia", x0: 1450, y0: 80, x1: 1762, y1: 345, porta: { x: 1475, y: 342 } },
+  { id: "banheiros", x0: 125, y0: 430, x1: 370, y1: 680, porta: { x: 342, y: 436 } },
+  { id: "copa", x0: 370, y0: 430, x1: 660, y1: 680, porta: { x: 398, y: 436 } },
+  { id: "lounge", x0: 660, y0: 430, x1: 945, y1: 680, porta: { x: 688, y: 436 } },
+  { id: "memoriais", x0: 945, y0: 430, x1: 1275, y1: 680, porta: { x: 970, y: 436 } },
+  { id: "gerencia", x0: 1275, y0: 430, x1: 1515, y1: 680, porta: { x: 1300, y: 436 } },
+  { id: "expansao", x0: 1515, y0: 430, x1: 1762, y1: 680, porta: { x: 1540, y: 436 } },
 ];
+// Portas com folha animada (abre quando alguém passa). "hall" não tem porta.
+const PORTAS = SALAS.filter((s) => s.id !== "hall").map((s) => ({ sala: s.id, p: s.porta, lado: s.y0 < CORREDOR_Y ? "cima" : "baixo" }));
 
-// Mesas: posição dos pés do boneco sentado (de costas, olhando a mesa).
+// Mesas: posição dos pés do boneco sentado (de costas, olhando a mesa). Acima da mesa fica o "monitor"/prancheta que acende.
 const MESAS: Record<string, Px[]> = {
-  revit: [{ x: 638, y: 240 }, { x: 772, y: 240 }, { x: 638, y: 320 }, { x: 772, y: 320 }],
-  autocad: [{ x: 942, y: 240 }, { x: 1082, y: 240 }, { x: 942, y: 320 }, { x: 1082, y: 320 }],
-  memoriais: [{ x: 1045, y: 570 }, { x: 1160, y: 570 }, { x: 1045, y: 640 }, { x: 1160, y: 640 }],
-  gerencia: [{ x: 1395, y: 565 }],
-  presidencia: [{ x: 1595, y: 232 }],
-  reuniao: [{ x: 1305, y: 222 }, { x: 1245, y: 312 }, { x: 1305, y: 312 }, { x: 1365, y: 312 }],
-  expansao: [{ x: 1660, y: 625 }],
-  recepcao: [{ x: 240, y: 225 }],
+  revit: [{ x: 632, y: 238 }, { x: 775, y: 238 }, { x: 632, y: 322 }, { x: 775, y: 322 }],
+  autocad: [{ x: 950, y: 238 }, { x: 1090, y: 238 }, { x: 950, y: 322 }, { x: 1090, y: 322 }],
+  memoriais: [{ x: 1030, y: 582 }, { x: 1145, y: 582 }, { x: 1030, y: 652 }, { x: 1145, y: 652 }],
+  gerencia: [{ x: 1400, y: 552 }],
+  presidencia: [{ x: 1595, y: 228 }],
+  reuniao: [{ x: 1270, y: 298 }, { x: 1310, y: 298 }, { x: 1360, y: 298 }],
+  expansao: [{ x: 1630, y: 637 }],
+  recepcao: [{ x: 240, y: 232 }],
 };
-// Lugares de descanso (em pé, de frente), com o que o boneco "diz".
-const DESCANSO: { p: Px; dir: Dir; falas: string[] }[] = [
-  { p: { x: 470, y: 612 }, dir: "costas", falas: ["☕", "🍪", "💬"] },
-  { p: { x: 530, y: 612 }, dir: "costas", falas: ["☕", "🥤"] },
-  { p: { x: 590, y: 612 }, dir: "costas", falas: ["🍞", "☕"] },
-  { p: { x: 445, y: 520 }, dir: "costas", falas: ["☕"] },
-  { p: { x: 790, y: 575 }, dir: "frente", falas: ["😌", "📺", "💬"] },
-  { p: { x: 700, y: 625 }, dir: "direita", falas: ["🎮", "💬"] },
-  { p: { x: 880, y: 625 }, dir: "esquerda", falas: ["📖"] },
-  { p: { x: 210, y: 590 }, dir: "costas", falas: ["🚻"] },
-  { p: { x: 270, y: 590 }, dir: "costas", falas: ["🪞"] },
-  { p: { x: 200, y: 320 }, dir: "frente", falas: ["📰", "💬"] },
-  { p: { x: 445, y: 300 }, dir: "frente", falas: ["🛗"] },
-  { p: { x: 720, y: 400 }, dir: "frente", falas: ["💬"] },
-  { p: { x: 1330, y: 400 }, dir: "frente", falas: ["💬", "📱"] },
-  { p: { x: 1640, y: 640 }, dir: "frente", falas: ["🧰"] },
+// Lugares de descanso, com o que o boneco "diz".
+const DESCANSO: { p: Px; dir: Dir; falas: string[]; acao: string }[] = [
+  { p: { x: 455, y: 632 }, dir: "costas", falas: ["☕", "🍪"], acao: "tomando um café na copa" },
+  { p: { x: 495, y: 632 }, dir: "costas", falas: ["☕", "🥤"], acao: "lanchando na copa" },
+  { p: { x: 535, y: 632 }, dir: "costas", falas: ["🍞", "💬"], acao: "conversando na copa" },
+  { p: { x: 560, y: 520 }, dir: "costas", falas: ["☕"], acao: "fazendo um café" },
+  { p: { x: 790, y: 575 }, dir: "frente", falas: ["😌", "📺"], acao: "descansando no lounge" },
+  { p: { x: 700, y: 625 }, dir: "direita", falas: ["💬"], acao: "batendo papo no lounge" },
+  { p: { x: 880, y: 625 }, dir: "esquerda", falas: ["📖"], acao: "lendo no lounge" },
+  { p: { x: 345, y: 540 }, dir: "costas", falas: ["🚻"], acao: "no banheiro" },
+  { p: { x: 345, y: 590 }, dir: "costas", falas: ["🪞"], acao: "no banheiro" },
+  { p: { x: 200, y: 318 }, dir: "frente", falas: ["📰"], acao: "esperando na recepção" },
+  { p: { x: 445, y: 300 }, dir: "frente", falas: ["🛗"], acao: "no hall dos elevadores" },
+  { p: { x: 720, y: 402 }, dir: "frente", falas: ["💬"], acao: "no corredor" },
+  { p: { x: 1330, y: 402 }, dir: "frente", falas: ["📱"], acao: "no corredor" },
 ];
 const SOFA: Px = { x: 790, y: 575 };
 
@@ -102,7 +103,10 @@ type Boneco = {
   proximaDecisao: number;
   fala: string;
   falaAte: number;
+  acao: string;
 };
+type Evento = { quando: number; agente: string; texto: string };
+const portasAbertura = new Map<string, number>();
 
 function salaDe(p: Px): Room | null {
   return SALAS.find((s) => p.x >= s.x0 && p.x < s.x1 && p.y >= s.y0 && p.y < s.y1) ?? null;
@@ -135,12 +139,56 @@ function desenharBoneco(c: CanvasRenderingContext2D, sheet: HTMLImageElement, b:
   const lx = Math.round(b.pos.x - tw / 2), ly = Math.round(b.pos.y + 6);
   c.fillStyle = "rgba(10,10,14,.82)";
   c.beginPath(); c.roundRect(lx, ly, tw, 17, 5); c.fill();
-  const cor = b.dados.estado === "trabalhando" ? "#4ad07a" : b.dados.estado === "esperando_voce" ? "#f5b63b" : b.dados.estado === "pausado" ? "#94a3b8" : "#8b7cff";
+  const cor = b.dados.estado === "trabalhando" ? "#7fb58f" : b.dados.estado === "esperando_voce" ? "#d2b06a" : b.dados.estado === "pausado" ? "#9aa2ad" : "#c9cbd2";
   c.fillStyle = cor; c.beginPath(); c.arc(lx + 8, ly + 8.5, 3, 0, Math.PI * 2); c.fill();
   c.fillStyle = "#f3f3f5"; c.fillText(nome, lx + 14, ly + 12.5);
 }
 
+function desenharPortas(c: CanvasRenderingContext2D, bonecos: Iterable<Boneco>, dt: number) {
+  const lista = Array.from(bonecos);
+  for (const d of PORTAS) {
+    const chave = `${d.p.x},${d.p.y}`;
+    const perto = lista.some((b) => b.andando && Math.abs(b.pos.x - d.p.x) < 40 && Math.abs(b.pos.y - d.p.y) < 48);
+    const atual = portasAbertura.get(chave) ?? 0;
+    const alvo = perto ? 1 : 0;
+    const novo = atual + (alvo - atual) * Math.min(1, dt * (perto ? 9 : 4));
+    portasAbertura.set(chave, novo);
+    const ab = novo;
+    // duas folhas de vidro; fechadas ficam na linha da parede, abertas giram para dentro da sala
+    const y = d.p.y, folha = 20;
+    const dirY = d.lado === "cima" ? -1 : 1;
+    for (const lado of [-1, 1]) {
+      const x0 = d.p.x + lado * 2;
+      const largura = folha * (1 - ab), altura = folha * ab;
+      c.fillStyle = "rgba(120,170,230,.65)"; c.strokeStyle = "rgba(255,255,255,.8)"; c.lineWidth = 1;
+      c.beginPath(); c.rect(lado < 0 ? x0 - largura : x0, y - 3, Math.max(2, largura), 6); c.fill(); c.stroke();
+      if (ab > 0.05) { c.beginPath(); c.rect(lado < 0 ? x0 - folha - 1 : x0 + folha - 5, dirY < 0 ? y - altura : y, 6, altura); c.fill(); c.stroke(); }
+    }
+  }
+}
+function desenharLuzMesa(c: CanvasRenderingContext2D, b: Boneco, t: number) {
+  if (b.andando || (b.dados.estado !== "trabalhando" && b.dados.estado !== "esperando_voce")) return;
+  if (Math.hypot(b.pos.x - b.mesa.x, b.pos.y - b.mesa.y) > 4) return;
+  const pulso = 0.18 + 0.06 * Math.sin(t / 420);
+  const g = c.createRadialGradient(b.mesa.x, b.mesa.y - 52, 4, b.mesa.x, b.mesa.y - 52, 52);
+  g.addColorStop(0, `rgba(255,244,200,${pulso + 0.12})`); g.addColorStop(1, "rgba(255,244,200,0)");
+  c.fillStyle = g; c.fillRect(b.mesa.x - 56, b.mesa.y - 108, 112, 80);
+}
+function desenharPensamento(c: CanvasRenderingContext2D, b: Boneco, t: number) {
+  const fase = (t + hash(b.dados.id) % 5000) % 14000;
+  if (b.dados.estado !== "trabalhando" || b.andando || fase > 3200) return false;
+  const x = b.pos.x + 22, y = b.pos.y - CELL_H * ESCALA - 14;
+  c.fillStyle = "rgba(255,255,255,.95)";
+  c.beginPath(); c.arc(x - 12, y + 16, 3, 0, Math.PI * 2); c.fill();
+  c.beginPath(); c.arc(x - 6, y + 10, 5, 0, Math.PI * 2); c.fill();
+  c.beginPath(); c.ellipse(x + 12, y - 2, 24, 14, 0, 0, Math.PI * 2); c.fill();
+  const n = 1 + Math.floor((fase / 400) % 3);
+  c.fillStyle = "#44464d"; c.font = "bold 14px Inter, system-ui, sans-serif"; c.fillText(".".repeat(n), x + 2, y + 4);
+  return true;
+}
+
 function desenharBalao(c: CanvasRenderingContext2D, b: Boneco, t: number) {
+  if (desenharPensamento(c, b, t)) return;
   if (!b.fala || t > b.falaAte) return;
   const emoji = [...b.fala].length <= 2;
   c.font = emoji ? "20px system-ui, sans-serif" : "13px Inter, system-ui, sans-serif";
@@ -160,6 +208,8 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
   const [dados, setDados] = useState<Dados | null>(null);
   const [hover, setHover] = useState<Boneco | null>(null);
   const [pronto, setPronto] = useState(false);
+  const [eventos, setEventos] = useState<Evento[]>([]);
+  const eventosRef = useRef<Evento[]>([]);
 
   useEffect(() => {
     let vivo = true;
@@ -178,7 +228,7 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
         let b = bonecos.current.get(a.id);
         if (!b) {
           const inicio = { x: 560 + ((i * 97) % 700), y: 760 };
-          b = { dados: a, personagem, salaTrabalho: sala, mesa, pos: inicio, alvo: inicio, rota: [], dir: "frente", dirParado: "frente", andando: false, proximaDecisao: 0, fala: "", falaAte: 0 };
+          b = { dados: a, personagem, salaTrabalho: sala, mesa, pos: inicio, alvo: inicio, rota: [], dir: "frente", dirParado: "frente", andando: false, proximaDecisao: 0, fala: "", falaAte: 0, acao: "chegando ao escritório" };
           bonecos.current.set(a.id, b);
         }
         const mudou = b.dados.estado !== a.estado || b.dados.tarefa?.id !== a.tarefa?.id;
@@ -188,7 +238,7 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
       for (const id of Array.from(bonecos.current.keys())) if (!vistos.has(id) && id !== "dono") bonecos.current.delete(id);
       if (!bonecos.current.has("dono")) {
         const mesa = MESAS.presidencia[0];
-        bonecos.current.set("dono", { dados: { id: "dono", nome: "Eduardo", papel: "dono", titulo: "Engenheiro responsável", sala: "presidencia", estado: "trabalhando", tarefa: null, ultimaAtividade: null }, personagem: "eduardo", salaTrabalho: "presidencia", mesa, pos: { ...mesa }, alvo: { ...mesa }, rota: [], dir: "costas", dirParado: "costas", andando: false, proximaDecisao: Number.MAX_SAFE_INTEGER, fala: "", falaAte: 0 });
+        bonecos.current.set("dono", { dados: { id: "dono", nome: "Eduardo", papel: "dono", titulo: "Engenheiro responsável", sala: "presidencia", estado: "trabalhando", tarefa: null, ultimaAtividade: null }, personagem: "eduardo", salaTrabalho: "presidencia", mesa, pos: { ...mesa }, alvo: { ...mesa }, rota: [], dir: "costas", dirParado: "costas", andando: false, proximaDecisao: Number.MAX_SAFE_INTEGER, fala: "", falaAte: 0, acao: "na presidência" });
       }
     }
     void carregar();
@@ -208,11 +258,18 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
     let raf = 0, ultimo = performance.now();
     const VEL = 95; // px do desenho por segundo
 
+    function registrar(b: Boneco, texto: string) {
+      if (b.acao === texto) return;
+      b.acao = texto;
+      eventosRef.current = [{ quando: Date.now(), agente: b.dados.nome, texto }, ...eventosRef.current].slice(0, 12);
+      setEventos(eventosRef.current);
+    }
     function decidir(b: Boneco, agora: number) {
       const a = b.dados;
       if (a.estado === "trabalhando" || a.estado === "esperando_voce") {
         if (b.alvo.x !== b.mesa.x || b.alvo.y !== b.mesa.y) { b.alvo = b.mesa; b.rota = rotaPara(b.pos, b.mesa); }
         b.dirParado = "costas";
+        registrar(b, a.estado === "esperando_voce" ? `aguarda sua aprovação${a.tarefa ? ` em ${a.tarefa.identificador}` : ""}` : `trabalhando${a.tarefa ? ` em ${a.tarefa.identificador} — ${a.tarefa.titulo}` : ""}`);
         b.fala = a.estado === "esperando_voce" ? "✋ Precisa de você" : a.tarefa ? `${a.tarefa.identificador}: ${a.tarefa.titulo}` : "Trabalhando…";
         b.falaAte = agora + 30000; b.proximaDecisao = agora + 10000 + Math.random() * 5000;
         return;
@@ -220,12 +277,14 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
       if (a.estado === "pausado") {
         if (b.alvo !== SOFA) { b.alvo = SOFA; b.rota = rotaPara(b.pos, SOFA); }
         b.dirParado = "frente"; b.fala = "💤"; b.falaAte = agora + 30000; b.proximaDecisao = agora + 12000;
+        registrar(b, "pausado, cochilando no lounge");
         return;
       }
       const ocupados = new Set(Array.from(bonecos.current.values()).filter((o) => o !== b).map((o) => `${o.alvo.x},${o.alvo.y}`));
       const livres = DESCANSO.filter((l) => !ocupados.has(`${l.p.x},${l.p.y}`));
       const lugar = (livres.length ? livres : DESCANSO)[Math.floor(Math.random() * (livres.length ? livres.length : DESCANSO.length))];
       b.alvo = lugar.p; b.rota = rotaPara(b.pos, lugar.p); b.dirParado = lugar.dir;
+      registrar(b, lugar.acao);
       b.fala = lugar.falas[Math.floor(Math.random() * lugar.falas.length)]; b.falaAte = agora + 25000;
       b.proximaDecisao = agora + 20000 + Math.random() * 30000;
     }
@@ -250,6 +309,8 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
       c.fillStyle = "#2f5f33"; c.fillRect(0, 0, W, H);
       if (fundo.complete && fundo.naturalWidth) c.drawImage(fundo, 0, 0, W, H);
       const ordenados = Array.from(bonecos.current.values()).sort((a, b) => a.pos.y - b.pos.y);
+      for (const b of ordenados) desenharLuzMesa(c, b, agora);
+      desenharPortas(c, ordenados, dt);
       if (sheet.complete && sheet.naturalWidth) {
         for (const b of ordenados) desenharBoneco(c, sheet, b, agora);
         for (const b of ordenados) desenharBalao(c, b, agora);
@@ -293,13 +354,23 @@ export function Escritorio({ compacto = false }: { compacto?: boolean }) {
             <strong>{hover.dados.nome}</strong>
             <span>{hover.dados.titulo || hover.dados.papel}</span>
             <em>{hover.dados.estado === "trabalhando" ? "Trabalhando" : hover.dados.estado === "esperando_voce" ? "Precisa de você" : hover.dados.estado === "pausado" ? "Pausado" : "Disponível"}</em>
+            <small>Agora: {hover.acao}</small>
             {hover.dados.tarefa && <small>{hover.dados.tarefa.identificador} · {hover.dados.tarefa.titulo}</small>}
           </div>
         )}
       </div>
       {!compacto && (
         <div className="escritorio-feed">
-          <h3>Atividade</h3>
+          <h3>Agora no escritório</h3>
+          {!eventos.length && <p className="empty-copy">Os agentes estão chegando…</p>}
+          {eventos.map((e, i) => (
+            <div className="escritorio-linha" key={`e${i}`}>
+              <time>{new Date(e.quando).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</time>
+              <b>{e.agente}</b>
+              <span>{e.texto}</span>
+            </div>
+          ))}
+          <h3 style={{ marginTop: 16 }}>Registro do Paperclip</h3>
           {!dados?.atividades.length && <p className="empty-copy">Nenhuma atividade ainda.</p>}
           {dados?.atividades.map((a: Atividade, i) => (
             <div className="escritorio-linha" key={i}>

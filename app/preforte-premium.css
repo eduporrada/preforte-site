@@ -414,3 +414,120 @@ body {
 .attr .service-tag { display: inline-flex; overflow: visible; white-space: normal; line-height: 1.2; height: auto; min-height: 24px; padding: 3px 9px; }
 .escritorio-mapa { background: #2f5f33; }
 .escritorio-carregando { position: absolute; inset: 0; display: grid; place-items: center; color: #dfe; font-size: 14px; }
+
+/* =====================================================================
+   Grafite — acabamento minimalista (sem neon, sem pastel, sem brilho)
+   ===================================================================== */
+:root {
+  --apple-bg: #1a1b1e;
+  --apple-surface: #222327;
+  --apple-surface-secondary: #27282d;
+  --apple-surface-elevated: rgba(36, 37, 42, 0.96);
+  --apple-fill: rgba(255, 255, 255, 0.05);
+  --apple-fill-hover: rgba(255, 255, 255, 0.08);
+  --apple-separator: rgba(255, 255, 255, 0.07);
+  --apple-separator-strong: rgba(255, 255, 255, 0.12);
+  --apple-label: #ededef;
+  --apple-secondary-label: #a1a3aa;
+  --apple-tertiary-label: #6e7079;
+  --apple-blue: #e9e9ec;
+  --apple-blue-hover: #ffffff;
+  --apple-blue-soft: rgba(255, 255, 255, 0.08);
+  --apple-red: #d4766a;
+  --apple-red-soft: rgba(212, 118, 106, 0.14);
+  --apple-green: #7fb58f;
+  --apple-green-soft: rgba(127, 181, 143, 0.14);
+  --apple-orange: #d2b06a;
+  --apple-orange-soft: rgba(210, 176, 106, 0.14);
+  --apple-radius-card: 12px;
+  --apple-radius-panel: 14px;
+  --apple-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.3);
+  --apple-shadow-raised: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --apple-shadow-overlay: 0 24px 70px rgba(0, 0, 0, 0.6);
+  --satin: linear-gradient(170deg, #26272c 0%, #212226 60%, #1e1f23 100%);
+  --satin-strong: linear-gradient(170deg, #292a2f 0%, #232428 60%, #1f2024 100%);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(255, 255, 255, 0.16);
+  --glow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+}
+html { background: #1a1b1e; }
+body {
+  background:
+    radial-gradient(1100px 600px at 20% -20%, rgba(255, 255, 255, 0.06), transparent 60%),
+    radial-gradient(900px 500px at 100% 110%, rgba(255, 255, 255, 0.035), transparent 60%),
+    #1a1b1e;
+}
+.sidebar {
+  background: linear-gradient(180deg, rgba(30, 31, 35, 0.9), rgba(26, 27, 30, 0.96));
+  backdrop-filter: blur(20px) saturate(110%);
+  -webkit-backdrop-filter: blur(20px) saturate(110%);
+  box-shadow: none;
+}
+.topbar { background: rgba(26, 27, 30, 0.78); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.nav-button.active { background: rgba(255, 255, 255, 0.08); box-shadow: none; }
+.nav-group-label { letter-spacing: 0.02em; text-transform: none; font-size: 12px; color: var(--apple-tertiary-label); }
+
+.card, .panel, .metric-card, .column, .detail-metric, .drawer-control-card, .payment-box, .project-notes-box, .mini-list, .attrs, .escritorio, .notice {
+  background: var(--satin);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--apple-shadow-card);
+  border-radius: 12px;
+}
+.card::before { display: none; }
+.card { box-shadow: var(--apple-shadow-card); }
+.card:hover { transform: none; border-color: var(--card-border-hover); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); }
+.column { background: rgba(255, 255, 255, 0.02); box-shadow: none; }
+.column.drag-over { border-color: rgba(255, 255, 255, 0.28); box-shadow: none; }
+.drawer { background: #202125; }
+.modal, .budget-dialog, .confirm-modal { background: #222327; border-radius: 14px; }
+.modal-head { background: #222327; }
+
+/* Botões: ação principal branca, o resto discreto */
+.primary-button, .budget-add-button, .modal-submit {
+  background: #ededef;
+  color: #111214;
+  box-shadow: none;
+  font-weight: 600;
+}
+.primary-button:hover, .budget-add-button:hover, .modal-submit:hover { background: #ffffff; color: #111214; }
+.primary-button:disabled { background: rgba(255, 255, 255, 0.25); color: #111; }
+.secondary-button, .ghost-button, .back-button { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--apple-label); box-shadow: none; }
+.secondary-button:hover, .ghost-button:hover { background: rgba(255, 255, 255, 0.09); }
+.delete-button { background: transparent; border: 1px solid rgba(212, 118, 106, 0.4); color: #d4766a; box-shadow: none; }
+.delete-button:hover { background: rgba(212, 118, 106, 0.12); }
+
+/* Tags: neutras, com um ponto de cor discreto */
+.service-tag, .priority-tag, .tag, .chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--apple-secondary-label);
+  font-weight: 500;
+  box-shadow: none;
+}
+.service-tag::before { box-shadow: none; opacity: 0.9; }
+.priority-tag.priority-high, .priority-tag.priority-urgent { background: rgba(212, 118, 106, 0.1); border-color: rgba(212, 118, 106, 0.3); color: #e09a90; }
+.priority-tag.priority-medium { background: rgba(210, 176, 106, 0.1); border-color: rgba(210, 176, 106, 0.3); color: #dcc08a; }
+.tag.good { background: rgba(127, 181, 143, 0.1); border-color: rgba(127, 181, 143, 0.3); color: #9cc9aa; }
+.tag.pending { background: rgba(210, 176, 106, 0.1); border-color: rgba(210, 176, 106, 0.3); color: #dcc08a; }
+.chip.active { background: rgba(255, 255, 255, 0.12); color: #fff; border-color: rgba(255, 255, 255, 0.25); }
+.chip-red.active { background: rgba(212, 118, 106, 0.14); color: #e09a90; border-color: rgba(212, 118, 106, 0.45); }
+
+/* Escritório */
+.escritorio { padding: 16px; }
+.escritorio-mapa { border-radius: 10px; box-shadow: none; border-color: rgba(255, 255, 255, 0.08); }
+.escritorio-contadores > span { background: rgba(255, 255, 255, 0.04); }
+.escritorio-contadores > span.ok b { color: #9cc9aa; }
+.escritorio-contadores > span.warn b { color: #dcc08a; }
+.escritorio-contadores > span.warn { border-color: rgba(210, 176, 106, 0.35); }
+.escritorio-dica em { color: var(--apple-secondary-label); }
+.escritorio-topo .eyebrow { text-transform: none; letter-spacing: 0; font-size: 12px; }
+.complete-button { border-color: rgba(127, 181, 143, 0.35); color: #9cc9aa; }
+.attrs h4 { text-transform: none; letter-spacing: 0; font-size: 12px; }
+
+/* Métricas e gráficos sem cor chamativa */
+.metric-icon, .metric-card .icon, .home-metric-icon { background: rgba(255, 255, 255, 0.06) !important; color: var(--apple-label) !important; }
+.file-icon { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); color: color-mix(in srgb, var(--file-color) 70%, #e6e6e9); box-shadow: none; filter: saturate(0.8); }
+.column-head { background: transparent; border-bottom: 1px solid var(--card-border); }
+.column-title { gap: 8px; }
+.column-title::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--column-accent, #9c9ea8); opacity: 0.85; flex: none; }
+.count { background: rgba(255, 255, 255, 0.06); color: var(--apple-secondary-label); }
