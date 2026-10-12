@@ -41,6 +41,8 @@ PREFORTE_SEGREDO=$(openssl rand -hex 32)
 EOF
 fi
 
+if [ "$REDE" = "host" ]; then REDE_SERVICO=""; REDE_FIM=""; REDE_LABEL="";
+else REDE_SERVICO="    networks: [proxy]"; REDE_FIM=$'networks:\n  proxy:\n    external: true\n    name: '"$REDE"; REDE_LABEL="      - traefik.docker.network=$REDE"; fi
 cat > "$DIR/docker-compose.yml" <<EOF
 services:
   site:
@@ -49,19 +51,15 @@ services:
     env_file: .env
     volumes:
       - $DADOS:/dados
-    networks: [proxy]
+$REDE_SERVICO
     labels:
       - traefik.enable=true
-      - traefik.docker.network=$REDE
+$REDE_LABEL
       - traefik.http.routers.preforte.rule=Host(\`$DOMINIO\`)
-      - traefik.http.routers.preforte.entrypoints=$ENTRY
       - traefik.http.routers.preforte.tls=true
       - traefik.http.routers.preforte.tls.certresolver=$RESOLVER
       - traefik.http.services.preforte.loadbalancer.server.port=3000
-networks:
-  proxy:
-    external: true
-    name: $REDE
+$REDE_FIM
 EOF
 
 echo "== Construindo e ligando o site (leva alguns minutos)"
