@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 const MSG: Record<string, string> = {
-  "ja-tem-dados": "O site já tem projetos. A restauração só funciona com o site vazio, para não apagar nada.",
+  "ja-tem-dados": "O site já tem projetos seus. A restauração só funciona antes de você cadastrar algo, para não apagar nada.",
   "sem-arquivo": "Escolha o arquivo ZIP.",
   "zip-invalido": "Esse arquivo não é um ZIP válido.",
   "sem-banco": "Não achei dados/preforte.sqlite dentro do ZIP.",

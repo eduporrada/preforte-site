@@ -7,11 +7,12 @@ import { env } from "../../../db/env";
 import { ensureDatabase } from "../../../db/runtime";
 
 // Restaura o backup exportado do site antigo (o ZIP "Preforte-exportacao").
-// Só funciona com o banco vazio, para nunca sobrescrever dados.
+// Só funciona enquanto o site tem apenas os projetos de exemplo, para nunca sobrescrever dados reais.
+// Os dados de exemplo são apagados e substituídos pelo backup.
 export async function POST(request: Request) {
   await ensureDatabase();
   const raw = env.DB as unknown as { prepare(sql: string): { first(): Promise<Record<string, unknown> | null> } };
-  const existing = await raw.prepare("SELECT count(*) AS n FROM projects").first().catch(() => ({ n: 0 }));
+  const existing = await raw.prepare("SELECT count(*) AS n FROM projects WHERE id NOT LIKE 'p-%'").first().catch(() => ({ n: 0 }));
   if (Number(existing?.n ?? 0) > 0) return back("ja-tem-dados");
 
   const form = await request.formData();
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
     for (const { name } of tables) {
       const liveCols = new Set((live.prepare(`PRAGMA table_info("${name}")`).all() as { name: string }[]).map((c) => c.name));
       if (!liveCols.size) continue;
+      live.exec(`DELETE FROM "${name}"`);
       const rows = src.prepare(`SELECT * FROM "${name}"`).all() as Record<string, unknown>[];
       for (const row of rows) {
         const cols = Object.keys(row).filter((c) => liveCols.has(c));
