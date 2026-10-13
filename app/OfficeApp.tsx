@@ -1048,11 +1048,13 @@ function ProjectsPage({
     <div className="board-surface">
       <div className="kanban-toolbar">
         <div className="kanban-status-copy">
-          <span>Fluxo de trabalho</span>
-          <strong>Projetos ordenados por prioridade</strong>
+          <div className="board-tabs" role="tablist" aria-label="Visualização">
+            <span className="board-tab ativa" role="tab" aria-selected="true"><Layers3 size={15} />Quadro</span>
+            <span className="board-tab" role="tab" aria-selected="false" title="Em breve"><ArchiveRestore size={15} />Lista</span>
+          </div>
         </div>
         <div className="kanban-toolbar-controls">
-          <span>{projects.length} projetos no quadro</span>
+          <span className="board-count">{projects.length} projetos</span>
         </div>
       </div>
       <div className="mobile-stage-picker" aria-label="Escolher etapa do Kanban">
@@ -1404,48 +1406,10 @@ function ProjectCard({
       <h3 className="card-title">{project.name}</h3>
       {project.client && <p className="card-client">{project.client}</p>}
       <div className="card-labels"><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
-      {project.tasks.length > 0 && (
-        <ul className="task-list">
-          {project.tasks.slice(0, 10).map((task) => (
-            <li
-              key={task.id}
-              className={`task-item ${task.done ? "done" : ""}`}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <input
-                className="task-check"
-                type="checkbox"
-                checked={task.done}
-                onChange={(event) => onTask(task.id, event.target.checked)}
-                aria-label={`${task.done ? "Reabrir" : "Concluir"} ${task.title}`}
-              />
-              <span>{task.title}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {project.tasks.length > 0 && (
-        <div className="card-progress">
-          <div className="progress-track"><div className="progress-fill" style={{ width: `${progress}%` }} /></div>
-          <span>☑ {project.tasks.filter((task) => task.done).length}/{project.tasks.length}</span>
-        </div>
-      )}
-      <div className="card-financial-grid">
-        <span><small>Contratado</small><strong>{money(project.price, true)}</strong></span>
-        <span><small>Recebido</small><strong>{money(project.paidValue, true)}</strong></span>
-        <span className={debt > 0 ? "has-debt" : ""}><small>Pendente</small><strong>{money(debt, true)}</strong></span>
-      </div>
-      <div className="card-bottom">
-        <div className="card-meta">
-          {late ? <span className="late-pill">● Atrasado</span> : project.dueDate ? <span>◷ {shortDate(project.dueDate)}</span> : null}
-        </div>
-        {debt === 0 ? (
-          <span className="payment-state paid">✓ Pago</span>
-        ) : (
-          <span className="payment-state pending">
-            {project.paidValue > 0 ? "Pagamento parcial" : "Em aberto"}
-          </span>
-        )}
+      <div className="card-chips">
+        {late && <span className="mini-chip chip-late">Atrasado</span>}
+        
+        {project.tasks.length > 0 && <span className="mini-chip">{project.tasks.filter((t) => t.done).length}/{project.tasks.length} tarefas</span>}
       </div>
       {pointerDragging && typeof document !== "undefined" && createPortal(
         <div
@@ -1466,44 +1430,10 @@ function ProjectCard({
             <h3 className="card-title">{project.name}</h3>
             {project.client && <p className="card-client">{project.client}</p>}
             <div className="card-labels"><span className="service-tag" style={{ "--tag-color": corDoTipo(project.type) } as React.CSSProperties}>{project.type}</span></div>
-            {project.tasks.length > 0 && (
-              <ul className="task-list">
-                {project.tasks.slice(0, 10).map((task) => (
-                  <li key={task.id} className={`task-item ${task.done ? "done" : ""}`}>
-                    <input
-                      className="task-check"
-                      type="checkbox"
-                      checked={task.done}
-                      readOnly
-                      tabIndex={-1}
-                    />
-                    <span>{task.title}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {project.tasks.length > 0 && (
-              <div className="card-progress">
-                <div className="progress-track"><div className="progress-fill" style={{ width: `${progress}%` }} /></div>
-                <span>☑ {project.tasks.filter((task) => task.done).length}/{project.tasks.length}</span>
-              </div>
-            )}
-            <div className="card-financial-grid">
-              <span><small>Contratado</small><strong>{money(project.price, true)}</strong></span>
-              <span><small>Recebido</small><strong>{money(project.paidValue, true)}</strong></span>
-              <span className={debt > 0 ? "has-debt" : ""}><small>Pendente</small><strong>{money(debt, true)}</strong></span>
-            </div>
-            <div className="card-bottom">
-              <div className="card-meta">
-                {late ? <span className="late-pill">● Atrasado</span> : project.dueDate ? <span>◷ {shortDate(project.dueDate)}</span> : null}
-              </div>
-              {debt === 0 ? (
-                <span className="payment-state paid">✓ Pago</span>
-              ) : (
-                <span className="payment-state pending">
-                  {project.paidValue > 0 ? "Pagamento parcial" : "Em aberto"}
-                </span>
-              )}
+            <div className="card-chips">
+              {late && <span className="mini-chip chip-late">Atrasado</span>}
+              
+              {project.tasks.length > 0 && <span className="mini-chip">{project.tasks.filter((t) => t.done).length}/{project.tasks.length} tarefas</span>}
             </div>
           </div>
         </div>,

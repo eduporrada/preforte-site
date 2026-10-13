@@ -892,3 +892,29 @@ body {
   background: #121214; border: 1px solid rgba(255,255,255,.11); color: #ececee; border-radius: 10px;
 }
 .modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: rgba(255,255,255,.3); }
+
+/* ===== Card enxuto como na referência ===== */
+.card { padding: 14px 14px 14px; }
+.card-title { font-size: 15.5px; margin-bottom: 3px; }
+.card-client { margin-bottom: 12px; }
+.card-labels { margin-bottom: 0; }
+.card-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.card-chips:empty { display: none; }
+.mini-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 999px; background: #151518; border: 1px solid rgba(255,255,255,.1); color: #a9a9b1; font-size: 12px; font-weight: 500; }
+.mini-chip.chip-late { color: #ff7a72; border-color: rgba(255,90,79,.45); background: rgba(255,90,79,.08); }
+.kanban-column .card + .card, .column .card + .card { margin-top: 10px; }
+
+/* Abas Quadro / Lista */
+.board-tabs { display: inline-flex; gap: 2px; padding: 4px; border-radius: 12px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07); }
+.board-tab { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border-radius: 9px; color: #8f8f98; font-size: 14px; font-weight: 500; }
+.board-tab svg { color: currentColor; }
+.board-tab.ativa { background: linear-gradient(180deg, #2a2a2e, #212125); color: #f0f0f2; box-shadow: 0 1px 0 rgba(255,255,255,.07) inset, 0 4px 10px rgba(0,0,0,.35); }
+.board-count { color: #6b6b74; font-size: 13.5px; background: none !important; border: 0 !important; }
+.card, .card.card-priority-high, .card.card-priority-urgent, .card.card-priority-medium { border-left-width: 1px !important; border-color: rgba(255,255,255,.11) !important; }
+.card::after { display: none !important; }
+.card-labels { display: inline-flex; margin-right: 6px; vertical-align: top; }
+.card-labels + .card-chips { display: inline-flex; margin-top: 0; }
+.card-menu-button { opacity: 0; transition: opacity .15s; }
+.card:hover .card-menu-button { opacity: 1; }
+.card-head { padding-right: 0; }
+.card-menu-button { top: auto !important; bottom: 10px !important; right: 10px !important; }
